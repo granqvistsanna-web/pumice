@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pumice</title>
+<meta name="description" content="Pumice is a soft, warm-grey design system for component libraries: pill controls, 28px cards, alpha washes and springy motion. Tokens, type scale and live components.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2220%22 fill=%22%2317181a%22/><rect x=%2216%22 y=%2226%22 width=%2232%22 height=%2212%22 rx=%226%22 fill=%22%23f7f7f6%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+<style>
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink-2);
+    font: 400 15px/1.5 var(--font-ui);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    transition: background-color var(--t-fade), color var(--t-color);
+  }
+  a { color: inherit; }
+  code, .mono { font-family: var(--font-code); font-size: 12.5px; }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+  /* ---- Bar ---- */
+  .bar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--frost);
+    backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  }
+  .bar-in {
+    max-width: 1120px; margin: 0 auto; height: 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; align-items: center; gap: var(--s-6);
+  }
+  .mark { display: inline-flex; align-items: center; gap: var(--s-4); color: var(--ink); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .mark i { width: 22px; height: 22px; border-radius: 8px; background: var(--ink); display: grid; place-items: center; }
+  .mark i::after { content: ""; width: 12px; height: 5px; border-radius: 3px; background: var(--bg); }
+  .bar nav { display: flex; gap: var(--s-1); overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+  .bar .spacer { flex: 1; }
+
+  .page {
+    max-width: 1120px; margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 96px;
+  }
+
+  /* ---- Intro ---- */
+  .intro { text-align: center; padding-block: 72px 64px; display: grid; justify-items: center; gap: var(--s-7); }
+  .intro h1 { margin: 0; }
+  .intro p { margin: 0; max-width: 54ch; }
+  .intro .row { margin-top: var(--s-4); }
+
+  /* ---- Type scale classes (also documented below) ---- */
+  .t-display { font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+  .t-title { font-size: 30px; line-height: 1.08; font-weight: 500; letter-spacing: -.012em; color: var(--ink); text-wrap: balance; }
+  .t-heading { font-size: 26px; line-height: 1.2; font-weight: 500; letter-spacing: -.01em; color: var(--ink); }
+  .t-lead { font-size: 16px; line-height: 1.55; color: var(--ink-4); }
+  .t-lead b { font-weight: 400; color: var(--ink); }
+  .t-body { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .t-ui { font-size: 14px; line-height: 1.4; font-weight: 500; color: var(--ink); }
+  .t-small { font-size: 13px; line-height: 1.5; color: var(--ink-4); }
+  .t-micro { font-size: 12px; line-height: 1.6; font-weight: 500; color: var(--ink-3); }
+  .t-tag { font-size: 11px; line-height: 1; font-weight: 500; letter-spacing: .01em; color: var(--ink); }
+
+  /* ---- Sections ---- */
+  section { padding-top: 72px; scroll-margin-top: 64px; }
+  .sh { display: flex; align-items: baseline; gap: var(--s-6); flex-wrap: wrap; margin-bottom: var(--s-9); }
+  .sh h2 { margin: 0; }
+  .sh p { margin: 0; flex-basis: 100%; max-width: 62ch; }
+  h3 { margin: 0 0 var(--s-6); font-size: 13px; font-weight: 500; color: var(--ink); }
+
+  .stage { background: var(--wash); border-radius: var(--r-card); padding: var(--s-10); }
+  .grid { display: grid; gap: var(--s-4); }
+  .g-auto { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .g-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--s-7); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; }
+
+  /* ---- Principles ---- */
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: var(--s-4); }
+  .rule { background: var(--surface); border-radius: var(--r-card); padding: var(--s-9); display: grid; gap: var(--s-4); align-content: start; }
+  .rule b { color: var(--ink); font-weight: 500; font-size: 15px; }
+  .rule span { font-size: 14px; color: var(--ink-4); line-height: 1.5; }
+
+  /* ---- Swatches ---- */
+  .sw { background: var(--bg); border-radius: 20px; padding: var(--s-3); box-shadow: var(--ring); }
+  .sw .chip-c { height: 72px; border-radius: 14px; box-shadow: inset 0 0 0 1px var(--hairline); }
+  .sw .meta { padding: var(--s-4) var(--s-3) var(--s-2); display: grid; gap: 1px; }
+  .sw .meta b { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .sw .meta code { color: var(--ink-4); font-size: 11.5px; }
+  .sw .meta small { color: var(--ink-4); font-size: 12px; }
+
+  /* ---- Type specimen ---- */
+  .spec { display: grid; grid-template-columns: 150px 1fr; gap: var(--s-7) var(--s-9); align-items: baseline; padding-block: var(--s-7); border-top: 1px solid var(--hairline); }
+  .spec:first-child { border-top: 0; padding-top: 0; }
+  .spec .k { display: grid; gap: 2px; }
+  .spec .k b { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .spec .k code { color: var(--ink-4); font-size: 11.5px; }
+  .spec > div:last-child { min-width: 0; }
+
+  /* ---- Space / radius ---- */
+  .ladder { display: grid; gap: var(--s-3); }
+  .ladder div { display: grid; grid-template-columns: 56px 44px 1fr; gap: var(--s-6); align-items: center; font-size: 12.5px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+  .ladder i { display: block; height: 10px; border-radius: var(--r-pill); background: var(--ink); }
+  .radii { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+  .radii div { aspect-ratio: 1.3; max-width: 100%; background: var(--surface-3); display: grid; place-items: end start; padding: var(--s-6); font-size: 12.5px; color: var(--ink-3); }
+
+  /* ---- Elevation ---- */
+  .elev { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: var(--s-7); }
+  .elev > div { height: 140px; border-radius: var(--r-card); display: grid; place-items: end start; padding: var(--s-7); font-size: 13px; color: var(--ink-3); }
+  .glass-stage { position: relative; overflow: hidden; background: var(--paper); }
+  .glass-stage::before { content: ""; position: absolute; width: 120px; height: 120px; border-radius: 50%; background: var(--ember); top: -20px; right: 10px; }
+  .glass-stage span { position: relative; background: var(--pane); border: 1px solid var(--pane-edge); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: var(--r-pill); padding: 6px 12px; color: var(--ink); }
+
+  /* ---- Components ---- */
+  .btn {
+    height: var(--h-button); padding: 0 20px; border: 0; border-radius: var(--r-pill);
+    background: var(--ink); color: var(--on-ink);
+    font: 500 15px/1 var(--font-ui); cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: var(--s-4);
+    transition: opacity var(--t-fade), scale var(--t-press) var(--spring-soft), background var(--t-color), color var(--t-color);
+  }
+  .btn:hover { opacity: .86; }
+  .btn:active { scale: var(--press); }
+  .btn.hero:hover { opacity: 1; scale: .98; }
+  .btn.hero:active { scale: var(--press-hero); }
+  .btn.quiet { background: var(--wash); color: var(--ink); }
+  .btn.quiet:hover { opacity: 1; background: var(--wash-2); }
+  .btn.sm { height: var(--h-nav); padding: 0 16px; font-size: 14px; }
+  .btn.block { width: 100%; height: 52px; border-radius: 14px; justify-content: center; }
+  .btn[disabled] { opacity: .4; cursor: not-allowed; scale: 1; }
+
+  .split { display: inline-flex; gap: 1px; }
+  .split .btn { border-radius: var(--r-pill) 0 0 var(--r-pill); padding: 0 12px 0 16px; }
+  .split .btn + .btn { border-radius: 0 var(--r-pill) var(--r-pill) 0; padding: 0 10px; }
+
+  .icon-btn {
+    width: var(--h-nav); height: var(--h-nav); border-radius: 50%; border: 0;
+    background: transparent; color: var(--ink); box-shadow: var(--ring);
+    display: grid; place-items: center; cursor: pointer;
+    transition: background var(--t-color), scale var(--t-press) var(--spring-soft);
+  }
+  .icon-btn:hover { background: var(--wash); }
+  .icon-btn:active { scale: var(--press-icon); }
+  .icon-btn.solid { background: var(--ink); color: var(--on-ink); box-shadow: none; }
+  svg.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .nav-link {
+    height: var(--h-nav); padding: 0 13px; border-radius: var(--r-pill);
+    display: inline-flex; align-items: center; white-space: nowrap;
+    font: 500 14px/1 var(--font-ui); color: var(--ink-4); text-decoration: none;
+    transition: color var(--t-color), background var(--t-color), scale var(--t-press) var(--spring-soft);
+  }
+  .nav-link:hover { color: var(--ink); }
+  .nav-link:active { scale: var(--press-link); }
+  .nav-link[aria-current="true"] { color: var(--ink); }
+
+  .search {
+    height: var(--h-field); border-radius: var(--r-pill); background: var(--wash);
+    display: inline-flex; align-items: center; gap: var(--s-4); padding: 0 6px 0 14px;
+    color: var(--ink-4); font-size: 14px; min-width: 0; width: 220px; max-width: 100%;
+  }
+  .search input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; color: var(--ink); outline: none; }
+  .search input::placeholder { color: var(--ink-4); }
+  .search:focus-within { box-shadow: var(--ring); background: var(--bg); }
+  .kbd { font: 500 11px/1 var(--font-ui); color: var(--ink-5); padding: 5px 7px; border-radius: var(--r-pill); }
+
+  .chip {
+    height: var(--h-chip); padding: 0 14px; border: 0; border-radius: var(--r-pill);
+    background: var(--wash); color: var(--ink-2); font: 500 14px/1 var(--font-ui); cursor: pointer;
+    transition: background var(--t-color), color var(--t-color), scale var(--t-press) var(--spring-soft);
+  }
+  .chip:hover { background: var(--wash-2); color: var(--ink); }
+  .chip:active { scale: var(--press-chip); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
+
+  .tag { height: var(--h-tag); padding: 0 10px; border-radius: var(--r-pill); display: inline-flex; align-items: center; background: var(--bg); }
+  .tag.glass { height: 28px; padding: 0 9px; background: var(--scrim); color: #fff; font-size: 12px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .tag.lock { background: var(--surface-3); color: var(--ink-3); }
+
+  .count {
+    height: 32px; padding: 0 14px; border-radius: var(--r-pill); box-shadow: var(--ring);
+    display: inline-flex; align-items: center; gap: var(--s-4);
+    font: 500 14px/1 var(--font-ui); color: var(--ink); font-variant-numeric: tabular-nums;
+  }
+  .count i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+
+  .card {
+    position: relative; background: var(--wash); border-radius: var(--r-card);
+    min-height: 260px; display: grid; place-items: center; overflow: hidden;
+  }
+  .card .tags { position: absolute; top: 12px; left: 12px; display: flex; gap: var(--s-3); }
+  .card .foot {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 0 14px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity var(--t-fade), transform var(--t-move) var(--spring);
+  }
+  .card:hover .foot, .card:focus-within .foot { opacity: 1; transform: none; }
+  .card .foot .name { height: var(--h-field); padding: 0 14px; border-radius: var(--r-pill); background: var(--frost); display: inline-flex; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+  .demo-knob { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 10px var(--wash); transition: transform var(--t-move) var(--spring); }
+  .card:hover .demo-knob { transform: scale(1.08); }
+
+  .faq { border-top: 1px solid var(--hairline); }
+  .faq-item { border-bottom: 1px solid var(--hairline); }
+  .faq-item button {
+    width: 100%; background: none; border: 0; padding: 16px 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: var(--s-7);
+    font: 500 15px/1.4 var(--font-ui); color: var(--ink); text-align: left;
+  }
+  .faq-item button svg { transition: rotate var(--t-press) var(--settle); flex-shrink: 0; }
+  .faq-item[data-open] button svg { rotate: 45deg; }
+  .faq-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--t-open) var(--settle); }
+  .faq-item[data-open] .faq-body { grid-template-rows: 1fr; }
+  .faq-body > div { overflow: hidden; }
+  .faq-body p { margin: 0; padding: 0 28px 16px 0; font-size: 14px; line-height: 1.55; color: var(--ink-4); opacity: 0; transition: opacity var(--t-fade); }
+  .faq-item[data-open] .faq-body p { opacity: 1; transition-delay: 80ms; }
+
+  /* ---- Entrance ---- */
+  @keyframes rise { from { opacity: 0; translate: 0 10px; } }
+  .intro > * { animation: rise var(--t-rise) var(--rise) both; }
+  .intro > .row { animation-delay: .3s; }
+
+  /* ---- Button motion lab ---- */
+  .lab { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+  @media (max-width: 760px) { .lab { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .lab { grid-template-columns: 1fr; } }
+  .lab > div { background: var(--surface); border-radius: var(--r-card); padding: var(--s-9) var(--s-8) var(--s-8); display: grid; gap: var(--s-7); justify-items: center; text-align: center; }
+  .lab .stagebox { height: 72px; display: grid; place-items: center; }
+  .lab b { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .lab code { color: var(--ink-4); font-size: 11.5px; line-height: 1.6; }
+
+  /* ---- Phone ---- */
+  .phones { display: flex; flex-wrap: wrap; gap: var(--s-10); align-items: flex-start; }
+  .phone {
+    width: 320px; max-width: 100%; height: 640px; flex-shrink: 0;
+    border-radius: 44px; padding: 10px; background: var(--solid);
+    box-shadow: var(--float);
+  }
+  .screen { position: relative; height: 100%; border-radius: 34px; overflow: hidden; background: var(--bg); }
+  .screen .scroll { height: 100%; overflow-y: auto; scrollbar-width: none; }
+  .pbar {
+    position: absolute; inset: 0 0 auto; z-index: 2;
+    display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: var(--s-5);
+    height: var(--h-bar); padding: 9px 12px; background: var(--frost);
+    transition: height var(--t-bar) var(--rise), padding var(--t-bar) var(--rise);
+  }
+  .pbar[data-moved] { height: var(--h-bar-compact); padding: 5px 12px; }
+  .pbar .pm { width: 34px; height: 34px; border-radius: 11px; background: var(--ink); display: grid; place-items: center; transition: width var(--t-bar) var(--rise), height var(--t-bar) var(--rise); }
+  .pbar .pm::after { content: ""; width: 50%; height: 22%; border-radius: 3px; background: var(--bg); }
+  .pbar[data-moved] .pm { width: 28px; height: 28px; }
+  .pbar .psearch { height: var(--h-touch); width: 170px; border-radius: var(--r-pill); background: var(--wash); display: flex; align-items: center; gap: var(--s-4); padding: 0 14px; color: var(--ink-4); font-size: 16px; }
+  .pbar .pmenu { justify-self: end; width: 42px; height: 42px; border: 0; background: none; border-radius: 12px; color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+  .pbar svg.i { width: 20px; height: 20px; }
+  .pbody { padding: 82px 14px 24px; display: grid; gap: var(--s-7); }
+  .pbody .phero { text-align: center; display: grid; justify-items: center; gap: var(--s-6); padding-block: 20px 8px; }
+  .pbody .phero h4 { margin: 0; font-size: 34px; line-height: 1.05; font-weight: 500; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+  .pbody .phero p { margin: 0; font-size: 15px; color: var(--ink-4); }
+  .pchips { display: flex; gap: var(--s-4); overflow-x: auto; scrollbar-width: none; margin-inline: -14px; padding-inline: 14px;
+    mask-image: linear-gradient(90deg, #000 calc(100% - 64px), transparent); }
+  .pchips .chip { height: 38px; padding: 0 16px; flex-shrink: 0; }
+  .pcard { position: relative; background: var(--wash); border-radius: var(--r-card); height: 300px; display: grid; place-items: center; }
+  .pcard .tag { position: absolute; top: 12px; left: 12px; }
+  .pcard .pfoot { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .pcard .pname { height: var(--h-touch); padding: 0 16px; border-radius: var(--r-pill); background: var(--frost); display: inline-flex; align-items: center; font-size: 13.5px; color: var(--ink-2); }
+  .pcard .icon-btn { width: var(--h-touch); height: var(--h-touch); }
+
+  .psheet {
+    position: absolute; inset: 0; z-index: 3; background: var(--bg);
+    padding: 62px 12px 16px; display: grid; align-content: start; gap: var(--s-6);
+    opacity: 0; visibility: hidden; translate: 0 -8px;
+    transition: opacity var(--t-fade), translate var(--t-move) var(--spring), visibility 0s linear var(--t-move);
+  }
+  .psheet[data-open] { opacity: 1; visibility: visible; translate: none; transition-delay: 0s; }
+  .psheet .close { position: absolute; top: 10px; right: 10px; }
+  .psheet nav { display: grid; padding-inline: 10px; }
+  .psheet nav a { height: 44px; display: flex; align-items: center; font-size: 26px; font-weight: 500; letter-spacing: -.01em; color: var(--ink-4); text-decoration: none; }
+  .psheet nav a[aria-current] { color: var(--ink); }
+  .plist { background: var(--surface); border-radius: 20px; padding-inline: 16px; }
+  .plist div { height: 50px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 500; color: var(--ink-2); }
+  .plist div + div { border-top: 1px solid var(--hairline); }
+  .ptoggles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .ptoggles .seg { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; }
+  .ptoggles .seg button { height: 38px; display: grid; place-items: center; padding: 0; }
+  .ptoggles .seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); box-shadow: none; }
+
+  .patterns { flex: 1; min-width: min(100%, 300px); display: grid; gap: var(--s-4); }
+  .pat { background: var(--surface); border-radius: 20px; padding: var(--s-7) var(--s-8); display: grid; gap: var(--s-2); }
+  .pat b { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .pat span { font-size: 13.5px; line-height: 1.5; color: var(--ink-4); }
+
+  @media (hover: none) {
+    .card .foot { opacity: 1; transform: none; }
+  }
+
+  .seg { display: inline-flex; padding: var(--s-1); gap: var(--s-1); border-radius: var(--r-pill); background: var(--wash); }
+  .seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--ink-4); font: 500 13px/1 var(--font-ui); cursor: pointer; transition: background var(--t-color), color var(--t-color); }
+  .seg button[aria-pressed="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 1px 2px rgba(var(--ink-rgb), .08); }
+
+  .comp { display: grid; grid-template-columns: 180px 1fr; gap: var(--s-9); padding-block: var(--s-9); border-top: 1px solid var(--hairline); }
+  .comp:first-of-type { border-top: 0; padding-top: 0; }
+  .comp .k { display: grid; gap: var(--s-2); align-content: start; }
+  .comp .k b { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .comp .k span { font-size: 12.5px; color: var(--ink-4); line-height: 1.5; }
+  .comp > div:last-child { min-width: 0; }
+
+  /* ---- Motion ---- */
+  .curves { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: var(--s-4); }
+  .curve { background: var(--surface); border-radius: var(--r-card); padding: var(--s-8); display: grid; gap: var(--s-6); cursor: pointer; }
+  .curve .track { height: 32px; border-radius: var(--r-pill); background: var(--wash); position: relative; }
+  .curve .dot { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--ink); }
+  .curve:hover .dot, .curve:focus-visible .dot { left: calc(100% - 28px); }
+  .curve b { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .curve code { color: var(--ink-4); font-size: 11.5px; overflow-wrap: anywhere; }
+
+  /* ---- Tables ---- */
+  .tbl { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-weight: 500; color: var(--ink-4); font-size: 12px; padding: 0 var(--s-6) var(--s-4) 0; border-bottom: 1px solid var(--hairline); }
+  td { padding: var(--s-5) var(--s-6) var(--s-5) 0; border-bottom: 1px solid var(--hairline); color: var(--ink-2); vertical-align: top; }
+  td:first-child { color: var(--ink); white-space: nowrap; }
+
+  pre { margin: 0; background: var(--solid); color: var(--solid-ink); border-radius: 20px; padding: var(--s-8); overflow-x: auto; font: 12.5px/1.7 var(--font-code); }
+
+  footer { margin-top: 96px; padding-top: var(--s-9); border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-6); }
+
+  @media (max-width: 760px) {
+    .spec, .comp { grid-template-columns: 1fr; gap: var(--s-4); }
+    .stage { padding: var(--s-8); }
+    .bar nav { display: none; }
+    .t-display { font-size: 32px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .curve .dot { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+</svg>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="mark" href="#top"><i></i>Pumice</a>
+    <nav aria-label="Sections">
+      <a class="nav-link" href="#principles" aria-current="true">Principles</a>
+      <a class="nav-link" href="#color">Color</a>
+      <a class="nav-link" href="#type">Type</a>
+      <a class="nav-link" href="#space">Space</a>
+      <a class="nav-link" href="#motion">Motion</a>
+      <a class="nav-link" href="#buttons">Buttons</a>
+      <a class="nav-link" href="#components">Components</a>
+      <a class="nav-link" href="#phone">Phone</a>
+      <a class="nav-link" href="#use">Use</a>
+    </nav>
+    <button class="icon-btn" id="theme" aria-label="Switch theme"><svg class="i"><use href="#i-moon"/></svg></button>
+  </div>
+</header>
+
+<main class="page" id="top">
+
+  <div class="intro">
+    <span class="count"><i></i>v1.0 · light and dark</span>
+    <h1 class="t-display">Pumice</h1>
+    <p class="t-lead">A soft, warm-grey system for <b>component libraries</b> and <b>product showcases</b>. Pills for every control, 28px cards for every stage, ink washes instead of borders, and motion that springs a little.</p>
+    <div class="row">
+      <a class="btn hero" href="#use">Use the tokens</a>
+      <a class="btn quiet" href="https://github.com/granqvistsanna-web/pumice">Source</a>
+    </div>
+  </div>
+
+  <!-- ===== Principles ===== -->
+  <section id="principles">
+    <div class="sh"><h2 class="t-title">Principles</h2></div>
+    <div class="rules">
+      <div class="rule"><b>Two shapes</b><span>Controls are pills (999px). Stages are 28px cards. Nothing in between, except 12px for small inner panels.</span></div>
+      <div class="rule"><b>Wash, don't outline</b><span>Fills are ink at 6% alpha, so they tint whatever sits behind them. Borders are rare, and a 1px inset ring when used.</span></div>
+      <div class="rule"><b>Ink is the accent</b><span>The primary action is a near-black pill. Signal colors belong to content and demos, never to chrome.</span></div>
+      <div class="rule"><b>Content shows on hover</b><span>Card names and actions rest hidden and spring up on hover or focus. The demo inside the card is the headline.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Color ===== -->
+  <section id="color">
+    <div class="sh"><h2 class="t-title">Color</h2><p class="t-lead">Greys lean warm and slightly olive. Every fill derives from <code>--ink-rgb</code>, so dark mode flips one value and the washes follow.</p></div>
+
+    <h3>Ink</h3>
+    <div class="grid g-auto">
+      <div class="sw"><div class="chip-c" style="background:var(--ink)"></div><div class="meta"><b>ink</b><code>#17181a</code><small>Headings, primary fill</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--ink-2)"></div><div class="meta"><b>ink-2</b><code>#3c3b37</code><small>Body, chip labels</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--ink-3)"></div><div class="meta"><b>ink-3</b><code>#5c5b56</code><small>Secondary body</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--ink-4)"></div><div class="meta"><b>ink-4</b><code>#6f6e68</code><small>Muted text, captions</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--ink-5)"></div><div class="meta"><b>ink-5</b><code>#85847e</code><small>Icons only, not text</small></div></div>
+    </div>
+
+    <h3 style="margin-top:32px">Surfaces</h3>
+    <div class="grid g-auto">
+      <div class="sw"><div class="chip-c" style="background:var(--bg)"></div><div class="meta"><b>bg</b><code>#ffffff</code><small>Page</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--surface)"></div><div class="meta"><b>surface</b><code>#f7f7f6</code><small>Canvas, stage</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--surface-2)"></div><div class="meta"><b>surface-2</b><code>#f1f1f0</code><small>Raised inside</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--surface-3)"></div><div class="meta"><b>surface-3</b><code>#ecebe7</code><small>Pressed, selected</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--paper)"></div><div class="meta"><b>paper</b><code>#dcd9cf</code><small>Warm stock</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--solid)"></div><div class="meta"><b>solid</b><code>#0e0f11</code><small>Deepest fill, code</small></div></div>
+    </div>
+
+    <h3 style="margin-top:32px">Washes and lines</h3>
+    <div class="grid g-auto">
+      <div class="sw"><div class="chip-c" style="background:var(--wash)"></div><div class="meta"><b>wash</b><code>ink / 6%</code><small>Chips, cards</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--wash-2)"></div><div class="meta"><b>wash-2</b><code>ink / 10%</code><small>Hover on a wash</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--rule)"></div><div class="meta"><b>rule</b><code>ink / 16%</code><small>Dividers that must read</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--scrim)"></div><div class="meta"><b>scrim</b><code>ink / 72%</code><small>Dark glass tag</small></div></div>
+    </div>
+
+    <h3 style="margin-top:32px">Signal (content only)</h3>
+    <div class="grid g-auto">
+      <div class="sw"><div class="chip-c" style="background:var(--signal)"></div><div class="meta"><b>signal</b><code>#2231dd</code><small>Links, focus</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--pick)"></div><div class="meta"><b>pick</b><code>#0d99ff</code><small>Selection</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--ember)"></div><div class="meta"><b>ember</b><code>#b8431c</code><small>Warm highlight</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--guide)"></div><div class="meta"><b>guide</b><code>#ff3b6b</code><small>Guides, measures</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--ok)"></div><div class="meta"><b>ok</b><code>#15803d</code><small>Success, live</small></div></div>
+      <div class="sw"><div class="chip-c" style="background:var(--lock)"></div><div class="meta"><b>lock</b><code>#adaca6</code><small>Locked content</small></div></div>
+    </div>
+
+    <h3 style="margin-top:32px">Dark mode</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>ink → ink-5</td><td>#17181a · #3c3b37 · #5c5b56 · #6f6e68 · #85847e</td><td>#fff · #b4b4b4 · #9a9a9a · #828282 · #6b6b6b</td><td>Dark greys drop the warm tint</td></tr>
+          <tr><td>bg / surface ladder</td><td>#fff · #f7f7f6 · #f1f1f0 · #ecebe7</td><td>#000 · #0f0f0f · #181818 · #202020</td><td>True black page</td></tr>
+          <tr><td>wash</td><td>ink / 6%</td><td>white / 9%</td><td>Slightly stronger to read on black</td></tr>
+          <tr><td>glass-a</td><td>.35</td><td>.16</td><td></td></tr>
+          <tr><td>pick · guide · ok</td><td>#0d99ff · #ff3b6b · #15803d</td><td>#3aa9ff · #ff5c84 · #34d17a</td><td>Lifted for contrast</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== Type ===== -->
+  <section id="type">
+    <div class="sh"><h2 class="t-title">Type</h2><p class="t-lead">One family, Inter, at weights 400 and 500. Hierarchy comes from size and ink, not boldness. Large sizes tighten their tracking; nothing goes above 500.</p></div>
+    <div class="stage">
+      <div class="spec"><div class="k"><b>Display</b><code>40 / 1.1 · 500 · −2%</code></div><div class="t-display">Small parts, live on the page</div></div>
+      <div class="spec"><div class="k"><b>Title</b><code>30 / 1.08 · 500 · −1.2%</code></div><div class="t-title">Unlock the full library</div></div>
+      <div class="spec"><div class="k"><b>Heading</b><code>26 / 1.2 · 500 · −1%</code></div><div class="t-heading">Common questions</div></div>
+      <div class="spec"><div class="k"><b>Lead</b><code>16 / 1.55 · 400 · ink-4</code></div><div class="t-lead">Browse working parts, change them, and <b>take the code</b> into your own project.</div></div>
+      <div class="spec"><div class="k"><b>Body</b><code>15 / 1.5 · 400 · ink-2</code></div><div class="t-body">Every part runs in the page, so what you try is what you ship.</div></div>
+      <div class="spec"><div class="k"><b>UI</b><code>14 / 1.4 · 500 · ink</code></div><div class="t-ui">Buttons, nav, chips, accordion rows</div></div>
+      <div class="spec"><div class="k"><b>Small</b><code>13 / 1.5 · 400 · ink-4</code></div><div class="t-small">Footer links, card captions, helper text</div></div>
+      <div class="spec"><div class="k"><b>Micro</b><code>12 / 1.6 · 500 · ink-3</code></div><div class="t-micro">Glass tags, column labels</div></div>
+      <div class="spec"><div class="k"><b>Tag</b><code>11 / 1 · 500 · +1%</code></div><div><span class="tag t-tag" style="box-shadow:var(--ring)">New</span></div></div>
+    </div>
+  </section>
+
+  <!-- ===== Space, radius, elevation ===== -->
+  <section id="space">
+    <div class="sh"><h2 class="t-title">Space, shape and depth</h2><p class="t-lead">Fine 2px steps up to 12, then the scale opens up. Most gaps inside a component are 8; sections sit 64–72 apart.</p></div>
+    <div class="g-2 grid">
+      <div class="stage">
+        <h3>Space</h3>
+        <div class="ladder" id="ladder"></div>
+      </div>
+      <div class="stage">
+        <h3>Radius</h3>
+        <div class="radii">
+          <div style="border-radius:var(--r-inner)">inner · 12</div>
+          <div style="border-radius:var(--r-card)">card · 28</div>
+          <div style="border-radius:var(--r-pill);aspect-ratio:1.3;place-items:center">pill · 999</div>
+        </div>
+        <h3 style="margin-top:32px">Control heights</h3>
+        <div class="tbl"><table>
+          <tbody>
+            <tr><td>tag</td><td>24</td><td>Status labels on cards</td></tr>
+            <tr><td>chip</td><td>32</td><td>Filters, segmented items</td></tr>
+            <tr><td>nav</td><td>36</td><td>Nav links, icon buttons, small buttons</td></tr>
+            <tr><td>field</td><td>38</td><td>Search, card name bar</td></tr>
+            <tr><td>button</td><td>40</td><td>Primary actions</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:40px">Elevation</h3>
+    <div class="elev">
+      <div style="background:var(--wash)">Flat · wash</div>
+      <div style="box-shadow:var(--ring)">Ring · 1px inset</div>
+      <div style="background:var(--bg);box-shadow:var(--float)">Float · 0 10 30</div>
+      <div class="glass-stage"><span>Glass pane</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Motion ===== -->
+  <section id="motion">
+    <div class="sh"><h2 class="t-title">Motion</h2><p class="t-lead">Colors fade fast and flat. Anything that moves uses a spring with a small overshoot. Things that open and close settle without one. Hover a card to compare.</p></div>
+    <div class="curves">
+      <div class="curve" tabindex="0"><b>spring · 240ms</b><div class="track"><span class="dot" style="transition:left var(--t-move) var(--spring)"></span></div><code>cubic-bezier(.28, 1.3, .36, 1)</code><span class="t-small">Lifts, reveals, hover moves</span></div>
+      <div class="curve" tabindex="0"><b>spring-soft · 260ms</b><div class="track"><span class="dot" style="transition:left var(--t-press) var(--spring-soft)"></span></div><code>cubic-bezier(.3, 1.12, .4, 1)</code><span class="t-small">Press scale on chips and icons</span></div>
+      <div class="curve" tabindex="0"><b>settle · 320ms</b><div class="track"><span class="dot" style="transition:left var(--t-open) var(--settle)"></span></div><code>cubic-bezier(.32, .72, 0, 1)</code><span class="t-small">Accordions, drawers, rotations</span></div>
+    </div>
+    <div class="tbl" style="margin-top:24px"><table>
+      <thead><tr><th>Token</th><th>Value</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td>t-color</td><td>160ms linear</td><td>Text and fill color changes</td></tr>
+        <tr><td>t-fade</td><td>180ms</td><td>Opacity in and out</td></tr>
+        <tr><td>t-move</td><td>240ms spring</td><td>Translate and scale on hover</td></tr>
+        <tr><td>t-press</td><td>260ms spring-soft</td><td>Active press, scale .92–.96</td></tr>
+        <tr><td>t-open</td><td>320ms settle</td><td>Height via grid-template-rows 0fr → 1fr</td></tr>
+        <tr><td>t-bar</td><td>380ms rise</td><td>Phone bar compacting on scroll</td></tr>
+        <tr><td>t-rise</td><td>620ms rise</td><td>Hero entrance: fade up 10px; CTA row waits 300ms</td></tr>
+        <tr><td>stagger</td><td>70ms × index, cap 9</td><td>Card grid entrance, after a 320ms base delay, 700ms each</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===== Button motion ===== -->
+  <section id="buttons">
+    <div class="sh"><h2 class="t-title">Button motion</h2><p class="t-lead">Every pressable thing shrinks on press, and the amount depends on its size: big targets move more, text links barely move. Hover changes opacity or fill, never position. Press each one.</p></div>
+    <div class="lab">
+      <div><div class="stagebox"><button class="btn">Primary</button></div><b>Primary</b><code>hover opacity .86<br>press scale .96 · 260ms spring-soft</code></div>
+      <div><div class="stagebox"><button class="btn hero">Hero CTA</button></div><b>Hero CTA</b><code>hover scale .98, full opacity<br>press scale .95</code></div>
+      <div><div class="stagebox"><button class="btn quiet">Quiet</button></div><b>Quiet</b><code>hover wash 6% → 10%<br>press scale .96</code></div>
+      <div><div class="stagebox"><button class="chip">Chip</button></div><b>Chip</b><code>hover wash 10%, ink label<br>press scale .95 · selected solid ink</code></div>
+      <div><div class="stagebox"><button class="icon-btn" aria-label="Add"><svg class="i"><use href="#i-plus"/></svg></button></div><b>Icon button</b><code>hover wash fill<br>press scale .92</code></div>
+      <div><div class="stagebox"><a class="nav-link" href="#buttons" aria-current="true">Nav link</a></div><b>Nav link</b><code>hover ink-4 → ink · 160ms<br>press scale .985</code></div>
+    </div>
+    <div class="tbl" style="margin-top:24px"><table>
+      <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Use <code>scale</code>, not <code>transform</code></td><td>The individual property leaves <code>transform</code> free for layout moves, so press and hover never fight.</td></tr>
+        <tr><td>Disabled</td><td>40% opacity, no press scale, not-allowed cursor.</td></tr>
+        <tr><td>Focus</td><td>2px <code>signal</code> outline, 2px offset, on <code>:focus-visible</code> only.</td></tr>
+        <tr><td>Reduced motion</td><td>All movement durations go to 0; color and opacity changes stay.</td></tr>
+        <tr><td>Card actions</td><td>Rest at opacity 0 and spring up 6px on hover or focus, only where <code>hover: hover</code>. On touch they are always visible.</td></tr>
+        <tr><td>Accordion</td><td>Height opens over 320ms with settle; the answer fades in 80ms after, so text never squeezes.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===== Components ===== -->
+  <section id="components">
+    <div class="sh"><h2 class="t-title">Components</h2><p class="t-lead">Every control is live. Hover, press and tab through them.</p></div>
+    <div class="stage" style="background:var(--surface)">
+
+      <div class="comp"><div class="k"><b>Button</b><span>40px pill, ink fill, 15/500. Hover dims to 86%, press scales to .96.</span></div>
+        <div class="row"><button class="btn">Get started</button><button class="btn quiet">Preview</button><button class="btn sm">Small</button><button class="btn" disabled>Disabled</button></div></div>
+
+      <div class="comp"><div class="k"><b>Split button</b><span>Two pills joined by a 1px gap. Action left, menu right.</span></div>
+        <div class="row"><span class="split"><button class="btn sm">Create account</button><button class="btn sm" aria-label="More options"><svg class="i"><use href="#i-down"/></svg></button></span></div></div>
+
+      <div class="comp"><div class="k"><b>Icon button</b><span>36px circle. Outline uses the ring token; solid uses ink.</span></div>
+        <div class="row"><button class="icon-btn" aria-label="Add"><svg class="i"><use href="#i-plus"/></svg></button><button class="icon-btn solid" aria-label="Copy"><svg class="i"><use href="#i-copy"/></svg></button></div></div>
+
+      <div class="comp"><div class="k"><b>Nav link</b><span>36px, 14/500, muted until current or hovered.</span></div>
+        <div class="row"><a class="nav-link" href="#components" aria-current="true">Library</a><a class="nav-link" href="#components">Audio</a><a class="nav-link" href="#components">Picks</a><a class="nav-link" href="#components">Pricing</a></div></div>
+
+      <div class="comp"><div class="k"><b>Search</b><span>38px wash pill with a shortcut hint. Focus swaps the wash for a ring.</span></div>
+        <div class="row"><label class="search" for="q"><svg class="i"><use href="#i-search"/></svg><input id="q" placeholder="Search"><span class="kbd">⌘K</span></label></div></div>
+
+      <div class="comp"><div class="k"><b>Filter chips</b><span>32px wash pills, ink-2 label. Selected turns solid ink.</span></div>
+        <div class="row" id="chips"><button class="chip" aria-pressed="true">All</button><button class="chip" aria-pressed="false">Hover</button><button class="chip" aria-pressed="false">Press</button><button class="chip" aria-pressed="false">Drag</button><button class="chip" aria-pressed="false">Scroll</button><button class="chip" aria-pressed="false">Loading</button></div></div>
+
+      <div class="comp"><div class="k"><b>Segmented</b><span>Chips inside a wash track. The selected item is a page-colored pill.</span></div>
+        <div class="row"><div class="seg" id="seg"><button aria-pressed="true">Monthly</button><button aria-pressed="false">Yearly</button></div></div></div>
+
+      <div class="comp"><div class="k"><b>Tags</b><span>24px for status on a card; dark glass with blur for overlays; lock for gated items.</span></div>
+        <div class="row" style="background:var(--wash);padding:12px;border-radius:var(--r-inner)"><span class="tag t-tag">New</span><span class="tag glass">Featured</span><span class="tag t-tag lock">Pro</span></div></div>
+
+      <div class="comp"><div class="k"><b>Live count</b><span>Ringed pill with a pulsing dot, tabular numerals. Use above a hero title.</span></div>
+        <div class="row"><span class="count"><i></i>482 joined this week</span></div></div>
+
+      <div class="comp"><div class="k"><b>Showcase card</b><span>28px wash stage. Tags pinned top-left; name bar and action spring up on hover or focus.</span></div>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))">
+          <article class="card" tabindex="0"><div class="tags"><span class="tag t-tag">New</span></div><span class="demo-knob"></span><div class="foot"><span class="name">Press dial</span><button class="icon-btn solid" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg></button></div></article>
+          <article class="card" tabindex="0" style="background:var(--paper-2)"><div class="tags"><span class="tag glass">Featured</span></div><span class="demo-knob" style="border-radius:var(--r-inner)"></span><div class="foot"><span class="name">Stack tile</span><button class="icon-btn solid" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg></button></div></article>
+        </div></div>
+
+      <div class="comp"><div class="k"><b>Accordion</b><span>Hairline rows, plus icon rotates 45°. Height animates through grid rows with the settle curve.</span></div>
+        <div class="faq" id="faq">
+          <div class="faq-item" data-open><button aria-expanded="true">What do I get with a paid plan? <svg class="i"><use href="#i-plus"/></svg></button><div class="faq-body"><div><p>Every part in the library, with source, plus new ones as they land.</p></div></div></div>
+          <div class="faq-item"><button aria-expanded="false">Can I use it in client work? <svg class="i"><use href="#i-plus"/></svg></button><div class="faq-body"><div><p>Yes. Use it in as many projects as you like; just don't resell the parts as a kit.</p></div></div></div>
+          <div class="faq-item"><button aria-expanded="false">Which frameworks are covered? <svg class="i"><use href="#i-plus"/></svg></button><div class="faq-body"><div><p>React first, with plain CSS for styling, so it ports easily.</p></div></div></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- ===== Phone ===== -->
+  <section id="phone">
+    <div class="sh"><h2 class="t-title">Phone patterns</h2><p class="t-lead">Below 760 the bar becomes a three-part grid and the nav moves into a full-screen menu. Scroll inside the phone to see the bar compact, and open the menu.</p></div>
+    <div class="phones">
+      <div class="phone">
+        <div class="screen">
+          <div class="pbar" id="pbar">
+            <span class="pm"></span>
+            <span class="psearch"><svg class="i" style="width:18px;height:18px"><use href="#i-search"/></svg>Search</span>
+            <button class="pmenu" id="pmenu" aria-label="Open menu"><svg class="i"><use href="#i-menu"/></svg></button>
+          </div>
+          <div class="scroll" id="pscroll">
+            <div class="pbody">
+              <div class="phero">
+                <span class="count"><i></i>482 joined this week</span>
+                <h4>Small parts, live on the page</h4>
+                <p>Try them here, then take the code.</p>
+                <button class="btn hero">Get started</button>
+              </div>
+              <div class="pchips"><button class="chip" aria-pressed="true">All</button><button class="chip">Hover</button><button class="chip">Press</button><button class="chip">Drag</button><button class="chip">Scroll</button><button class="chip">Loading</button></div>
+              <div class="pcard"><span class="tag t-tag">New</span><span class="demo-knob"></span><div class="pfoot"><span class="pname">Press dial</span><button class="icon-btn solid" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg></button></div></div>
+              <div class="pcard" style="background:var(--paper-2)"><span class="tag glass">Featured</span><span class="demo-knob" style="border-radius:var(--r-inner)"></span><div class="pfoot"><span class="pname">Stack tile</span><button class="icon-btn solid" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg></button></div></div>
+            </div>
+          </div>
+          <div class="psheet" id="psheet">
+            <button class="pmenu close icon-btn" id="pclose" aria-label="Close menu" style="box-shadow:none"><svg class="i" style="rotate:45deg"><use href="#i-plus"/></svg></button>
+            <nav><a href="#phone" aria-current="true">Library</a><a href="#phone">Audio</a><a href="#phone">Picks</a><a href="#phone">Pricing</a></nav>
+            <button class="btn block">Create account</button>
+            <div class="plist"><div>Upgrade <svg class="i"><use href="#i-arrow"/></svg></div><div>Saved <svg class="i"><use href="#i-copy"/></svg></div><div>Contact <svg class="i"><use href="#i-arrow"/></svg></div></div>
+            <div class="ptoggles">
+              <div class="seg"><button aria-pressed="true" aria-label="Light"><svg class="i"><use href="#i-sun"/></svg></button><button aria-pressed="false" aria-label="Dark"><svg class="i"><use href="#i-moon"/></svg></button></div>
+              <div class="seg"><button aria-pressed="false">Mute</button><button aria-pressed="true">Sound</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="patterns">
+        <div class="pat"><b>Three-part bar</b><span>Grid of <code>1fr auto 1fr</code>: mark left, search centred, menu right. 62px tall with 12px side padding.</span></div>
+        <div class="pat"><b>Compacts on scroll</b><span>After the first few pixels the bar drops to 54px and the mark from 34 to 28, over 380ms with the rise curve.</span></div>
+        <div class="pat"><b>Search takes the bar</b><span>On focus the grid goes to one column: mark and menu hide, the field stretches full width. Text is 16px so iOS does not zoom.</span></div>
+        <div class="pat"><b>Full-screen menu</b><span>Nav links at 26/500 in 44px rows, muted unless current. Then a 52px full-width primary button with a 14px radius, a grouped list on <code>surface</code> with 50px rows and trailing icons, and two segmented toggles side by side.</span></div>
+        <div class="pat"><b>Chips scroll sideways</b><span>One row that bleeds to the screen edge, faded with a 64px mask on the end (40px on the start once scrolled). Chips grow to 38px.</span></div>
+        <div class="pat"><b>Touch targets</b><span>On coarse pointers every action is at least 44px: card name bars, open buttons, the search field. Corner buttons are 36px with a 10px radius.</span></div>
+        <div class="pat"><b>Cards stack</b><span>One column, 14px gutter, the 28px radius kept. Actions stay visible instead of waiting for hover.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Breakpoints ===== -->
+  <section id="breakpoints">
+    <div class="sh"><h2 class="t-title">Breakpoints</h2><p class="t-lead">Content-led, not device-led. The card grid drops a column at each step; the bar hides its links at 760.</p></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Width</th><th>What changes</th></tr></thead>
+      <tbody>
+        <tr><td>≤ 560</td><td>One column, hero title to 32px, chips scroll sideways</td></tr>
+        <tr><td>≤ 760</td><td>Nav links collapse into a menu, side gutter 16</td></tr>
+        <tr><td>≤ 900</td><td>Card grid 3 → 2 columns</td></tr>
+        <tr><td>≤ 1180</td><td>Page max width eases off, gutter 24</td></tr>
+        <tr><td>hover: none</td><td>Card name bars stay visible instead of revealing on hover</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===== Use ===== -->
+  <section id="use">
+    <div class="sh"><h2 class="t-title">Use it</h2><p class="t-lead">Link the font and the tokens, then build on the variables. Copy component styles straight from this page.</p></div>
+<pre>&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&amp;display=swap"&gt;
+&lt;link rel="stylesheet" href="https://granqvistsanna-web.github.io/pumice/tokens.css"&gt;
+
+.my-button {
+  height: var(--h-button); padding: 0 20px;
+  border-radius: var(--r-pill);
+  background: var(--ink); color: var(--on-ink);
+  font: 500 15px/1 var(--font-ui);
+  transition: transform var(--t-move) var(--spring);
+}
+.my-button:active { transform: scale(.96); }</pre>
+  </section>
+
+  <footer class="t-small">
+    <span>Pumice · v1.0 · 2026</span>
+    <a href="https://granqvistsanna-web.github.io/">Part of the Toolbox</a>
+  </footer>
+</main>
+
+<script>
+  // space ladder
+  var steps = [2,4,6,8,10,12,16,20,24,32,40,48,64,72];
+  document.getElementById("ladder").innerHTML = steps.map(function (v, i) {
+    return '<div><span>s-' + (i + 1) + '</span><span>' + v + 'px</span><i style="width:' + v * 3 + 'px;max-width:100%"></i></div>';
+  }).join("");
+
+  // single-select groups
+  function single(id) {
+    var g = document.getElementById(id);
+    g.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      g.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    });
+  }
+  single("chips"); single("seg");
+
+  // accordion
+  document.getElementById("faq").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var item = b.parentElement, open = item.hasAttribute("data-open");
+    item.toggleAttribute("data-open", !open);
+    b.setAttribute("aria-expanded", !open);
+  });
+
+  // phone demo
+  var pbar = document.getElementById("pbar"), sheet = document.getElementById("psheet");
+  document.getElementById("pscroll").addEventListener("scroll", function () {
+    pbar.toggleAttribute("data-moved", this.scrollTop > 8);
+  }, { passive: true });
+  document.getElementById("pmenu").addEventListener("click", function () { sheet.setAttribute("data-open", ""); });
+  document.getElementById("pclose").addEventListener("click", function () { sheet.removeAttribute("data-open"); });
+  sheet.querySelectorAll(".seg").forEach(function (s) {
+    s.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      s.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    });
+  });
+
+  // theme
+  var root = document.documentElement, tb = document.getElementById("theme");
+  function isDark() {
+    return root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function paint() { tb.querySelector("use").setAttribute("href", isDark() ? "#i-sun" : "#i-moon"); }
+  tb.addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("theme", next); } catch (e) {}
+    paint();
+  });
+  paint();
+</script>
+</body>
+</html>
