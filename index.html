@@ -49,6 +49,7 @@
   .mark i::after { content: ""; width: 12px; height: 5px; border-radius: 3px; background: var(--bg); }
   .bar nav { display: flex; gap: var(--s-1); overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
   .bar .spacer { flex: 1; }
+  .bar-in > .icon-btn { margin-left: auto; }
 
   .page {
     max-width: 1120px; margin: 0 auto;
@@ -112,13 +113,13 @@
 
   /* ---- Space / radius ---- */
   .ladder { display: grid; gap: var(--s-3); }
-  .ladder div { display: grid; grid-template-columns: 56px 44px 1fr; gap: var(--s-6); align-items: center; font-size: 12.5px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+  .ladder div { display: grid; grid-template-columns: 56px 44px minmax(0, 1fr); gap: var(--s-6); align-items: center; font-size: 12.5px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
   .ladder i { display: block; height: 10px; border-radius: var(--r-pill); background: var(--ink); }
   .radii { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
   .radii div { aspect-ratio: 1.3; max-width: 100%; background: var(--surface-3); display: grid; place-items: end start; padding: var(--s-6); font-size: 12.5px; color: var(--ink-3); }
 
   /* ---- Elevation ---- */
-  .elev { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: var(--s-7); }
+  .elev { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: var(--s-7); }
   .elev > div { height: 140px; border-radius: var(--r-card); display: grid; place-items: end start; padding: var(--s-7); font-size: 13px; color: var(--ink-3); }
   .glass-stage { position: relative; overflow: hidden; background: var(--paper); }
   .glass-stage::before { content: ""; position: absolute; width: 120px; height: 120px; border-radius: 50%; background: var(--ember); top: -20px; right: 10px; }
@@ -337,25 +338,25 @@
   .mini-seg { display: flex; gap: 2px; padding: 2px; border-radius: var(--r-pill); background: var(--wash); }
   .mini-seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-3); font: 500 12.5px/1 var(--font-ui); cursor: pointer; transition: background 180ms, color 180ms; }
   .mini-seg button:hover { color: var(--ink); }
-  .mini-seg button[aria-pressed="true"] { background: var(--elev); color: var(--ink); }
+  .mini-seg button[aria-pressed="true"] { background: var(--elev); color: var(--ink); box-shadow: var(--shadow-1); }
   .switch { position: relative; width: 50px; height: var(--h-switch); flex: none; border: 0; border-radius: var(--r-pill); background: rgba(var(--ink-rgb), .16); cursor: pointer; transition: background 200ms; }
   .switch i { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: var(--elev); box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: translate var(--t-open) var(--morph-ease); }
   .switch[aria-checked="true"] { background: var(--ink); }
   .switch[aria-checked="true"] i { translate: 20px; background: var(--on-ink); }
-  .ctl.bar-ctl { display: block; min-height: calc(var(--h-row) + 6px); padding: 3px 0; }
-  .bar {
+  .ctl.slide-ctl { display: block; min-height: calc(var(--h-row) + 6px); padding: 3px 0; }
+  .slide {
     position: relative; overflow: hidden; height: var(--h-row); padding: 0 13px; border-radius: var(--r-bar);
     background: var(--wash); display: flex; align-items: center; justify-content: space-between; gap: 10px;
     cursor: ew-resize; touch-action: pan-y; transition: background var(--t-color);
   }
-  .bar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--v, 50%); background: var(--fill); pointer-events: none; }
-  .bar:hover { background: rgba(var(--ink-rgb), .08); }
-  .bar:hover::before { background: rgba(var(--ink-rgb), .15); }
-  .bar span { position: relative; pointer-events: none; white-space: nowrap; }
-  .bar .bl { font-size: 13.5px; font-weight: 500; line-height: 1; color: var(--ink-2); }
-  .bar .bv { font-size: 12.5px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .bar input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
-  .bar:has(input:focus-visible) { box-shadow: inset 0 0 0 2px rgba(var(--ink-rgb), .45); }
+  .slide::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--v, 50%); background: var(--fill); pointer-events: none; }
+  .slide:hover { background: rgba(var(--ink-rgb), .08); }
+  .slide:hover::before { background: rgba(var(--ink-rgb), .15); }
+  .slide span { position: relative; pointer-events: none; white-space: nowrap; }
+  .slide .bl { font-size: 13.5px; font-weight: 500; line-height: 1; color: var(--ink-2); }
+  .slide .bv { font-size: 12.5px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .slide input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+  .slide:has(input:focus-visible) { box-shadow: inset 0 0 0 2px rgba(var(--ink-rgb), .45); }
   .side-foot { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
   .act {
     height: 40px; padding: 0 16px; border-radius: var(--r-pill); display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -395,6 +396,10 @@
   .icon-seg button { width: 35px; height: 27px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-4); display: grid; place-items: center; cursor: pointer; transition: background 180ms, color 180ms; }
   .icon-seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
   .icon-seg svg.i { width: 15px; height: 15px; }
+  @media (pointer: coarse) {
+    .icon-seg button { width: 44px; height: 36px; }
+    .mset { height: 52px; }
+  }
   .mwho { padding: 10px 16px 12px; display: grid; gap: 2px; font-size: 14px; }
   .mwho b { font-weight: 500; color: var(--ink); } .mwho span { color: var(--ink-4); }
 
@@ -409,15 +414,16 @@
   .block .tools { position: absolute; top: 12px; right: 12px; display: flex; gap: 2px; opacity: 0; transition: opacity 180ms; }
   .block .view-seg { position: absolute; top: 12px; left: 12px; opacity: 0; transition: opacity 180ms; }
   .modal .side { height: auto; opacity: 0; transform: translateX(12px); transition: opacity 240ms, transform 280ms var(--morph-ease); }
+  .modal .block, .modal .side { box-shadow: var(--lift); }
   .modal[data-on] .block { opacity: 1; scale: 1; }
   .modal[data-on] .block .tools, .modal[data-on] .block .view-seg { opacity: 1; transition-delay: calc(var(--morph) * .4); }
   .modal[data-on] .side { opacity: 1; transform: none; transition-delay: 60ms; }
-  .hold { height: 64px; padding: 0 34px; border: 0; border-radius: var(--r-pill); background: var(--elev); color: var(--ink); font: 500 20px/1 var(--font-ui); display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 2px rgba(var(--ink-rgb), .06); cursor: pointer; transition: scale var(--t-press) var(--spring-soft); }
+  .hold { height: 64px; padding: 0 34px; border: 0; border-radius: var(--r-pill); background: var(--elev); color: var(--ink); font: 500 20px/1 var(--font-ui); display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-1); cursor: pointer; transition: scale var(--t-press) var(--spring-soft); }
   .hold:active { scale: .96; }
   @media (max-width: 760px) and (orientation: portrait) {
     .modal { padding: 12px; }
     .shell { flex-direction: column; }
-    .block { flex: 0 0 calc(54% - var(--panel-gap)); }
+    .block { flex: 0 0 calc(44% - var(--panel-gap)); }
     .modal .side { width: 100%; flex: 1; min-height: 0; padding: 14px 16px; }
     .modal .side-foot { flex-direction: row; } .modal .side-foot .act { flex: 1; min-width: 0; }
   }
@@ -428,7 +434,7 @@
 
   .seg { display: inline-flex; padding: var(--s-1); gap: var(--s-1); border-radius: var(--r-pill); background: var(--wash); }
   .seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--ink-4); font: 500 13px/1 var(--font-ui); cursor: pointer; transition: background var(--t-color), color var(--t-color); }
-  .seg button[aria-pressed="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 1px 2px rgba(var(--ink-rgb), .08); }
+  .seg button[aria-pressed="true"] { background: var(--elev); color: var(--ink); box-shadow: var(--shadow-1); }
 
   .comp { display: grid; grid-template-columns: 180px 1fr; gap: var(--s-9); padding-block: var(--s-9); border-top: 1px solid var(--hairline); }
   .comp:first-of-type { border-top: 0; padding-top: 0; }
@@ -526,7 +532,7 @@
     <div class="sh"><h2 class="t-title">Principles</h2></div>
     <div class="rules">
       <div class="rule"><b>Two shapes, nested</b><span>Controls are pills. Stages and panels are 28px cards. Anything inside takes the outer radius minus its padding: a 22px menu holds 18px rows; slider rows are 10px.</span></div>
-      <div class="rule"><b>Wash, don't outline</b><span>Fills are ink at 6% alpha, so they tint whatever sits behind them. Borders are rare, and a 1px inset ring when used.</span></div>
+      <div class="rule"><b>Wash, don't outline</b><span>Fills are ink at 6% alpha, so they tint whatever sits behind them. Borders are rare. Shadows are kept for what floats: three steps, each with one job.</span></div>
       <div class="rule"><b>Ink is the accent</b><span>The primary action is a near-black pill. Signal colors belong to content and demos, never to chrome.</span></div>
       <div class="rule"><b>Content shows on hover</b><span>Card names and actions rest hidden and spring up on hover or focus. The demo inside the card is the headline.</span></div>
     </div>
@@ -633,10 +639,13 @@
     </div>
 
     <h3 style="margin-top:40px">Elevation</h3>
+    <p class="t-small" style="margin:0 0 16px;max-width:62ch">Flat is the default. Shadow means something sits above the page: a selected thumb, a panel, a menu. Each step is used for one job only.</p>
     <div class="elev">
-      <div style="background:var(--wash)">Flat · wash</div>
-      <div style="box-shadow:var(--ring)">Ring · 1px inset</div>
-      <div style="background:var(--bg);box-shadow:var(--float)">Float · 0 10 30</div>
+      <div style="background:var(--wash)">Flat · wash<br><span class="mono">Cards, chips, stages</span></div>
+      <div style="box-shadow:var(--ring)">Ring · 1px inset<br><span class="mono">Outline pills</span></div>
+      <div style="background:var(--elev);box-shadow:var(--shadow-1)">shadow-1<br><span class="mono">Selected thumbs, knobs</span></div>
+      <div style="background:var(--elev);box-shadow:var(--lift)">lift<br><span class="mono">Panels, sticky bars</span></div>
+      <div style="background:var(--elev);box-shadow:var(--float)">float<br><span class="mono">Menus, modals</span></div>
       <div class="glass-stage"><span>Glass pane</span></div>
     </div>
   </section>
@@ -704,9 +713,9 @@
             <div class="ctls">
               <div class="ctl"><span class="ctl-label">Fill</span><div class="mini-seg" data-single><button aria-pressed="true">Light</button><button aria-pressed="false">Dark</button></div></div>
               <div class="ctl"><span class="ctl-label">Haptics</span><button class="switch" role="switch" aria-checked="true" aria-label="Haptics"><i></i></button></div>
-              <div class="ctl bar-ctl"><label class="bar" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
-              <div class="ctl bar-ctl"><label class="bar" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
-              <div class="ctl bar-ctl"><label class="bar" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
+              <div class="ctl slide-ctl"><label class="slide" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
+              <div class="ctl slide-ctl"><label class="slide" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
+              <div class="ctl slide-ctl"><label class="slide" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
             </div>
             <div class="side-foot">
               <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
@@ -766,7 +775,7 @@
         <tr><td>Menu row</td><td>44px, 18 radius, 14/500 ink-2, trailing 17px icon in ink-4; hover is the wash with ink text. Toggles inside use solid ink for the selected item.</td></tr>
         <tr><td>Scroll edges</td><td>When controls overflow, the list fades 30px at the edge that has more.</td></tr>
         <tr><td>Open motion</td><td>Veil fades in over 260ms (bg 78%, blur 12, saturate 1.3). The stage grows out of its card over 380ms; its tools appear at 40% of that; the panel follows 60ms later, sliding 12px.</td></tr>
-        <tr><td>On a phone</td><td>Stage on top at 54%, panel below at 46% as a sheet; footer actions sit side by side; swipe down to close.</td></tr>
+        <tr><td>On a phone</td><td>Stage on top at 44%, panel below at 56% as a sheet so three or four controls show without scrolling; footer actions sit side by side; swipe down to close.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -835,9 +844,9 @@
         <div class="ctls">
           <div class="ctl"><span class="ctl-label">Fill</span><div class="mini-seg" data-single><button aria-pressed="true">Light</button><button aria-pressed="false">Dark</button></div></div>
           <div class="ctl"><span class="ctl-label">Stroke</span><div class="mini-seg" data-single><button aria-pressed="true">Off</button><button aria-pressed="false">On</button></div></div>
-          <div class="ctl bar-ctl"><label class="bar" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
-          <div class="ctl bar-ctl"><label class="bar" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
-          <div class="ctl bar-ctl"><label class="bar" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
+          <div class="ctl slide-ctl"><label class="slide" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
+          <div class="ctl slide-ctl"><label class="slide" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
+          <div class="ctl slide-ctl"><label class="slide" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
         </div>
         <div class="side-foot">
           <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
@@ -971,7 +980,7 @@
   document.querySelectorAll("[data-toggle]").forEach(function (t) {
     t.addEventListener("click", function () { t.setAttribute("aria-pressed", t.getAttribute("aria-pressed") !== "true"); });
   });
-  document.querySelectorAll(".bar input").forEach(function (inp) {
+  document.querySelectorAll(".slide input").forEach(function (inp) {
     var bar = inp.parentElement, out = bar.querySelector(".bv"), unit = bar.dataset.unit || "";
     inp.addEventListener("input", function () {
       bar.style.setProperty("--v", (inp.value - inp.min) / (inp.max - inp.min) * 100 + "%");
