@@ -175,7 +175,7 @@
   .search input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; color: var(--ink); outline: none; }
   .search input::placeholder { color: var(--ink-4); }
   .search:focus-within { box-shadow: var(--ring); background: var(--bg); }
-  .kbd { font: 500 11px/1 var(--font-ui); color: var(--ink-5); padding: 5px 7px; border-radius: var(--r-pill); }
+  .kbd { font: 500 11px/1 var(--font-ui); color: var(--ink-4); padding: 5px 7px; border-radius: var(--r-pill); }
 
   .chip {
     height: var(--h-chip); padding: 0 14px; border: 0; border-radius: var(--r-pill);
@@ -301,6 +301,127 @@
   .pat b { font-size: 14px; font-weight: 500; color: var(--ink); }
   .pat span { font-size: 13.5px; line-height: 1.5; color: var(--ink-4); }
 
+  /* ---- Panels ---- */
+  .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--s-9); align-items: start; }
+  .panels figure { margin: 0; display: grid; gap: var(--s-6); justify-items: center; }
+  .panels figcaption { font-size: 13px; color: var(--ink-4); text-align: center; max-width: 34ch; }
+  .pan-stage { width: 100%; background: var(--surface); border-radius: var(--r-card); padding: var(--s-9) var(--s-7); display: grid; place-items: center; }
+
+  /* tool: icon button whose backdrop grows in on hover */
+  .tool {
+    position: relative; width: 36px; height: 36px; border: 0; border-radius: var(--r-pill);
+    background: none; color: var(--ink-3); display: grid; place-items: center; cursor: pointer;
+    transition: color var(--t-color);
+  }
+  .tool::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: rgba(var(--ink-rgb), .08); opacity: 0; scale: .86; transition: opacity 150ms, scale var(--t-press) var(--spring-soft); }
+  .tool:hover, .tool[aria-pressed="true"] { color: var(--ink); }
+  .tool:hover::before, .tool:focus-visible::before { opacity: 1; scale: 1; }
+  .tool > svg { position: relative; transition: scale var(--t-press) var(--spring-soft); }
+  .tool:hover > svg { scale: 1.04; }
+  .tool:active > svg { scale: .96; transition-duration: 90ms; }
+
+  /* side panel: settings */
+  .side {
+    width: var(--side); max-width: 100%; height: 520px; padding: 18px; border-radius: var(--r-card);
+    background: var(--bg); background-image: linear-gradient(var(--wash), var(--wash));
+    display: flex; flex-direction: column; text-align: left;
+  }
+  .side.on-surface { background: var(--elev); background-image: linear-gradient(var(--wash), var(--wash)); }
+  .side-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 0 12px; padding-bottom: 14px; }
+  .side-title { margin: 0; font-size: 17px; line-height: 1.25; font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
+  .side-say { flex-basis: 100%; margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: var(--ink-4); text-wrap: pretty; }
+  .side-head .tool { margin: -6px -6px 0 0; }
+  .ctls { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 0; scrollbar-width: thin; }
+  .ctl { min-height: calc(var(--h-row) + 12px); padding: 6px 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .ctl-label { font-size: 13.5px; line-height: 1; color: var(--ink-2); }
+  .mini-seg { display: flex; gap: 2px; padding: 2px; border-radius: var(--r-pill); background: var(--wash); }
+  .mini-seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-3); font: 500 12.5px/1 var(--font-ui); cursor: pointer; transition: background 180ms, color 180ms; }
+  .mini-seg button:hover { color: var(--ink); }
+  .mini-seg button[aria-pressed="true"] { background: var(--elev); color: var(--ink); }
+  .switch { position: relative; width: 50px; height: var(--h-switch); flex: none; border: 0; border-radius: var(--r-pill); background: rgba(var(--ink-rgb), .16); cursor: pointer; transition: background 200ms; }
+  .switch i { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: var(--elev); box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: translate var(--t-open) var(--morph-ease); }
+  .switch[aria-checked="true"] { background: var(--ink); }
+  .switch[aria-checked="true"] i { translate: 20px; background: var(--on-ink); }
+  .ctl.bar-ctl { display: block; min-height: calc(var(--h-row) + 6px); padding: 3px 0; }
+  .bar {
+    position: relative; overflow: hidden; height: var(--h-row); padding: 0 13px; border-radius: var(--r-bar);
+    background: var(--wash); display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    cursor: ew-resize; touch-action: pan-y; transition: background var(--t-color);
+  }
+  .bar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--v, 50%); background: var(--fill); pointer-events: none; }
+  .bar:hover { background: rgba(var(--ink-rgb), .08); }
+  .bar:hover::before { background: rgba(var(--ink-rgb), .15); }
+  .bar span { position: relative; pointer-events: none; white-space: nowrap; }
+  .bar .bl { font-size: 13.5px; font-weight: 500; line-height: 1; color: var(--ink-2); }
+  .bar .bv { font-size: 12.5px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .bar input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+  .bar:has(input:focus-visible) { box-shadow: inset 0 0 0 2px rgba(var(--ink-rgb), .45); }
+  .side-foot { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .act {
+    height: 40px; padding: 0 16px; border-radius: var(--r-pill); display: flex; align-items: center; justify-content: center; gap: 7px;
+    font: 500 13px/1 var(--font-ui); letter-spacing: -.01em; cursor: pointer; white-space: nowrap;
+    transition: opacity 160ms, background 180ms, color 180ms, border-color 180ms, scale var(--t-press) var(--spring-soft);
+  }
+  .act.solid { border: 0; background: var(--ink); color: var(--on-ink); }
+  .act.solid:hover { opacity: .88; }
+  .act.solid:active { scale: .985; }
+  .act.line { border: 1px solid var(--line-ctl); background: none; color: var(--ink-2); }
+  .act.line:hover { background: rgba(var(--ink-rgb), .05); border-color: rgba(var(--ink-rgb), .28); color: var(--ink); }
+  .act[data-done] { border-color: color-mix(in srgb, var(--ok) 34%, transparent); background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok); }
+  .act svg.i { width: 15px; height: 15px; }
+
+  /* info panel: floating, elevated */
+  .info { width: var(--side); max-width: 100%; height: 520px; padding: 20px; border-radius: var(--r-card); background: var(--elev); box-shadow: var(--lift); display: flex; flex-direction: column; text-align: left; }
+  .info-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; }
+  .info-bar .tool:first-child { margin-left: -9px; } .info-bar .tool:last-child { margin-right: -9px; }
+  .info-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .info-tags span { height: 34px; padding: 0 13px; border-radius: var(--r-pill); background: rgba(var(--ink-rgb), .05); display: inline-flex; align-items: center; font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .info .side-title { margin-bottom: 14px; }
+  .credit { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; font-size: 13px; font-weight: 500; color: var(--ink); }
+  .credit i { width: 22px; height: 22px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 1px var(--hairline); }
+  .info p { margin: 0 0 12px; font-size: 13px; line-height: 1.62; color: var(--ink-3); }
+  .info time { font-size: 11.5px; color: var(--ink-4); }
+  .info .side-foot { margin-top: auto; }
+
+  /* dropdown menu */
+  .menu { width: 240px; padding: 4px; border-radius: var(--r-menu); background: var(--elev); box-shadow: var(--menu-ring), var(--float); display: flex; flex-direction: column; text-align: left; }
+  .mrow { height: var(--h-row); padding: 0 16px; border: 0; border-radius: var(--r-row); background: none; display: flex; align-items: center; gap: 8px; font: 500 14px/1 var(--font-ui); color: var(--ink-2); cursor: pointer; transition: background 150ms, color 150ms; }
+  .mrow:hover { background: var(--wash); color: var(--ink); }
+  .mrow span { flex: 1; text-align: left; }
+  .mrow svg.i { width: 17px; height: 17px; color: var(--ink-4); }
+  .mrule { height: 1px; margin: 4px 12px; background: var(--hairline); }
+  .mset { height: 45px; padding: 0 4px 0 16px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 500; color: var(--ink-2); }
+  .icon-seg { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--wash); }
+  .icon-seg button { width: 35px; height: 27px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-4); display: grid; place-items: center; cursor: pointer; transition: background 180ms, color 180ms; }
+  .icon-seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
+  .icon-seg svg.i { width: 15px; height: 15px; }
+  .mwho { padding: 10px 16px 12px; display: grid; gap: 2px; font-size: 14px; }
+  .mwho b { font-weight: 500; color: var(--ink); } .mwho span { color: var(--ink-4); }
+
+  /* modal demo */
+  .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 24px; visibility: hidden; transition: visibility 0s linear var(--morph); }
+  .modal[data-on] { visibility: visible; transition-delay: 0s; }
+  .veil { position: absolute; inset: 0; border: 0; background: var(--veil); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); opacity: 0; transition: opacity 260ms; cursor: default; }
+  .modal[data-on] .veil { opacity: 1; }
+  .shell { position: relative; width: min(1000px, 100%); height: min(640px, 100%); display: flex; gap: var(--panel-gap); pointer-events: none; }
+  .shell > * { pointer-events: auto; }
+  .block { flex: 1; min-width: 0; border-radius: var(--r-card); background: var(--bg); background-image: linear-gradient(var(--wash), var(--wash)); position: relative; display: grid; place-items: center; opacity: 0; scale: .96; transition: opacity 200ms, scale var(--morph) var(--morph-ease); }
+  .block .tools { position: absolute; top: 12px; right: 12px; display: flex; gap: 2px; opacity: 0; transition: opacity 180ms; }
+  .block .view-seg { position: absolute; top: 12px; left: 12px; opacity: 0; transition: opacity 180ms; }
+  .modal .side { height: auto; opacity: 0; transform: translateX(12px); transition: opacity 240ms, transform 280ms var(--morph-ease); }
+  .modal[data-on] .block { opacity: 1; scale: 1; }
+  .modal[data-on] .block .tools, .modal[data-on] .block .view-seg { opacity: 1; transition-delay: calc(var(--morph) * .4); }
+  .modal[data-on] .side { opacity: 1; transform: none; transition-delay: 60ms; }
+  .hold { height: 64px; padding: 0 34px; border: 0; border-radius: var(--r-pill); background: var(--elev); color: var(--ink); font: 500 20px/1 var(--font-ui); display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 2px rgba(var(--ink-rgb), .06); cursor: pointer; transition: scale var(--t-press) var(--spring-soft); }
+  .hold:active { scale: .96; }
+  @media (max-width: 760px) and (orientation: portrait) {
+    .modal { padding: 12px; }
+    .shell { flex-direction: column; }
+    .block { flex: 0 0 calc(54% - var(--panel-gap)); }
+    .modal .side { width: 100%; flex: 1; min-height: 0; padding: 14px 16px; }
+    .modal .side-foot { flex-direction: row; } .modal .side-foot .act { flex: 1; min-width: 0; }
+  }
+
   @media (hover: none) {
     .card .foot { opacity: 1; transform: none; }
   }
@@ -356,6 +477,15 @@
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M9 17H7a5 5 0 0 1 0-10h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M7 4h10v16l-5-3.5L7 20z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 16l4-4-4-4M14 12H4"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5h3l5-4v13l-5-4H4zM16 9.5l5 5M21 9.5l-5 5"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3l5-4v13l-5-4H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12 4 7.5M12 12v9"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
 </svg>
@@ -370,6 +500,7 @@
       <a class="nav-link" href="#space">Space</a>
       <a class="nav-link" href="#motion">Motion</a>
       <a class="nav-link" href="#buttons">Buttons</a>
+      <a class="nav-link" href="#panels">Panels</a>
       <a class="nav-link" href="#components">Components</a>
       <a class="nav-link" href="#phone">Phone</a>
       <a class="nav-link" href="#use">Use</a>
@@ -394,7 +525,7 @@
   <section id="principles">
     <div class="sh"><h2 class="t-title">Principles</h2></div>
     <div class="rules">
-      <div class="rule"><b>Two shapes</b><span>Controls are pills (999px). Stages are 28px cards. Nothing in between, except 12px for small inner panels.</span></div>
+      <div class="rule"><b>Two shapes, nested</b><span>Controls are pills. Stages and panels are 28px cards. Anything inside takes the outer radius minus its padding: a 22px menu holds 18px rows; slider rows are 10px.</span></div>
       <div class="rule"><b>Wash, don't outline</b><span>Fills are ink at 6% alpha, so they tint whatever sits behind them. Borders are rare, and a 1px inset ring when used.</span></div>
       <div class="rule"><b>Ink is the accent</b><span>The primary action is a near-black pill. Signal colors belong to content and demos, never to chrome.</span></div>
       <div class="rule"><b>Content shows on hover</b><span>Card names and actions rest hidden and spring up on hover or focus. The demo inside the card is the headline.</span></div>
@@ -447,7 +578,7 @@
       <table>
         <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Note</th></tr></thead>
         <tbody>
-          <tr><td>ink → ink-5</td><td>#17181a · #3c3b37 · #5c5b56 · #6f6e68 · #85847e</td><td>#fff · #b4b4b4 · #9a9a9a · #828282 · #6b6b6b</td><td>Dark greys drop the warm tint</td></tr>
+          <tr><td>ink → ink-5</td><td>#17181a · #3c3b37 · #5c5b56 · #6f6e68 · #85847e</td><td>#fff · #b4b4b4 · #9a9a9a · #8f8f8f · #6b6b6b</td><td>Dark greys drop the warm tint</td></tr>
           <tr><td>bg / surface ladder</td><td>#fff · #f7f7f6 · #f1f1f0 · #ecebe7</td><td>#000 · #0f0f0f · #181818 · #202020</td><td>True black page</td></tr>
           <tr><td>wash</td><td>ink / 6%</td><td>white / 9%</td><td>Slightly stronger to read on black</td></tr>
           <tr><td>glass-a</td><td>.35</td><td>.16</td><td></td></tr>
@@ -557,6 +688,89 @@
     </table></div>
   </section>
 
+  <!-- ===== Panels ===== -->
+  <section id="panels">
+    <div class="sh"><h2 class="t-title">Panels</h2><p class="t-lead">Three surfaces sit above the page. A settings panel shares the stage's wash and sits beside it. An info panel and a menu are elevated: an <code>elev</code> fill with a soft lift shadow. Radii nest, so an inner shape is always the outer radius minus its padding.</p></div>
+    <div class="row" style="margin-bottom:24px"><button class="btn" id="open-modal">Open the detail view</button><span class="t-small">Stage and settings panel together, with the open motion.</span></div>
+    <div class="panels">
+      <figure>
+        <div class="pan-stage">
+          <aside class="side on-surface" aria-label="Settings panel example">
+            <div class="side-head">
+              <h4 class="side-title">Voice memo</h4>
+              <button class="tool" aria-label="Close"><svg class="i" style="rotate:45deg"><use href="#i-plus"/></svg></button>
+              <p class="side-say">Press and hold to record, slide left to discard, let go to play it back.</p>
+            </div>
+            <div class="ctls">
+              <div class="ctl"><span class="ctl-label">Fill</span><div class="mini-seg" data-single><button aria-pressed="true">Light</button><button aria-pressed="false">Dark</button></div></div>
+              <div class="ctl"><span class="ctl-label">Haptics</span><button class="switch" role="switch" aria-checked="true" aria-label="Haptics"><i></i></button></div>
+              <div class="ctl bar-ctl"><label class="bar" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
+              <div class="ctl bar-ctl"><label class="bar" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
+              <div class="ctl bar-ctl"><label class="bar" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
+            </div>
+            <div class="side-foot">
+              <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
+              <button class="act solid">Add to collection</button>
+            </div>
+          </aside>
+        </div>
+        <figcaption>Settings: 300 wide, 18 padding, wash fill. Slider rows are the slider.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="pan-stage">
+          <aside class="info" aria-label="Info panel example">
+            <div class="info-bar"><button class="tool" aria-label="Save" aria-pressed="false" data-toggle><svg class="i"><use href="#i-mark"/></svg></button><button class="tool" aria-label="Close"><svg class="i" style="rotate:45deg"><use href="#i-plus"/></svg></button></div>
+            <div class="info-tags"><span>Reveal</span><span>Morph</span></div>
+            <h4 class="side-title">Shape loader</h4>
+            <div class="credit"><i></i>Studio Fjäll</div>
+            <p>A soft shape holds the centre while the page loads, then opens into the window the site is seen through.</p>
+            <time>3 days ago</time>
+            <div class="side-foot">
+              <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
+              <button class="act solid">See original <svg class="i"><use href="#i-arrow"/></svg></button>
+            </div>
+          </aside>
+        </div>
+        <figcaption>Info: floats 16px from the screen edge, lift shadow, slides in 235ms after a 150ms wait.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="pan-stage" style="align-items:start">
+          <div class="menu" role="menu" aria-label="Account menu example">
+            <button class="mrow" role="menuitem"><span>Upgrade</span><svg class="i"><use href="#i-arrow"/></svg></button>
+            <button class="mrow" role="menuitem"><span>Saved</span><svg class="i"><use href="#i-mark"/></svg></button>
+            <button class="mrow" role="menuitem"><span>Contact</span><svg class="i"><use href="#i-mail"/></svg></button>
+            <button class="mrow" role="menuitem"><span>Sign out</span><svg class="i"><use href="#i-out"/></svg></button>
+            <div class="mrule"></div>
+            <div class="mset">Theme<div class="icon-seg" data-single><button aria-pressed="true" aria-label="Light"><svg class="i"><use href="#i-sun"/></svg></button><button aria-pressed="false" aria-label="Dark"><svg class="i"><use href="#i-moon"/></svg></button></div></div>
+            <div class="mset">Sound<div class="icon-seg" data-single><button aria-pressed="false" aria-label="Mute"><svg class="i"><use href="#i-mute"/></svg></button><button aria-pressed="true" aria-label="Sound on"><svg class="i"><use href="#i-sound"/></svg></button></div></div>
+            <div class="mrule"></div>
+            <div class="mwho"><b>Alex Moreno</b><span>alex@example.com</span></div>
+          </div>
+        </div>
+        <figcaption>Menu: 240 wide, 22 radius, 4 padding, so rows get 18. Opens 8px under its trigger.</figcaption>
+      </figure>
+    </div>
+
+    <div class="tbl" style="margin-top:28px"><table>
+      <thead><tr><th>Part</th><th>Spec</th></tr></thead>
+      <tbody>
+        <tr><td>Panel head</td><td>Title 17/500/−2% ink; description 13/1.45 ink-4 below it, full width; close is a 36px tool, nudged −6px into the corner.</td></tr>
+        <tr><td>Control row</td><td>44px line + 6px above and below; label 13.5 ink-2 left, control right. Groups sit 18px apart.</td></tr>
+        <tr><td>Mini segmented</td><td>2px padding in a wash pill; 32px items at 12.5/500; selected is an <code>elev</code> pill with ink text.</td></tr>
+        <tr><td>Switch</td><td>50×30, 24px knob 3px in. Off is ink 16%; on is solid ink with the knob in <code>on-ink</code>, moving 20px over 320ms.</td></tr>
+        <tr><td>Slider row</td><td>44px wash bar, 10px radius; fill is ink 12% from the left; label left, tabular value right; ew-resize cursor; drag anywhere on the row.</td></tr>
+        <tr><td>Footer</td><td>Pinned to the bottom, 8px apart: outline action (1px ink 16%) above a solid one. Both 40px pills, 13/500. A finished action turns <code>ok</code>-tinted.</td></tr>
+        <tr><td>Tool button</td><td>36px; a wash circle grows in from .86 on hover; the icon goes to 1.04 on hover and .96 on press over 90ms.</td></tr>
+        <tr><td>Menu row</td><td>44px, 18 radius, 14/500 ink-2, trailing 17px icon in ink-4; hover is the wash with ink text. Toggles inside use solid ink for the selected item.</td></tr>
+        <tr><td>Scroll edges</td><td>When controls overflow, the list fades 30px at the edge that has more.</td></tr>
+        <tr><td>Open motion</td><td>Veil fades in over 260ms (bg 78%, blur 12, saturate 1.3). The stage grows out of its card over 380ms; its tools appear at 40% of that; the panel follows 60ms later, sliding 12px.</td></tr>
+        <tr><td>On a phone</td><td>Stage on top at 54%, panel below at 46% as a sheet; footer actions sit side by side; swipe down to close.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
   <!-- ===== Components ===== -->
   <section id="components">
     <div class="sh"><h2 class="t-title">Components</h2><p class="t-lead">Every control is live. Hover, press and tab through them.</p></div>
@@ -603,6 +817,35 @@
         </div></div>
     </div>
   </section>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <button class="veil" id="veil" aria-label="Close" tabindex="-1"></button>
+    <div class="shell" role="dialog" aria-modal="true" aria-label="Voice memo">
+      <div class="block">
+        <div class="seg view-seg" data-single><button aria-pressed="true" aria-label="Preview" style="padding:0 12px"><svg class="i"><use href="#i-cube"/></svg></button><button aria-pressed="false" aria-label="Code" style="padding:0 12px"><svg class="i"><use href="#i-code"/></svg></button></div>
+        <div class="tools"><button class="tool" aria-label="Save" aria-pressed="false" data-toggle><svg class="i"><use href="#i-mark"/></svg></button><button class="tool" aria-label="Sound" aria-pressed="true" data-toggle><svg class="i"><use href="#i-sound"/></svg></button></div>
+        <button class="hold"><svg class="i" style="width:22px;height:22px"><use href="#i-mic"/></svg>Hold to record</button>
+      </div>
+      <aside class="side">
+        <div class="side-head">
+          <h4 class="side-title">Voice memo</h4>
+          <button class="tool" id="close-modal" aria-label="Close"><svg class="i" style="rotate:45deg"><use href="#i-plus"/></svg></button>
+          <p class="side-say">Press and hold to record, slide left to discard, let go to play it back.</p>
+        </div>
+        <div class="ctls">
+          <div class="ctl"><span class="ctl-label">Fill</span><div class="mini-seg" data-single><button aria-pressed="true">Light</button><button aria-pressed="false">Dark</button></div></div>
+          <div class="ctl"><span class="ctl-label">Stroke</span><div class="mini-seg" data-single><button aria-pressed="true">Off</button><button aria-pressed="false">On</button></div></div>
+          <div class="ctl bar-ctl"><label class="bar" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
+          <div class="ctl bar-ctl"><label class="bar" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
+          <div class="ctl bar-ctl"><label class="bar" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
+        </div>
+        <div class="side-foot">
+          <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
+          <button class="act solid">Add to collection</button>
+        </div>
+      </aside>
+    </div>
+  </div>
 
   <!-- ===== Phone ===== -->
   <section id="phone">
@@ -714,6 +957,44 @@
     item.toggleAttribute("data-open", !open);
     b.setAttribute("aria-expanded", !open);
   });
+
+  // panels: single-select groups, switches, toggles, slider rows, share, modal
+  document.querySelectorAll("[data-single]").forEach(function (g) {
+    g.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      g.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    });
+  });
+  document.querySelectorAll(".switch").forEach(function (s) {
+    s.addEventListener("click", function () { s.setAttribute("aria-checked", s.getAttribute("aria-checked") !== "true"); });
+  });
+  document.querySelectorAll("[data-toggle]").forEach(function (t) {
+    t.addEventListener("click", function () { t.setAttribute("aria-pressed", t.getAttribute("aria-pressed") !== "true"); });
+  });
+  document.querySelectorAll(".bar input").forEach(function (inp) {
+    var bar = inp.parentElement, out = bar.querySelector(".bv"), unit = bar.dataset.unit || "";
+    inp.addEventListener("input", function () {
+      bar.style.setProperty("--v", (inp.value - inp.min) / (inp.max - inp.min) * 100 + "%");
+      out.textContent = inp.value + unit;
+    });
+  });
+  document.querySelectorAll("[data-share]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var label = b.querySelector("span");
+      b.setAttribute("data-done", ""); label.textContent = "Link copied";
+      setTimeout(function () { b.removeAttribute("data-done"); label.textContent = "Share"; }, 1600);
+    });
+  });
+  var modal = document.getElementById("modal"), opener = document.getElementById("open-modal");
+  function setModal(on) {
+    modal.toggleAttribute("data-on", on);
+    modal.setAttribute("aria-hidden", !on);
+    (on ? document.getElementById("close-modal") : opener).focus();
+  }
+  opener.addEventListener("click", function () { setModal(true); });
+  document.getElementById("close-modal").addEventListener("click", function () { setModal(false); });
+  document.getElementById("veil").addEventListener("click", function () { setModal(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal.hasAttribute("data-on")) setModal(false); });
 
   // phone demo
   var pbar = document.getElementById("pbar"), sheet = document.getElementById("psheet");
