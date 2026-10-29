@@ -412,31 +412,6 @@
   .mwho { padding: 10px 16px 12px; display: grid; gap: 2px; font-size: 14px; }
   .mwho b { font-weight: 500; color: var(--ink); } .mwho span { color: var(--ink-4); }
 
-  /* modal demo */
-  .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 24px; visibility: hidden; transition: visibility 0s linear var(--morph); }
-  .modal[data-on] { visibility: visible; transition-delay: 0s; }
-  .veil { position: absolute; inset: 0; border: 0; background: var(--veil); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); opacity: 0; transition: opacity 260ms; cursor: default; }
-  .modal[data-on] .veil { opacity: 1; }
-  .shell { position: relative; width: min(1000px, 100%); height: min(640px, 100%); display: flex; gap: var(--panel-gap); pointer-events: none; }
-  .shell > * { pointer-events: auto; }
-  .block { flex: 1; min-width: 0; border-radius: var(--r-card); background: var(--bg); background-image: linear-gradient(var(--wash), var(--wash)); position: relative; display: grid; place-items: center; opacity: 0; scale: .96; transition: opacity 200ms, scale var(--morph) var(--morph-ease); }
-  .block .tools { position: absolute; top: 12px; right: 12px; display: flex; gap: 2px; opacity: 0; transition: opacity 180ms; }
-  .block .view-seg { position: absolute; top: 12px; left: 12px; opacity: 0; transition: opacity 180ms; }
-  .modal .side { height: auto; opacity: 0; transform: translateX(12px); transition: opacity 240ms, transform 280ms var(--morph-ease); }
-  .modal .block, .modal .side { box-shadow: var(--lift); }
-  .modal[data-on] .block { opacity: 1; scale: 1; }
-  .modal[data-on] .block .tools, .modal[data-on] .block .view-seg { opacity: 1; transition-delay: calc(var(--morph) * .4); }
-  .modal[data-on] .side { opacity: 1; transform: none; transition-delay: 60ms; }
-  .hold { height: 64px; padding: 0 34px; border: 0; border-radius: var(--r-pill); background: var(--thumb); color: var(--ink); font: 500 20px/1 var(--font-ui); display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-1); cursor: pointer; transition: scale var(--t-press) var(--spring-soft); }
-  .hold:active { scale: .96; }
-  @media (max-width: 760px) and (orientation: portrait) {
-    .modal { padding: 12px; }
-    .shell { flex-direction: column; }
-    .block { flex: 0 0 calc(44% - var(--panel-gap)); }
-    .modal .side { width: 100%; flex: 1; min-height: 0; padding: 14px 16px; }
-    .modal .side-foot { flex-direction: row; } .modal .side-foot .act { flex: 1; min-width: 0; }
-  }
-
   .seg { display: inline-flex; padding: var(--s-1); gap: var(--s-1); border-radius: var(--r-pill); background: var(--wash); }
   .seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--ink-4); font: 500 13px/1 var(--font-ui); cursor: pointer; transition: background var(--t-color), color var(--t-color); }
   .seg button[aria-pressed="true"] { background: var(--thumb); color: var(--ink); box-shadow: var(--shadow-1); }
@@ -1098,7 +1073,7 @@
   <!-- ===== Panels ===== -->
   <section id="panels">
     <div class="sh"><h2 class="t-title">Panels</h2><p class="t-lead">Three surfaces sit above the page. A settings panel shares the stage's wash and sits beside it. An info panel and a menu are elevated: an <code>elev</code> fill with a soft lift shadow. Radii nest, so an inner shape is always the outer radius minus its padding.</p></div>
-    <div class="row" style="margin-bottom:24px"><button class="btn" id="open-modal">Open the detail view</button><span class="t-small">Stage and settings panel together, with the open motion.</span></div>
+    <div class="row" style="margin-bottom:24px"><a class="btn quiet" href="#modal-open">How a panel opens</a><span class="t-small">A card opens into its stage and settings panel: the Modal pattern.</span></div>
     <div class="panels">
       <figure>
         <div class="pan-stage">
@@ -1172,8 +1147,8 @@
         <tr><td>Tool button</td><td>36px; a wash circle grows in from .86 on hover; the icon goes to 1.04 on hover and .96 on press over 90ms.</td></tr>
         <tr><td>Menu row</td><td>44px, 18 radius, 14/500 ink-2, trailing 17px icon in ink-4; hover is the wash with ink text. Toggles inside use solid ink for the selected item.</td></tr>
         <tr><td>Scroll edges</td><td>When controls overflow, the list fades 30px at the edge that has more.</td></tr>
-        <tr><td>Open motion</td><td>Veil fades in over 260ms (bg 78%, blur 12, saturate 1.3). The stage grows out of its card over 380ms; its tools appear at 40% of that; the panel follows 60ms later, sliding 12px.</td></tr>
-        <tr><td>On a phone</td><td>Stage on top at 44%, panel below at 56% as a sheet so three or four controls show without scrolling; footer actions sit side by side; swipe down to close.</td></tr>
+        <tr><td>Open motion</td><td>One way only: the <a href="#modal-open">Modal</a> pattern. The card's stage morphs into the panel's stage over 380ms under the veil, and the panel slides 12px in at 40% of that.</td></tr>
+        <tr><td>On a phone</td><td>Stage on top at full width, panel below it; footer actions sit side by side.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -1421,35 +1396,6 @@ morph(function () { art.style.viewTransitionName = ""; stage.style.viewTransitio
     </table></div>
   </section>
 
-  <div class="modal" id="modal" aria-hidden="true">
-    <button class="veil" id="veil" aria-label="Close" tabindex="-1"></button>
-    <div class="shell" role="dialog" aria-modal="true" aria-label="Voice memo">
-      <div class="block">
-        <div class="seg view-seg" data-single><button aria-pressed="true" aria-label="Preview" style="padding:0 12px"><svg class="i"><use href="#i-cube"/></svg></button><button aria-pressed="false" aria-label="Code" style="padding:0 12px"><svg class="i"><use href="#i-code"/></svg></button></div>
-        <div class="tools"><button class="tool" aria-label="Save" aria-pressed="false" data-toggle><svg class="i"><use href="#i-mark"/></svg></button><button class="tool" aria-label="Sound" aria-pressed="true" data-toggle><svg class="i"><use href="#i-sound"/></svg></button></div>
-        <button class="hold"><svg class="i" style="width:22px;height:22px"><use href="#i-mic"/></svg>Hold to record</button>
-      </div>
-      <aside class="side">
-        <div class="side-head">
-          <h4 class="side-title">Voice memo</h4>
-          <button class="tool" id="close-modal" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
-          <p class="side-say">Press and hold to record, slide left to discard, let go to play it back.</p>
-        </div>
-        <div class="ctls">
-          <div class="ctl"><span class="ctl-label">Fill</span><div class="mini-seg" data-single><button aria-pressed="true">Light</button><button aria-pressed="false">Dark</button></div></div>
-          <div class="ctl"><span class="ctl-label">Stroke</span><div class="mini-seg" data-single><button aria-pressed="true">Off</button><button aria-pressed="false">On</button></div></div>
-          <div class="ctl slide-ctl"><label class="slide" style="--v:60%"><span class="bl">Sensitivity</span><span class="bv">60</span><input type="range" min="0" max="100" value="60" aria-label="Sensitivity"></label></div>
-          <div class="ctl slide-ctl"><label class="slide" style="--v:40%"><span class="bl">Bounce</span><span class="bv">40</span><input type="range" min="0" max="100" value="40" aria-label="Bounce"></label></div>
-          <div class="ctl slide-ctl"><label class="slide" style="--v:58%" data-unit="px"><span class="bl">Corner</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Corner"></label></div>
-        </div>
-        <div class="side-foot">
-          <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
-          <button class="act solid">Add to collection</button>
-        </div>
-      </aside>
-    </div>
-  </div>
-
   <!-- ===== Phone ===== -->
   <section id="phone">
     <div class="sh"><h2 class="t-title">Phone patterns</h2><p class="t-lead">Below 760 the bar becomes a three-part grid and the nav moves into a full-screen menu. Scroll inside the phone to see the bar compact, and open the menu.</p></div>
@@ -1693,7 +1639,7 @@ toggle.onclick = function () {
     b.setAttribute("aria-expanded", !open);
   });
 
-  // panels: single-select groups, switches, toggles, slider rows, share, modal
+  // panels: single-select groups, switches, toggles, slider rows, share
   document.querySelectorAll("[data-single]").forEach(function (g) {
     g.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b) return;
@@ -1720,16 +1666,6 @@ toggle.onclick = function () {
       setTimeout(function () { b.removeAttribute("data-done"); label.textContent = "Share"; }, 1600);
     });
   });
-  var modal = document.getElementById("modal"), opener = document.getElementById("open-modal");
-  function setModal(on) {
-    modal.toggleAttribute("data-on", on);
-    modal.setAttribute("aria-hidden", !on);
-    (on ? document.getElementById("close-modal") : opener).focus();
-  }
-  opener.addEventListener("click", function () { setModal(true); });
-  document.getElementById("close-modal").addEventListener("click", function () { setModal(false); });
-  document.getElementById("veil").addEventListener("click", function () { setModal(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal.hasAttribute("data-on")) setModal(false); });
 
   // phone demo
   var pbar = document.getElementById("pbar"), sheet = document.getElementById("psheet");
