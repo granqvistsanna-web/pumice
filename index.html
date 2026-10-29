@@ -121,6 +121,14 @@
   .ico-sizes span { font-size: 13px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
   .ico-sizes small { font-size: 12.5px; color: var(--ink-4); }
   .ico-ctx { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
+  @media (max-width: 560px) {
+    /* five across keeps thirty icons to six full rows instead of ten */
+    .ico-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+    .ico { aspect-ratio: 1; border-radius: var(--r-inner); gap: 6px; }
+    .ico span { font-size: 10px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-inline: 2px; }
+    .ico-sizes div { grid-template-columns: 28px minmax(0, 1fr); row-gap: 2px; }
+    .ico-sizes small { grid-column: 2; }
+  }
   .ico-ctx .tag.glass { gap: 4px; }
 
   /* ---- Space / radius ---- */
