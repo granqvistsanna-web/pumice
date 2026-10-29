@@ -87,7 +87,8 @@
   --s-13: 64px; --s-14: 72px; --s-15: 96px;
 
   /* layout — the bar and galleries run full width inside --gutter; tool pages cap at --w-tool,
-     docs at --w-wide, running text at --w-read */
+     docs at --w-wide, running text at --w-read. Caps are content widths: max-width is the cap
+     plus 2 × gutter, so the gutter sits outside it */
   --gutter: clamp(16px, 1.25vw, 24px);
   --w-tool: 1120px; --w-wide: 1280px; --w-read: 760px;
   --h-topbar: 64px;
@@ -113,6 +114,10 @@
   --t-rise: 620ms;     /* hero entrance */
   --t-theme: 560ms;    /* theme switch: circle wipe from the toggle */
   --stagger: 70ms;     /* per card in a grid entrance, cap at 9 */
+
+  /* depth — one perspective for every 3D scene, small angles only; 3D is for one object on a stage, never chrome */
+  --depth: 900px;
+  --tilt: 10deg;       /* most a card leans under the pointer */
 
   /* press scales */
   --press: .96;        /* primary button */
@@ -200,5 +205,5 @@
 @media (max-width: 760px) { :root { --fs-display: 32px; } }
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --t-theme: 0ms; --t-move: 0ms; --t-press: 0ms; --t-open: 0ms; --t-bar: 0ms; --t-rise: 0ms; --stagger: 0ms; --morph: 1ms; }
+  :root { --t-theme: 0ms; --t-move: 0ms; --t-press: 0ms; --t-open: 0ms; --t-bar: 0ms; --t-rise: 0ms; --stagger: 0ms; --morph: 1ms; --tilt: 0deg; }
 }

@@ -596,6 +596,190 @@
   @media (prefers-reduced-motion: reduce) {
     .curve .dot { transition: none !important; }
   }
+
+  /* ---- Blueprint: a faint 24px grid for stages that show measures ---- */
+  .blueprint {
+    background-color: var(--surface);
+    background-image: linear-gradient(var(--hairline) 1px, transparent 1px), linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+    background-size: 24px 24px; background-position: center;
+  }
+
+  /* ---- Width: bands drawn to scale on a 1440 screen, guides at each cap ---- */
+  .widths { display: grid; gap: var(--s-7); padding-block: var(--s-10); }
+  .wb {
+    position: relative; width: var(--w); margin-inline: auto; height: 52px; padding: 0 var(--s-7); border-radius: var(--r-inner);
+    background: var(--bg); box-shadow: var(--shadow-1); display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+    font-size: 12.5px; color: var(--ink-4); font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .wb b { font-weight: 500; color: var(--ink); }
+  .wb::before, .wb::after { content: ""; position: absolute; top: -10px; bottom: -10px; border-left: 1px dashed var(--guide); }
+  .wb::before { left: 0; } .wb::after { right: 0; }
+  .wb.full { width: auto; margin-inline: var(--s-6); background: var(--wash); box-shadow: none; }
+  @media (max-width: 560px) { .wb { padding: 0 var(--s-5); } .wb span { display: none; } }
+
+  /* ---- Depth: 3D scenes on a stage. One perspective (--depth), small angles (--tilt) ---- */
+  .depths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--s-9); align-items: start; }
+  .depths figure { margin: 0; display: grid; gap: var(--s-6); }
+  .depths figcaption { font-size: 13px; color: var(--ink-4); max-width: 40ch; }
+  .depths figcaption b { color: var(--ink); font-weight: 500; }
+  .scene { height: 340px; border-radius: var(--r-card); display: grid; place-items: center; perspective: var(--depth); overflow: hidden; touch-action: pan-y; }
+
+  /* Tilt card: sinks under the pointer by up to --tilt; layers sit forward so they slide against each other */
+  .tilt {
+    --px: 0; --py: 0; position: relative; width: 196px; aspect-ratio: 4 / 5; border-radius: 22px;
+    background: var(--paper); box-shadow: var(--lift); transform-style: preserve-3d;
+    transform: rotateX(calc(var(--py) * var(--tilt) * -1)) rotateY(calc(var(--px) * var(--tilt)));
+    transition: transform 700ms var(--spring-soft);
+  }
+  .tilt.on { transition: transform 120ms linear; }
+  .tilt > * { position: absolute; }
+  .tilt .sun { width: 44%; aspect-ratio: 1; top: 14%; right: 14%; border-radius: 50%; background: var(--ember); transform: translateZ(36px); }
+  .tilt .hill { left: 0; right: 0; bottom: 0; height: 44%; border-radius: 60% 60% 22px 22px / 46% 46% 22px 22px; background: var(--solid); transform: translateZ(18px); }
+  .tilt .tag { left: 14px; bottom: 14px; transform: translateZ(56px); }
+  .tilt::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; transform: translateZ(1px);
+    background: radial-gradient(circle at calc(50% + var(--px) * 50%) calc(50% + var(--py) * 50%), var(--pane), transparent 62%);
+    opacity: 0; transition: opacity var(--t-fade);
+  }
+  .tilt.on::after { opacity: 1; }
+
+  /* Card swap: a stack in depth; press it and the front card drops out and goes to the back */
+  .swap { position: relative; width: 160px; aspect-ratio: 4 / 5; padding: 0; border: 0; background: none; cursor: pointer; transform-style: preserve-3d; transform: translateX(-42px) rotateY(-26deg) rotateX(8deg); }
+  .swap > span {
+    position: absolute; inset: 0; border-radius: 20px; box-shadow: var(--shadow-1), inset 0 0 0 1px var(--hairline);
+    transform: translate3d(calc(var(--i) * 28px), calc(var(--i) * -10px), calc(var(--i) * -56px));
+    transition: transform 560ms var(--spring-soft);
+  }
+  .swap > span .tag { position: absolute; left: 10px; bottom: 10px; }
+  .swap > span.out { animation: swap-out 680ms var(--settle); transition: none; }
+  @keyframes swap-out { 0% { transform: none; } 42% { transform: translate3d(-12px, 118%, 24px) rotateZ(-5deg); } }
+  .swap:focus-visible { outline-offset: 6px; border-radius: 20px; }
+
+  /* Lift tile: one object turned three-quarters on the floor; hover lifts it off its shadow and runs a scan across it */
+  .lt { position: relative; display: grid; place-items: center; perspective: var(--depth); }
+  .lt::before, .lt::after { content: ""; position: absolute; pointer-events: none; opacity: .45; transition: opacity var(--t-fade); }
+  .lt::before { left: var(--s-7); right: var(--s-7); top: 50%; border-top: 1px dashed var(--guide); }
+  .lt::after { top: var(--s-7); bottom: var(--s-7); left: 50%; border-left: 1px dashed var(--guide); }
+  .lt .plane { position: relative; width: var(--lt-w, 88px); height: var(--lt-h, 88px); transform-style: preserve-3d; transform: rotateX(24deg) rotateY(-30deg); }
+  .lt .obj { position: absolute; inset: 0; border-radius: var(--lt-r, 24px); overflow: hidden; background: var(--ink); box-shadow: 7px 7px 0 var(--ink-3); transition: transform 520ms var(--spring); }
+  .lt .shade {
+    position: absolute; left: 50%; top: calc(50% + var(--lt-h, 88px) / 2 + 10px); width: calc(var(--lt-w, 88px) * 1.1); height: 14px; translate: -50% 0;
+    border-radius: 50%; background: rgba(var(--ink-rgb), .22); filter: blur(4px);
+    transition: filter var(--t-open) var(--settle), opacity var(--t-open) var(--settle), scale var(--t-open) var(--settle);
+  }
+  .lt .obj::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 30%, var(--pane), transparent 70%); translate: -100% 0; }
+  .lt .mz { position: absolute; top: calc(50% + var(--lt-h, 88px) / 2 - 6px); left: calc(50% + var(--lt-w, 88px) / 2 + 14px); font: 500 11px/1 var(--font-ui); color: var(--guide); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity var(--t-fade); }
+  :is(.lt, .rel):is(:hover, :focus-visible) .obj { transform: translate3d(0, -16px, 28px); }
+  :is(.lt, .rel):is(:hover, :focus-visible) .obj::after { animation: scan 900ms var(--settle) 120ms; }
+  :is(.lt, .rel):is(:hover, :focus-visible) .shade { filter: blur(10px); opacity: .55; scale: .88; }
+  :is(.lt, .rel):is(:hover, :focus-visible) .mz, .lt:hover::before, .lt:hover::after, .rel:is(:hover, :focus-visible) .lt::before, .rel:is(:hover, :focus-visible) .lt::after { opacity: 1; }
+  @keyframes scan { to { translate: 100% 0; } }
+
+  /* Rolling counter: each digit is a 0–9 column that rolls to its place on a spring */
+  .roll { display: inline-flex; align-items: center; gap: var(--s-6); }
+  .roll output { display: inline-flex; font: 500 30px/1 var(--font-ui); letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .roll .dg { height: 1em; overflow: hidden; }
+  .roll .dg > span { display: flex; flex-direction: column; translate: 0 calc(var(--n) * -1em); transition: translate 560ms var(--spring); }
+  .roll .dg.lead { color: var(--ink-5); }
+  .roll .cur { color: var(--ink-4); font-size: 20px; align-self: flex-start; margin-right: 2px; }
+
+  /* Slide to confirm: drag the knob to the end; let go early and it springs home */
+  .confirm { --v: 0; --k: 44px; position: relative; width: 280px; max-width: 100%; height: 52px; border-radius: var(--r-pill); background: var(--wash); display: grid; place-items: center; user-select: none; -webkit-user-select: none; transition: background var(--t-color); }
+  .confirm::before { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--k) + 8px + var(--v) * (100% - var(--k) - 8px)); border-radius: inherit; background: var(--fill); }
+  .confirm .say { position: relative; font: 500 14px/1 var(--font-ui); color: var(--ink-3); opacity: calc(1 - var(--v) * 1.8); pointer-events: none; }
+  .confirm button {
+    position: absolute; top: 4px; left: calc(4px + var(--v) * (100% - var(--k) - 8px)); width: var(--k); height: var(--k); border: 0; border-radius: 50%;
+    background: var(--ink); color: var(--on-ink); box-shadow: var(--shadow-1); display: grid; place-items: center; cursor: grab; touch-action: none;
+  }
+  .confirm:not(.drag) button, .confirm:not(.drag)::before { transition: left 560ms var(--spring), width 560ms var(--spring), background var(--t-color); }
+  .confirm.drag button { cursor: grabbing; }
+  .confirm[data-done] { background: color-mix(in srgb, var(--ok) 14%, transparent); }
+  .confirm[data-done]::before { background: none; }
+  .confirm[data-done] button { background: var(--ok); }
+  .confirm[data-done] .say { opacity: 1; color: var(--ok); }
+
+  /* ---- Detail page: header and meta at --w-read, media at --w-tool, body at --w-read with a contents rail ---- */
+  .dp { border-radius: var(--r-card); background: var(--bg); box-shadow: var(--ring); overflow: clip; }
+  .dp-bar { height: 56px; padding: 0 var(--s-6); display: flex; align-items: center; gap: var(--s-2); border-bottom: 1px solid var(--hairline); }
+  .dp-bar .nav-link { gap: var(--s-2); padding-left: 8px; }
+  .dp-bar .crumb { font-size: 13px; color: var(--ink-4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dp-bar .spacer { flex: 1; }
+  .dp-in { max-width: calc(var(--w-tool) + 2 * var(--gutter)); margin-inline: auto; padding: var(--s-12) var(--gutter) var(--s-13); display: grid; gap: var(--s-11); }
+  .dp-head { display: grid; gap: var(--s-7); justify-items: start; }
+  .dp-head > :not(.dp-meta) { max-width: var(--w-read); }
+  .dp-head > * { margin: 0; }
+  .dp-head .info-tags { margin: 0; }
+  .dp-meta { margin: var(--s-4) 0 0; width: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--hairline); }
+  .dp-meta div { padding: var(--s-6) var(--s-6) var(--s-6) 0; display: grid; gap: 2px; }
+  .dp-meta div + div { padding-left: var(--s-6); border-left: 1px solid var(--hairline); }
+  .dp-meta dt { font-size: 12px; color: var(--ink-4); }
+  .dp-meta dd { margin: 0; font: 500 14px/1.4 var(--font-ui); color: var(--ink); font-variant-numeric: tabular-nums; }
+  .dp-media { position: relative; height: clamp(320px, 40vw, 480px); }
+  .dp-media .seg { position: absolute; top: 12px; left: 12px; }
+  .dp-media .tools { position: absolute; top: 12px; right: 12px; display: flex; gap: 2px; }
+  .dp-media .sz { position: absolute; left: 50%; bottom: 16px; translate: -50% 0; font: 500 11px/1 var(--font-ui); color: var(--guide); font-variant-numeric: tabular-nums; }
+  .dp-cols { display: grid; grid-template-columns: minmax(0, var(--w-read)) 200px; justify-content: space-between; gap: var(--s-11); }
+  .dp-body > :first-child { margin-top: 0; }
+  .dp-body h4 { margin: var(--s-11) 0 var(--s-6); scroll-margin-top: 80px; }
+  .dp-body p, .dp-body ol { margin: 0 0 var(--s-7); }
+  .dp-body ol { padding-left: 1.2em; display: grid; gap: var(--s-3); }
+  .dp-body li::marker { color: var(--ink-4); font-variant-numeric: tabular-nums; }
+  .dp-body pre { margin-bottom: var(--s-7); }
+  .dp-toc { position: sticky; top: calc(var(--h-topbar) + var(--s-7)); align-self: start; display: grid; gap: var(--s-1); }
+  .dp-toc b { font-size: 12px; font-weight: 500; color: var(--ink-4); padding: 0 0 var(--s-4) 13px; }
+  .dp-toc .nav-link { height: 32px; font-size: 13.5px; }
+  .dp-rel { display: grid; gap: var(--s-7); }
+  .dp-rel h4 { margin: 0; }
+  .rels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--s-4); }
+  .rel { display: grid; gap: var(--s-6); text-decoration: none; border-radius: var(--r-card); }
+  .rel .lt { height: 200px; border-radius: var(--r-card); background: var(--wash); transition: background var(--t-color); }
+  .rel:hover .lt { background: var(--wash-2); }
+  .rel div:last-child { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4); padding-inline: var(--s-2); }
+  .rel b { font: 500 14px/1.4 var(--font-ui); color: var(--ink); }
+  .rel span { font-size: 13px; color: var(--ink-4); }
+  @media (max-width: 900px) { .dp-cols { grid-template-columns: minmax(0, 1fr); } .dp-toc { display: none; } }
+  @media (max-width: 560px) {
+    .dp-in { padding-top: var(--s-10); gap: var(--s-10); }
+    .dp-meta { grid-template-columns: 1fr 1fr; }
+    .dp-meta div:nth-child(3) { padding-left: 0; border-left: 0; }
+    .dp-meta div:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+    .dp-bar .crumb { display: none; }
+    .dp-media .tilt { scale: .78; }
+  }
+
+  /* ---- Modal: a card opens into its detail. Native <dialog>; the card's stage and the modal's stage
+     share one view-transition-name, so the browser morphs one into the other ---- */
+  .mcard { padding: 0; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }
+  .mcard .lt, .morph .lt { height: auto; aspect-ratio: 4 / 3; }   /* same shape at both ends, so the snapshot scales and never stretches */
+  dialog.morph { width: min(920px, 100% - 24px); max-width: none; max-height: calc(100dvh - 24px); padding: 0; border: 0; background: none; color: inherit; overflow: visible; }
+  dialog.morph::backdrop { background: var(--veil); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); }
+  .mshell { display: flex; gap: var(--panel-gap); align-items: flex-start; }
+  .mshell .lt { flex: 1; min-width: 0; border-radius: var(--r-card); background: var(--bg); background-image: linear-gradient(var(--wash), var(--wash)); box-shadow: var(--lift); }
+  .mshell .lt > .tool { position: absolute; top: 12px; right: 12px; }
+  .mshell .plane { scale: 1.5; }   /* the modal stage is about 1.5× the card's, so the object keeps its size on the stage */
+  .mshell .side { height: auto; align-self: stretch; box-shadow: var(--lift); }
+  dialog.morph[open] .side { animation: side-in 280ms var(--morph-ease) calc(var(--morph) * .4) both; }
+  dialog.morph[open].plain { animation: dlg-in var(--morph) var(--morph-ease); }
+  @keyframes side-in { from { opacity: 0; translate: 12px 0; } }
+  @keyframes dlg-in { from { opacity: 0; scale: .96; } }
+  @keyframes vt-out { to { opacity: 0; } }
+  @keyframes vt-in { from { opacity: 0; } }
+  ::view-transition-group(morph) { animation-duration: var(--morph); animation-timing-function: var(--morph-ease); }
+  /* the theme wipe owns the root transition; while a card morphs, the page cross-fades under the veil instead */
+  :root.morphing::view-transition-old(root) { animation: vt-out var(--morph) var(--morph-ease) both; mix-blend-mode: plus-lighter; }
+  :root.morphing::view-transition-new(root) { animation: vt-in var(--morph) var(--morph-ease) both; mix-blend-mode: plus-lighter; }
+  @media (max-width: 760px) {
+    .mshell { flex-direction: column; align-items: stretch; }
+    .mshell .side { width: 100%; padding: 14px 16px; }
+    .mshell .side-foot { flex-direction: row; } .mshell .side-foot .act { flex: 1; min-width: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    dialog.morph[open] .side, dialog.morph[open].plain { animation-name: vt-in; }
+    .swap > span.out, :is(.lt, .rel) .obj::after { animation: none !important; }
+    .swap > span, .lt .obj, .lt .shade, .roll .dg > span, .confirm button, .confirm::before { transition-duration: 0ms !important; }
+    :is(.lt, .rel):is(:hover, :focus-visible) .obj { transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -606,6 +790,8 @@
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-forward" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
@@ -645,10 +831,14 @@
       <a class="nav-link" href="#type">Type</a>
       <a class="nav-link" href="#icons">Icons</a>
       <a class="nav-link" href="#space">Space</a>
+      <a class="nav-link" href="#width">Width</a>
       <a class="nav-link" href="#motion">Motion</a>
       <a class="nav-link" href="#buttons">Buttons</a>
       <a class="nav-link" href="#panels">Panels</a>
+      <a class="nav-link" href="#modal-open">Modal</a>
       <a class="nav-link" href="#components">Components</a>
+      <a class="nav-link" href="#depth">Depth</a>
+      <a class="nav-link" href="#detail">Detail page</a>
       <a class="nav-link" href="#phone">Phone</a>
       <a class="nav-link" href="#use">Use</a>
     </nav>
@@ -968,6 +1158,35 @@
     </div>
   </section>
 
+  <!-- ===== Width ===== -->
+  <section id="width">
+    <div class="sh"><h2 class="t-title">Width</h2><p class="t-lead">One gutter and three caps. Choose by what people do on the page: browse a gallery, use a tool, or read. Drawn to scale on a 1440 screen; the pink guides mark each cap.</p></div>
+    <div class="stage blueprint" style="padding:0 var(--s-6)">
+      <div class="widths">
+        <div class="wb full"><b>full</b><span>bar, galleries · 100% − 2 × gutter</span></div>
+        <div class="wb" style="--w:88.9%"><b>w-wide</b><span>docs · 1280</span></div>
+        <div class="wb" style="--w:77.8%"><b>w-tool</b><span>tool and detail pages · 1120</span></div>
+        <div class="wb" style="--w:52.8%"><b>w-read</b><span>text · 760</span></div>
+      </div>
+    </div>
+    <div class="tbl" style="margin-top:24px"><table>
+      <thead><tr><th>Token</th><th>Value</th><th>Use for</th></tr></thead>
+      <tbody>
+        <tr><td>gutter</td><td>16–24</td><td>Side padding at every width, plus the safe-area inset on phones. Nothing ever touches the screen edge.</td></tr>
+        <tr><td>full</td><td>100% − 2 × gutter</td><td>The top bar, card galleries and filter rows. More columns are better than wider cards.</td></tr>
+        <tr><td>w-wide</td><td>1280</td><td>Reference pages like this one: long docs with tables, swatches and side-by-side stages.</td></tr>
+        <tr><td>w-tool</td><td>1120</td><td>A single tool or a detail page: a stage and its panel, or the header, meta and media of an article.</td></tr>
+        <tr><td>w-read</td><td>760</td><td>Running text, about 75 characters at 15px. Article bodies, detail-page copy and FAQs. Leads stop sooner, at 54–62ch.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="g-2 grid" style="margin-top:16px">
+      <div class="rule"><b>Caps are content widths</b><span>Set max-width to the cap plus two gutters, so the gutter sits outside the cap and the content edge doesn't move as the screen shrinks.</span></div>
+      <div class="rule"><b>Nest, don't stack</b><span>A page takes one cap. Narrower parts go inside it: a <code>w-read</code> body sits within a <code>w-tool</code> page and lines up with its left edge instead of being centred on its own.</span></div>
+    </div>
+<pre style="margin-top:16px">.page  { max-width: calc(var(--w-tool) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+.prose { max-width: var(--w-read); }   /* inside .page, left-aligned */</pre>
+  </section>
+
   <!-- ===== Motion ===== -->
   <section id="motion">
     <div class="sh"><h2 class="t-title">Motion</h2><p class="t-lead">Colors fade fast and flat. Anything that moves uses a spring with a small overshoot. Things that open and close settle without one. Hover a card to compare.</p></div>
@@ -1099,6 +1318,63 @@
     </table></div>
   </section>
 
+  <!-- ===== Modal ===== -->
+  <section id="modal-open">
+    <div class="sh"><h2 class="t-title">Modal</h2><p class="t-lead">A card opens into its detail as one object: the card's stage grows into the modal's stage while the page dims behind the veil. A native <code>&lt;dialog&gt;</code> gives focus, Escape and the top layer; a view transition does the morph. Open one, then close it with ×, Escape or the veil.</p></div>
+    <div class="rels">
+      <button class="rel mcard" type="button"><div class="lt"><span class="shade"></span><div class="plane"><span class="obj"></span></div></div><div><b>Lift tile</b><span>Hover</span></div></button>
+      <button class="rel mcard" type="button"><div class="lt" style="--lt-r:50%"><span class="shade"></span><div class="plane"><span class="obj"></span></div></div><div><b>Press dial</b><span>Press</span></div></button>
+      <button class="rel mcard" type="button"><div class="lt" style="--lt-w:132px;--lt-h:56px;--lt-r:999px"><span class="shade"></span><div class="plane"><span class="obj"></span></div></div><div><b>Pill switch</b><span>Toggle</span></div></button>
+    </div>
+
+    <dialog class="morph" id="morph" aria-labelledby="morph-title">
+      <div class="mshell">
+        <div class="lt"><span class="shade"></span><div class="plane"><span class="obj"></span></div><button class="tool" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+        <aside class="side">
+          <div class="side-head">
+            <h3 class="side-title" id="morph-title">Lift tile</h3>
+            <p class="side-say">Rises off its shadow on hover and runs a scan across its face.</p>
+          </div>
+          <div class="ctls">
+            <div class="ctl"><span class="ctl-label">Fill</span><div class="mini-seg" data-single><button aria-pressed="true">Ink</button><button aria-pressed="false">Paper</button></div></div>
+            <div class="ctl slide-ctl"><label class="slide" style="--v:58%" data-unit="px"><span class="bl">Lift</span><span class="bv">28px</span><input type="range" min="0" max="48" value="28" aria-label="Lift"></label></div>
+          </div>
+          <div class="side-foot">
+            <button class="act line" data-share><svg class="i"><use href="#i-link"/></svg><span>Share</span></button>
+            <button class="act solid">Add to collection</button>
+          </div>
+        </aside>
+      </div>
+    </dialog>
+
+    <div class="tbl" style="margin-top:28px"><table>
+      <thead><tr><th>Part</th><th>Spec</th></tr></thead>
+      <tbody>
+        <tr><td>Use it when</td><td>An item in a grid opens to its detail and people will go back to the grid: a library, gallery or inbox. The card and the modal share one visual, the stage.</td></tr>
+        <tr><td>Not for</td><td>Confirmations and forms that don't come from a card: open those as a plain dialog that fades in. Content that needs its own URL or long reading gets a <a href="#detail">detail page</a>.</td></tr>
+        <tr><td>Open</td><td>The card's stage and the modal's stage share <code>view-transition-name: morph</code>. The stage morphs over <code>--morph</code> 380ms on <code>--morph-ease</code>; the page cross-fades under the <code>--veil</code> (blur 12, saturate 1.3); the panel slides 12px in at 40% of the morph.</td></tr>
+        <tr><td>Same shape</td><td>Both stages are 4:3, so the snapshot scales up and never stretches.</td></tr>
+        <tr><td>Close</td><td>The same morph in reverse, from ×, Escape or a click on the veil. Focus goes back to the card that opened it.</td></tr>
+        <tr><td>No view transitions</td><td>The dialog fades in and scales from .96 over <code>--morph</code>, and closes at once.</td></tr>
+        <tr><td>Reduced motion</td><td>No morph and no scale: the dialog and its panel fade in, and close at once.</td></tr>
+        <tr><td>On a phone</td><td>Stage on top at full width, panel below, footer actions side by side.</td></tr>
+        <tr><td>Theme wipe</td><td>The theme switch owns the root transition, so the page adds a <code>morphing</code> class while a card opens or closes, and the root cross-fades instead of wiping.</td></tr>
+      </tbody>
+    </table></div>
+<pre style="margin-top:16px">function morph(update, done) {
+  if (!document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    update(); return done && done();
+  }
+  root.classList.add("morphing");
+  document.startViewTransition(update).finished.finally(function () {
+    root.classList.remove("morphing"); done && done();
+  });
+}
+// open: name the card's stage, then hand the name to the dialog's stage inside the update
+art.style.viewTransitionName = "morph";
+morph(function () { art.style.viewTransitionName = ""; stage.style.viewTransitionName = "morph"; dialog.showModal(); });</pre>
+  </section>
+
   <!-- ===== Components ===== -->
   <section id="components">
     <div class="sh"><h2 class="t-title">Components</h2><p class="t-lead">Every control is live. Hover, press and tab through them.</p></div>
@@ -1140,6 +1416,12 @@
       <div class="comp"><div class="k"><b>Like-pop</b><span>For a commit like Save or Star, on set only. The button presses in, springs back and throws a ring and eight ink dots. Undoing is quiet, and nothing pops on load.</span></div>
         <div class="row"><button class="btn quiet sm" id="pop-demo" type="button" aria-pressed="false">Save</button></div></div>
 
+      <div class="comp"><div class="k"><b>Rolling counter</b><span>Each digit is a 0–9 column that rolls into place on the spring, so a jump of many reads as motion, not a swap. Leading zeros sit in ink-5.</span></div>
+        <div class="roll" id="roll"><button class="icon-btn" type="button" data-d="-1" aria-label="Fewer"><svg class="i"><use href="#i-down"/></svg></button><output aria-live="polite"><span class="cur">$</span></output><button class="icon-btn" type="button" data-d="1" aria-label="More"><svg class="i" style="rotate:180deg"><use href="#i-down"/></svg></button><button class="btn quiet sm" type="button" data-d="random">Random</button></div></div>
+
+      <div class="comp"><div class="k"><b>Slide to confirm</b><span>For a step that can't be undone. Drag the knob to the end; let go early and it springs home. Enter on the knob confirms for keyboards.</span></div>
+        <div class="confirm" id="confirm"><span class="say">Slide to send</span><button type="button" aria-label="Slide to send, or press Enter"><svg class="i"><use href="#i-forward"/></svg></button></div></div>
+
       <div class="comp"><div class="k"><b>Tags</b><span>24px for status on a card; dark glass with blur for overlays; lock for gated items.</span></div>
         <div class="row" style="background:var(--wash);padding:var(--s-6);border-radius:var(--r-inner)"><span class="tag t-tag">New</span><span class="tag glass">Featured</span><span class="tag t-tag lock">Pro</span></div></div>
 
@@ -1153,6 +1435,130 @@
           <div class="faq-item"><button aria-expanded="false">Which frameworks are covered? <svg class="i"><use href="#i-plus"/></svg></button><div class="faq-body"><div><p>React first, with plain CSS for styling, so it ports easily.</p></div></div></div>
         </div></div>
     </div>
+  </section>
+
+  <!-- ===== Depth ===== -->
+  <section id="depth">
+    <div class="sh"><h2 class="t-title">Depth</h2><p class="t-lead">3D is for one object on a stage, never for chrome. Every scene shares one perspective, <code>--depth</code> 900px, and keeps its angles small. With reduced motion, <code>--tilt</code> goes to 0 and each scene holds its rest pose.</p></div>
+    <div class="depths">
+      <figure>
+        <div class="scene blueprint" data-tilt><div class="tilt"><span class="sun"></span><span class="hill"></span><span class="tag glass">Dune</span></div></div>
+        <figcaption><b>Tilt card.</b> Sinks under the pointer by up to <code>--tilt</code> instead of rising to meet it. Its layers sit 18, 36 and 56px forward, so they slide against each other. Let go and it springs back over 700ms.</figcaption>
+      </figure>
+      <figure>
+        <div class="scene blueprint">
+          <button class="swap" id="swap" type="button" aria-label="Next card">
+            <span style="--i:0;background:var(--ember)"><span class="tag glass">Ember</span></span>
+            <span style="--i:1;background:var(--paper)"><span class="tag glass">Paper</span></span>
+            <span style="--i:2;background:var(--solid)"><span class="tag glass">Solid</span></span>
+            <span style="--i:3;background:var(--surface-3)"><span class="tag glass">Stone</span></span>
+          </button>
+        </div>
+        <figcaption><b>Card swap.</b> A stack turned 26° and stepped 56px back per card. Press it and the front card drops below the stack and goes in at the back while the rest step forward.</figcaption>
+      </figure>
+      <figure>
+        <div class="scene blueprint lt" tabindex="0"><span class="shade"></span><div class="plane"><span class="obj"></span></div><span class="mz">+28</span></div>
+        <figcaption><b>Lift tile.</b> One object lying in the floor plane. On hover it rises 16px and comes 28px forward off its shadow, a scan runs across it and the guides light up. The thumbnail of every related item uses it.</figcaption>
+      </figure>
+    </div>
+    <div class="tbl" style="margin-top:28px"><table>
+      <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>One object</td><td>A scene holds one thing on a <code>surface</code> stage, often on the blueprint grid. Text and controls stay flat.</td></tr>
+        <tr><td>Small angles</td><td>Tilt up to 10°, a turned stack 26°, a standing object 24° by 30°. Layers inside a card sit 18–56px forward.</td></tr>
+        <tr><td>Follow, then settle</td><td>While the pointer moves, a 120ms linear follow; on leave, 700ms <code>spring-soft</code> back to rest.</td></tr>
+        <tr><td>Light</td><td>A sheen in <code>pane</code> follows the pointer. The shadow stays on the floor and blurs as the object rises.</td></tr>
+        <tr><td>Keep it flat-safe</td><td><code>preserve-3d</code> breaks under <code>overflow: hidden</code>, so the stage clips, not the object. With reduced motion the scene holds its rest pose and the swap jumps without the drop.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===== Detail page ===== -->
+  <section id="detail">
+    <div class="sh"><h2 class="t-title">Detail page</h2><p class="t-lead">One part, case or article on its own page, built only from the pieces above. The page caps at <code>w-tool</code>: meta and media span it, while the header text and body read at <code>w-read</code>, with a contents rail on wide screens; related items end the page.</p></div>
+    <article class="dp" aria-label="Detail page example">
+      <div class="dp-bar">
+        <a class="nav-link" href="#detail"><svg class="i" style="width:var(--icon-sm);height:var(--icon-sm)"><use href="#i-left"/></svg>Library</a>
+        <span class="crumb">/ Depth / Tilt card</span>
+        <span class="spacer"></span>
+        <button class="tool" aria-label="Save" aria-pressed="false" data-toggle><svg class="i"><use href="#i-mark"/></svg></button>
+        <button class="tool" aria-label="Share"><svg class="i"><use href="#i-share"/></svg></button>
+      </div>
+      <div class="dp-in">
+        <header class="dp-head">
+          <div class="info-tags"><span>Hover</span><span>Depth</span></div>
+          <h3 class="t-display">Tilt card</h3>
+          <p class="t-lead">A photo card that <b>sinks under your pointer</b> instead of rising to meet it, with layers that slide against each other as it turns.</p>
+          <div class="row"><button class="btn"><svg class="i"><use href="#i-copy"/></svg>Copy code</button><button class="btn quiet">Open in sandbox</button></div>
+          <dl class="dp-meta">
+            <div><dt>Made by</dt><dd>Studio Fjäll</dd></div>
+            <div><dt>Updated</dt><dd>12 Oct 2026</dd></div>
+            <div><dt>Size</dt><dd>1.4 kB</dd></div>
+            <div><dt>Licence</dt><dd>Pro</dd></div>
+          </dl>
+        </header>
+
+        <figure class="dp-media scene blueprint" data-tilt style="margin:0">
+          <div class="seg" data-single><button aria-pressed="true" aria-label="Preview" style="padding:0 12px"><svg class="i"><use href="#i-cube"/></svg></button><button aria-pressed="false" aria-label="Code" style="padding:0 12px"><svg class="i"><use href="#i-code"/></svg></button></div>
+          <div class="tools"><button class="tool" aria-label="Replay"><svg class="i"><use href="#i-play"/></svg></button><button class="tool" aria-label="Settings"><svg class="i"><use href="#i-sliders"/></svg></button></div>
+          <div class="tilt"><span class="sun"></span><span class="hill"></span><span class="tag glass">Dune</span></div>
+          <span class="sz">196 × 245</span>
+        </figure>
+
+        <div class="dp-cols">
+          <div class="dp-body t-body">
+            <h4 class="t-heading" id="dp-how">How it works</h4>
+            <p>The card reads where the pointer is as a number from −1 to 1 on each axis, then turns away from it by up to the tilt angle. Everything else is CSS: one perspective on the stage and three layers set forward in depth.</p>
+            <ol>
+              <li>Put the card on a stage with <code>perspective: var(--depth)</code>.</li>
+              <li>Give the card <code>preserve-3d</code> and push each layer forward with <code>translateZ</code>.</li>
+              <li>Set <code>--px</code> and <code>--py</code> on pointer move; clear them on leave.</li>
+            </ol>
+            <h4 class="t-heading" id="dp-code">Code</h4>
+<pre>.tilt {
+  transform: rotateX(calc(var(--py) * var(--tilt) * -1))
+             rotateY(calc(var(--px) * var(--tilt)));
+  transition: transform 700ms var(--spring-soft);
+}</pre>
+            <h4 class="t-heading" id="dp-props">Props</h4>
+            <div class="tbl"><table>
+              <thead><tr><th>Prop</th><th>Default</th><th>Does</th></tr></thead>
+              <tbody>
+                <tr><td>tilt</td><td>10°</td><td>Most the card leans at the edge</td></tr>
+                <tr><td>shade</td><td>on</td><td>Sheen that follows the pointer</td></tr>
+                <tr><td>corner</td><td>22</td><td>Card radius in px</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <nav class="dp-toc" aria-label="On this page">
+            <b>On this page</b>
+            <a class="nav-link" href="#dp-how" aria-current="true">How it works</a>
+            <a class="nav-link" href="#dp-code">Code</a>
+            <a class="nav-link" href="#dp-props">Props</a>
+          </nav>
+        </div>
+
+        <div class="dp-rel">
+          <h4 class="t-heading">Related</h4>
+          <div class="rels">
+            <a class="rel" href="#depth"><div class="lt"><span class="shade"></span><div class="plane"><span class="obj"></span></div><span class="mz">+28</span></div><div><b>Lift tile</b><span>Hover</span></div></a>
+            <a class="rel" href="#depth"><div class="lt" style="--lt-r:50%"><span class="shade"></span><div class="plane"><span class="obj"></span></div><span class="mz">+28</span></div><div><b>Press dial</b><span>Press</span></div></a>
+            <a class="rel" href="#depth"><div class="lt" style="--lt-w:132px;--lt-h:56px;--lt-r:999px"><span class="shade"></span><div class="plane"><span class="obj"></span></div><span class="mz">+28</span></div><div><b>Pill switch</b><span>Toggle</span></div></a>
+          </div>
+        </div>
+      </div>
+    </article>
+    <div class="tbl" style="margin-top:28px"><table>
+      <thead><tr><th>Part</th><th>Spec</th></tr></thead>
+      <tbody>
+        <tr><td>Bar</td><td>56px, hairline below. Back link as a nav link with a 15px chevron, then the crumb in 13 ink-4; save and share as tool buttons on the right.</td></tr>
+        <tr><td>Header</td><td>Text capped at <code>w-read</code>. Tags, a display title, a lead, then the actions: primary first, quiet second.</td></tr>
+        <tr><td>Meta</td><td>A four-up strip between hairlines: label 12 ink-4 over value 14/500 ink. Two-up on phones.</td></tr>
+        <tr><td>Media</td><td>Full <code>w-tool</code>, 320–480 tall, the blueprint stage. View toggle top left, tools top right, size in <code>guide</code> at the foot.</td></tr>
+        <tr><td>Body</td><td><code>w-read</code>, headings at 26, a 200px contents rail that sticks under the bar. The rail hides below 900.</td></tr>
+        <tr><td>Related</td><td>Three lift tiles on washes, name and kind underneath. The whole card is the link.</td></tr>
+      </tbody>
+    </table></div>
   </section>
 
   <div class="modal" id="modal" aria-hidden="true">
@@ -1308,6 +1714,100 @@ toggle.onclick = function () {
     pd.setAttribute("aria-pressed", on); pd.textContent = on ? "Saved" : "Save";
     if (on) nudge(pd, "pop");
   });
+
+  // depth: tilt follows the pointer as --px / --py from -1 to 1
+  document.querySelectorAll("[data-tilt]").forEach(function (stage) {
+    var card = stage.querySelector(".tilt");
+    stage.addEventListener("pointermove", function (e) {
+      if (e.pointerType === "touch") return;
+      var r = stage.getBoundingClientRect();
+      card.classList.add("on");
+      card.style.setProperty("--px", ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3));
+      card.style.setProperty("--py", ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3));
+    });
+    stage.addEventListener("pointerleave", function () {
+      card.classList.remove("on"); card.style.setProperty("--px", 0); card.style.setProperty("--py", 0);
+    });
+  });
+
+  // depth: card swap sends the front card to the back
+  var swap = document.getElementById("swap"), cards = Array.prototype.slice.call(swap.children);
+  swap.addEventListener("click", function () {
+    var n = cards.length;
+    cards.forEach(function (c) {
+      var i = (+c.style.getPropertyValue("--i") + n - 1) % n;
+      c.style.setProperty("--i", i);
+      if (i === n - 1) nudge(c, "out", 700);
+    });
+  });
+
+  // rolling counter
+  var roll = document.getElementById("roll"), rollOut = roll.querySelector("output"), rollV = 128;
+  rollOut.insertAdjacentHTML("beforeend", "<span class='dg'><span></span></span>".repeat(3));
+  rollOut.querySelectorAll(".dg > span").forEach(function (col) { col.textContent = ""; for (var d = 0; d < 10; d++) col.insertAdjacentHTML("beforeend", "<span>" + d + "</span>"); col.parentNode.setAttribute("aria-hidden", "true"); });
+  function paintRoll() {
+    var s = String(rollV).padStart(3, "0"), lead = true;
+    rollOut.querySelectorAll(".dg").forEach(function (dg, i) {
+      dg.firstChild.style.setProperty("--n", s[i]);
+      lead = lead && s[i] === "0" && i < 2; dg.classList.toggle("lead", lead);
+    });
+    rollOut.setAttribute("aria-label", "$" + rollV);
+  }
+  roll.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    rollV = b.dataset.d === "random" ? Math.floor(Math.random() * 1000) : Math.min(999, Math.max(0, rollV + +b.dataset.d));
+    paintRoll();
+  });
+  paintRoll();
+
+  // slide to confirm
+  var cf = document.getElementById("confirm"), knob = cf.querySelector("button"), say = cf.querySelector(".say");
+  function confirmDone() {
+    cf.setAttribute("data-done", ""); cf.style.setProperty("--v", 1); say.textContent = "Sent";
+    setTimeout(function () { cf.removeAttribute("data-done"); cf.style.setProperty("--v", 0); say.textContent = "Slide to send"; }, 1800);
+  }
+  knob.addEventListener("pointerdown", function (e) {
+    if (cf.hasAttribute("data-done")) return;
+    var r = cf.getBoundingClientRect(), x0 = e.clientX, run = r.width - knob.offsetWidth - 8, v = 0;
+    knob.setPointerCapture(e.pointerId); cf.classList.add("drag");
+    function move(ev) { v = Math.min(1, Math.max(0, (ev.clientX - x0) / run)); cf.style.setProperty("--v", v); }
+    function up() {
+      knob.removeEventListener("pointermove", move); knob.removeEventListener("pointerup", up); knob.removeEventListener("pointercancel", up);
+      cf.classList.remove("drag");
+      if (v > .92) confirmDone(); else cf.style.setProperty("--v", 0);
+    }
+    knob.addEventListener("pointermove", move); knob.addEventListener("pointerup", up); knob.addEventListener("pointercancel", up);
+  });
+  knob.addEventListener("click", function (e) { if (e.detail === 0 && !cf.hasAttribute("data-done")) confirmDone(); });
+
+  // modal: the card's stage morphs into the dialog's stage
+  var dlg = document.getElementById("morph"), dStage = dlg.querySelector(".lt"), fromCard = null;
+  function morph(update, done) {
+    var vt = !!document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    dlg.classList.toggle("plain", !vt);
+    if (!vt) { update(); return done && done(); }
+    root.classList.add("morphing");
+    document.startViewTransition(update).finished.finally(function () { root.classList.remove("morphing"); if (done) done(); });
+  }
+  document.querySelectorAll(".mcard").forEach(function (card) {
+    card.addEventListener("click", function () {
+      var art = card.querySelector(".lt");
+      fromCard = card;
+      dStage.style.cssText = art.style.cssText;
+      document.getElementById("morph-title").textContent = card.querySelector("b").textContent;
+      art.style.viewTransitionName = "morph";
+      morph(function () { art.style.viewTransitionName = ""; dStage.style.viewTransitionName = "morph"; dlg.showModal(); });
+    });
+  });
+  function closeMorph() {
+    if (!dlg.open) return;
+    var art = fromCard.querySelector(".lt");
+    morph(function () { dStage.style.viewTransitionName = ""; art.style.viewTransitionName = "morph"; dlg.close(); },
+      function () { art.style.viewTransitionName = ""; });
+  }
+  dlg.addEventListener("cancel", function (e) { e.preventDefault(); closeMorph(); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg || e.target.closest("[data-close]")) closeMorph(); });
+  dlg.addEventListener("close", function () { fromCard.focus(); });
 
   // space ladder
   var steps = [2,4,6,8,10,12,16,20,24,32,40,48,64,72,96];
