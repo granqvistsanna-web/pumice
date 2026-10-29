@@ -689,7 +689,7 @@
   .dp-media .sz { position: absolute; left: 50%; bottom: 16px; translate: -50% 0; font: 500 11px/1 var(--font-ui); color: var(--guide); font-variant-numeric: tabular-nums; }
   .dp-cols { display: grid; grid-template-columns: minmax(0, var(--w-read)) 200px; justify-content: space-between; gap: var(--s-11); }
   .dp-body > :first-child { margin-top: 0; }
-  .dp-body h2 { margin: var(--s-11) 0 var(--s-6); scroll-margin-top: 80px; }
+  .dp-body h4 { margin: var(--s-11) 0 var(--s-6); scroll-margin-top: 80px; }
   .dp-body p, .dp-body ol { margin: 0 0 var(--s-7); }
   .dp-body ol { padding-left: 1.2em; display: grid; gap: var(--s-3); }
   .dp-body li::marker { color: var(--ink-4); font-variant-numeric: tabular-nums; }
@@ -698,7 +698,7 @@
   .dp-toc b { font-size: 12px; font-weight: 500; color: var(--ink-4); padding: 0 0 var(--s-4) 13px; }
   .dp-toc .nav-link { height: 32px; font-size: 13.5px; }
   .dp-rel { display: grid; gap: var(--s-7); }
-  .dp-rel h2 { margin: 0; }
+  .dp-rel h4 { margin: 0; }
   .rels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--s-4); }
   .rel { display: grid; gap: var(--s-6); text-decoration: none; border-radius: var(--r-card); }
   .rel .lt { height: 200px; border-radius: var(--r-card); background: var(--wash); transition: background var(--t-color); }
@@ -1192,7 +1192,7 @@
         <div class="lt"><span class="shade"></span><div class="plane"><span class="obj"></span></div><button class="tool" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
         <aside class="side">
           <div class="side-head">
-            <h4 class="side-title" id="morph-title">Lift tile</h4>
+            <h3 class="side-title" id="morph-title">Lift tile</h3>
             <p class="side-say">Rises off its shadow on hover and runs a scan across its face.</p>
           </div>
           <div class="ctls">
@@ -1367,20 +1367,20 @@ morph(function () { art.style.viewTransitionName = ""; stage.style.viewTransitio
 
         <div class="dp-cols">
           <div class="dp-body t-body">
-            <h2 class="t-heading" id="dp-how">How it works</h2>
+            <h4 class="t-heading" id="dp-how">How it works</h4>
             <p>The card reads where the pointer is as a number from −1 to 1 on each axis, then turns away from it by up to the tilt angle. Everything else is CSS: one perspective on the stage and three layers set forward in depth.</p>
             <ol>
               <li>Put the card on a stage with <code>perspective: var(--depth)</code>.</li>
               <li>Give the card <code>preserve-3d</code> and push each layer forward with <code>translateZ</code>.</li>
               <li>Set <code>--px</code> and <code>--py</code> on pointer move; clear them on leave.</li>
             </ol>
-            <h2 class="t-heading" id="dp-code">Code</h2>
+            <h4 class="t-heading" id="dp-code">Code</h4>
 <pre>.tilt {
   transform: rotateX(calc(var(--py) * var(--tilt) * -1))
              rotateY(calc(var(--px) * var(--tilt)));
   transition: transform 700ms var(--spring-soft);
 }</pre>
-            <h2 class="t-heading" id="dp-props">Props</h2>
+            <h4 class="t-heading" id="dp-props">Props</h4>
             <div class="tbl"><table>
               <thead><tr><th>Prop</th><th>Default</th><th>Does</th></tr></thead>
               <tbody>
@@ -1399,7 +1399,7 @@ morph(function () { art.style.viewTransitionName = ""; stage.style.viewTransitio
         </div>
 
         <div class="dp-rel">
-          <h2 class="t-heading">Related</h2>
+          <h4 class="t-heading">Related</h4>
           <div class="rels">
             <a class="rel" href="#depth"><div class="lt"><span class="shade"></span><div class="plane"><span class="obj"></span></div><span class="mz">+28</span></div><div><b>Lift tile</b><span>Hover</span></div></a>
             <a class="rel" href="#depth"><div class="lt" style="--lt-r:50%"><span class="shade"></span><div class="plane"><span class="obj"></span></div><span class="mz">+28</span></div><div><b>Press dial</b><span>Press</span></div></a>
