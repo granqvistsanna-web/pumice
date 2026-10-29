@@ -153,7 +153,7 @@
   --glass-a: .16;
   --pane-edge: rgba(var(--glass-rgb), .2);
   --frost: rgba(10, 10, 10, .9);
-  --pick: #3aa9ff; --guide: #ff5c84; --ok: #34d17a; --lock: #525252; --signal: #7b86ff;
+  --pick: #3aa9ff; --ember: #e0663c; --guide: #ff5c84; --ok: #34d17a; --lock: #525252; --signal: #7b86ff;
   --float: 0 10px 30px rgba(0, 0, 0, .5);
   --elev: #181818;
   --thumb: rgba(255, 255, 255, .16);   /* #181818 vanishes on a dark wash */
@@ -174,7 +174,7 @@
     --glass-a: .16;
     --pane-edge: rgba(var(--glass-rgb), .2);
     --frost: rgba(10, 10, 10, .9);
-    --pick: #3aa9ff; --guide: #ff5c84; --ok: #34d17a; --lock: #525252; --signal: #7b86ff;
+    --pick: #3aa9ff; --ember: #e0663c; --guide: #ff5c84; --ok: #34d17a; --lock: #525252; --signal: #7b86ff;
     --float: 0 10px 30px rgba(0, 0, 0, .5);
     --elev: #181818;
     --thumb: rgba(255, 255, 255, .16);   /* #181818 vanishes on a dark wash */

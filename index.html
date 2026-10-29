@@ -144,12 +144,12 @@
   .rhythm { display: grid; justify-items: start; }
   .rb, .rrow i { display: block; border-radius: 6px; background: var(--wash-2); }
   .rg { width: 100%; height: var(--g); display: flex; align-items: center; justify-content: flex-end; gap: var(--s-2); padding-inline: var(--s-4);
-    background: color-mix(in srgb, var(--guide) 12%, transparent); box-shadow: inset 0 1px color-mix(in srgb, var(--guide) 50%, transparent), inset 0 -1px color-mix(in srgb, var(--guide) 50%, transparent);
+    background: color-mix(in srgb, var(--guide) 12%, transparent); border-block: 1px solid color-mix(in srgb, var(--guide) 50%, transparent);
     font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); white-space: nowrap; }
   .rhythm b { font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .rs { position: relative; width: 100%; display: grid; justify-items: start; padding: var(--s-10); border-radius: var(--r-card); background: var(--bg);
-    box-shadow: inset 0 0 0 var(--s-10) color-mix(in srgb, var(--guide) 8%, transparent); }
-  .rs-pad { position: absolute; top: var(--s-5); left: var(--s-10); display: flex; gap: var(--s-2); font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); }
+  /* the 32px border is the stage padding, tinted so it reads as a measured band */
+  .rs { position: relative; width: 100%; display: grid; justify-items: start; border: var(--s-10) solid color-mix(in srgb, var(--guide) 8%, transparent); border-radius: var(--r-card); background: var(--bg) padding-box; }
+  .rs-pad { position: absolute; top: calc(var(--s-5) - var(--s-10)); left: 0; display: flex; gap: var(--s-2); font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); }
   .rrow { display: flex; align-items: center; gap: var(--s-4); }
   .rrow i { width: 52px; height: 24px; border-radius: var(--r-pill); }
   .rrow span { display: flex; gap: var(--s-2); margin-left: var(--s-4); font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); white-space: nowrap; }
@@ -169,7 +169,7 @@
   .dd-groups { gap: var(--out); justify-content: center; }
   .dd-groups div { display: grid; gap: var(--in); }
   .dd-groups i { display: block; width: 180px; max-width: 100%; height: 10px; border-radius: var(--r-pill); background: var(--wash-2); }
-  .dd-card .chip { display: inline-flex; align-items: center; background: var(--thumb); box-shadow: var(--shadow-1); }
+  .dd-card .chip { display: inline-flex; align-items: center; color: var(--ink); background: var(--thumb); box-shadow: var(--shadow-1); }
   .dd-card { display: flex; gap: var(--s-4); align-self: stretch; min-height: 148px; align-items: flex-start; border-radius: var(--r-card); background: var(--wash); }
 
   /* ---- Elevation ---- */
@@ -308,7 +308,7 @@
   .pbar svg.i { width: 20px; height: 20px; }
   .pbody { padding: 82px 14px 24px; display: grid; gap: var(--s-7); }
   .pbody .phero { text-align: center; display: grid; justify-items: center; gap: var(--s-6); padding-block: 20px 8px; }
-  .pbody .phero h4 { margin: 0; font-size: 34px; line-height: 1.05; font-weight: 500; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+  .pbody .phero h3 { margin: 0; font-size: 34px; line-height: 1.05; font-weight: 500; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
   .pbody .phero p { margin: 0; font-size: var(--fs-body); color: var(--ink-4); }
   .pchips { display: flex; gap: var(--s-4); overflow-x: auto; scrollbar-width: none; margin-inline: -14px; padding-inline: 14px;
     mask-image: linear-gradient(90deg, #000 calc(100% - 64px), transparent); }
@@ -729,7 +729,7 @@
           <tr><td>bg / surface ladder</td><td>#fff · #f7f7f6 · #f1f1f0 · #ecebe7</td><td>#000 · #0f0f0f · #181818 · #202020</td><td>True black page</td></tr>
           <tr><td>wash</td><td>ink / 6%</td><td>white / 9%</td><td>Slightly stronger to read on black</td></tr>
           <tr><td>glass-a</td><td>.35</td><td>.16</td><td></td></tr>
-          <tr><td>pick · guide · ok</td><td>#0d99ff · #ff3b6b · #15803d</td><td>#3aa9ff · #ff5c84 · #34d17a</td><td>Lifted for contrast</td></tr>
+          <tr><td>ember · pick · guide · ok</td><td>#b8431c · #0d99ff · #ff3b6b · #15803d</td><td>#e0663c · #3aa9ff · #ff5c84 · #34d17a</td><td>Lifted for contrast</td></tr>
         </tbody>
       </table>
     </div>
@@ -793,9 +793,9 @@
       <figure class="dont"><div class="dd-stage"><div class="t-body" style="font-weight:700;color:var(--ink)">Common questions</div><div class="t-body" style="font-weight:700;color:var(--ink)">Plans, licences and frameworks.</div></div>
         <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Reach for bold. Two lines at one size and weight read as one.</figcaption></figure>
       <figure class="do"><div class="dd-stage"><div class="t-caption" style="color:var(--ink-4)">Updated 3 days ago · 1.2k saves</div></div>
-        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Keep meta at 12 in ink-4, which holds 4.9:1 on white.</figcaption></figure>
-      <figure class="dont"><div class="dd-stage"><div style="font-size:10px;color:var(--ink-5)">Updated 3 days ago · 1.2k saves</div></div>
-        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Go below the scale or set text in ink-5. Quiet is not faint.</figcaption></figure>
+        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Keep meta at 12 in sentence case and ink-4: quiet but still 4.9:1 on white. Never smaller, never ink-5.</figcaption></figure>
+      <figure class="dont"><div class="dd-stage"><div class="t-caption" style="color:var(--ink-4);text-transform:uppercase;letter-spacing:.12em">Updated 3 days ago · 1.2k saves</div></div>
+        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Shout meta in tracked capitals. It ends up louder than the title it sits under.</figcaption></figure>
       <figure class="do"><div class="dd-stage dd-num t-ui" style="font-variant-numeric:tabular-nums"><span>1,111.10</span><span>480.08</span><span>9,999.99</span></div>
         <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Set stacked numbers in tabular figures so the decimals line up.</figcaption></figure>
       <figure class="dont"><div class="dd-stage dd-num t-ui" style="font-variant-numeric:proportional-nums"><span>1,111.10</span><span>480.08</span><span>9,999.99</span></div>
@@ -1025,7 +1025,7 @@
         <div class="pan-stage">
           <aside class="side on-surface" aria-label="Settings panel example">
             <div class="side-head">
-              <h4 class="side-title">Voice memo</h4>
+              <h3 class="side-title">Voice memo</h3>
               <button class="tool" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
               <p class="side-say">Press and hold to record, slide left to discard, let go to play it back.</p>
             </div>
@@ -1050,7 +1050,7 @@
           <aside class="info" aria-label="Info panel example">
             <div class="info-bar"><button class="tool" aria-label="Save" aria-pressed="false" data-toggle><svg class="i"><use href="#i-mark"/></svg></button><button class="tool" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
             <div class="info-tags"><span>Reveal</span><span>Morph</span></div>
-            <h4 class="side-title">Shape loader</h4>
+            <h3 class="side-title">Shape loader</h3>
             <div class="credit"><i></i>Studio Fjäll</div>
             <p>A soft shape holds the centre while the page loads, then opens into the window the site is seen through.</p>
             <time>3 days ago</time>
@@ -1165,7 +1165,7 @@
       </div>
       <aside class="side">
         <div class="side-head">
-          <h4 class="side-title">Voice memo</h4>
+          <h3 class="side-title">Voice memo</h3>
           <button class="tool" id="close-modal" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
           <p class="side-say">Press and hold to record, slide left to discard, let go to play it back.</p>
         </div>
@@ -1199,7 +1199,7 @@
             <div class="pbody">
               <div class="phero">
                 <span class="count"><i></i>482 joined this week</span>
-                <h4>Small parts, live on the page</h4>
+                <h3>Small parts, live on the page</h3>
                 <p>Try them here, then take the code.</p>
                 <button class="btn hero">Get started</button>
               </div>

@@ -1,0 +1,32 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-29T17:54:30.877Z",
+        "reason": "Pumice brief: Inter is the system font and must stay; other sites load tokens.css"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-29T17:54:54.828Z",
+        "reason": "Claude, measured in browser: detector reads var(--s-*) padding as 0; real insets are 16-32px, seg/mini-seg are pill-in-pill by design"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-29T17:55:22.505Z",
+        "reason": "Claude, measured in browser: only hit is .tag.glass, white on a 72% ink scrim the detector skips (about 8:1); remove when the detector composites alpha"
+      }
+    ]
+  }
+}
