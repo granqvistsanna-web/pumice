@@ -72,6 +72,12 @@
   --s-9: 24px; --s-10: 32px; --s-11: 40px; --s-12: 48px;
   --s-13: 64px; --s-14: 72px;
 
+  /* layout — the bar and galleries run full width inside --gutter; tool pages cap at --w-tool,
+     docs at --w-wide, running text at --w-read */
+  --gutter: clamp(16px, 1.25vw, 24px);
+  --w-tool: 1120px; --w-wide: 1280px; --w-read: 760px;
+  --h-topbar: 64px;
+
   /* control heights */
   --h-tag: 24px; --h-chip: 32px; --h-nav: 36px; --h-field: 38px; --h-button: 40px;
 

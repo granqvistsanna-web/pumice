@@ -40,9 +40,9 @@
     backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px);
   }
   .bar-in {
-    margin: 0 auto; height: 64px;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    height: var(--h-topbar);
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
     display: flex; align-items: center; gap: var(--s-6);
   }
   .mark { display: inline-flex; align-items: center; gap: var(--s-4); color: var(--ink); font-weight: 600; font-size: 15px; text-decoration: none; }
@@ -52,10 +52,11 @@
   .bar .spacer { flex: 1; }
   .bar-in > .icon-btn { margin-left: auto; }
 
+  /* the bar runs full width; the page caps at --w-wide */
   .page {
-    margin: 0 auto;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    margin: 0 auto; max-width: calc(var(--w-wide) + 2 * var(--gutter));
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
     padding-block: 0 96px;
   }
 
@@ -1021,7 +1022,7 @@
         <tr><td>≤ 560</td><td>One column, hero title to 32px, chips scroll sideways</td></tr>
         <tr><td>≤ 760</td><td>Nav links collapse into a menu, side gutter 16</td></tr>
         <tr><td>≤ 900</td><td>Card grid 3 → 2 columns</td></tr>
-        <tr><td>≤ 1180</td><td>Page max width eases off, gutter 24</td></tr>
+        <tr><td>any</td><td>Gutter <code>--gutter</code>, 16 to 24px. The bar and gallery grids run full width; tool pages cap at <code>--w-tool</code> 1120, docs at <code>--w-wide</code> 1280, running text at <code>--w-read</code> 760</td></tr>
         <tr><td>hover: none</td><td>Card name bars stay visible instead of revealing on hover</td></tr>
       </tbody>
     </table></div>
