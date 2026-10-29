@@ -774,6 +774,7 @@
         <tr><td>t-open</td><td>320ms settle</td><td>Height via grid-template-rows 0fr → 1fr</td></tr>
         <tr><td>t-bar</td><td>380ms rise</td><td>Phone bar compacting on scroll</td></tr>
         <tr><td>t-rise</td><td>620ms rise</td><td>Hero entrance: fade up 10px; CTA row waits 300ms</td></tr>
+        <tr><td>t-theme</td><td>560ms settle</td><td>Theme switch: the new theme opens as a circle from the toggle</td></tr>
         <tr><td>stagger</td><td>70ms × index, cap 9</td><td>Card grid entrance, after a 320ms base delay, 700ms each</td></tr>
       </tbody>
     </table></div>
@@ -1040,6 +1041,19 @@
   transition: transform var(--t-move) var(--spring);
 }
 .my-button:active { transform: scale(.96); }</pre>
+<p class="t-lead" style="margin:24px 0 12px">Theme switch: flip the theme inside a view transition and tokens.css wipes it in from the toggle. Try the moon in the bar.</p>
+<pre>function setTheme(next, from) {
+  var root = document.documentElement;
+  var flip = function () { root.dataset.theme = next; };
+  if (!document.startViewTransition) return flip();
+  var r = from.getBoundingClientRect();
+  root.style.setProperty("--vt-x", r.left + r.width / 2 + "px");
+  root.style.setProperty("--vt-y", r.top + r.height / 2 + "px");
+  document.startViewTransition(flip);
+}
+toggle.onclick = function () {
+  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", toggle);
+};</pre>
   </section>
 
   <footer class="t-small">
@@ -1131,11 +1145,19 @@
     return root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
   }
   function paint() { tb.querySelector("use").setAttribute("href", isDark() ? "#i-sun" : "#i-moon"); }
+  // the switch itself is the pattern documented under Use: a circle wipe from the toggle
+  function setTheme(next, from) {
+    var flip = function () { root.dataset.theme = next; paint(); };
+    if (!document.startViewTransition) return flip();
+    var r = from.getBoundingClientRect();
+    root.style.setProperty("--vt-x", r.left + r.width / 2 + "px");
+    root.style.setProperty("--vt-y", r.top + r.height / 2 + "px");
+    document.startViewTransition(flip);
+  }
   tb.addEventListener("click", function () {
     var next = isDark() ? "light" : "dark";
-    root.dataset.theme = next;
     try { localStorage.setItem("theme", next); } catch (e) {}
-    paint();
+    setTheme(next, tb);
   });
   paint();
 </script>

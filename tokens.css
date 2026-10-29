@@ -91,6 +91,7 @@
   --t-open: 320ms;
   --t-bar: 380ms;      /* phone bar compacting on scroll */
   --t-rise: 620ms;     /* hero entrance */
+  --t-theme: 560ms;    /* theme switch: circle wipe from the toggle */
   --stagger: 70ms;     /* per card in a grid entrance, cap at 9 */
 
   /* press scales */
@@ -164,6 +165,17 @@
   }
 }
 
+/* Theme switch. Flip [data-theme] inside document.startViewTransition() and the new theme opens
+   as a circle from --vt-x / --vt-y (set them to the toggle's centre). Every transition holds still
+   meanwhile, so nothing fades inside the wipe. Browsers without view transitions just flip. */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: pumice-theme var(--t-theme) var(--settle); }
+@keyframes pumice-theme {
+  from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0)); }
+  to { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0)); }
+}
+:root:active-view-transition, :root:active-view-transition * { transition: none !important; }
+
 @media (prefers-reduced-motion: reduce) {
-  :root { --t-move: 0ms; --t-press: 0ms; --t-open: 0ms; --t-bar: 0ms; --t-rise: 0ms; --stagger: 0ms; --morph: 1ms; }
+  :root { --t-theme: 0ms; --t-move: 0ms; --t-press: 0ms; --t-open: 0ms; --t-bar: 0ms; --t-rise: 0ms; --stagger: 0ms; --morph: 1ms; }
 }
