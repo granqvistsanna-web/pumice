@@ -24,13 +24,13 @@
   html { color-scheme: light; }
   body {
     margin: 0; background: var(--bg); color: var(--ink-2);
-    font: 400 15px/1.5 var(--font-ui);
+    font: var(--fw-regular) var(--fs-body)/var(--lh-body) var(--font-ui);
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     transition: background-color var(--t-fade), color var(--t-color);
   }
   a { color: inherit; }
-  code, .mono { font-family: var(--font-code); font-size: 12.5px; }
+  code, .mono { font-family: var(--font-code); font-size: var(--fs-mono); }
   :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 
   /* ---- Bar ---- */
@@ -45,7 +45,7 @@
     padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
     display: flex; align-items: center; gap: var(--s-6);
   }
-  .mark { display: inline-flex; align-items: center; gap: var(--s-4); color: var(--ink); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .mark { display: inline-flex; align-items: center; gap: var(--s-4); color: var(--ink); font-weight: 600; font-size: var(--fs-body); text-decoration: none; }
   .mark i { width: 22px; height: 22px; border-radius: 8px; background: var(--ink); display: grid; place-items: center; }
   .mark i::after { content: ""; width: 12px; height: 5px; border-radius: 3px; background: var(--bg); }
   .bar nav { display: flex; gap: var(--s-1); overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
@@ -57,33 +57,33 @@
     margin: 0 auto; max-width: calc(var(--w-wide) + 2 * var(--gutter));
     padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
     padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
-    padding-block: 0 96px;
+    padding-block: 0 var(--s-15);
   }
 
   /* ---- Intro ---- */
-  .intro { text-align: center; padding-block: 72px 64px; display: grid; justify-items: center; gap: var(--s-7); }
+  .intro { text-align: center; padding-block: var(--s-14) var(--s-13); display: grid; justify-items: center; gap: var(--s-7); }
   .intro h1 { margin: 0; }
   .intro p { margin: 0; max-width: 54ch; }
   .intro .row { margin-top: var(--s-4); }
 
   /* ---- Type scale classes (also documented below) ---- */
-  .t-display { font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
-  .t-title { font-size: 30px; line-height: 1.08; font-weight: 500; letter-spacing: -.012em; color: var(--ink); text-wrap: balance; }
-  .t-heading { font-size: 26px; line-height: 1.2; font-weight: 500; letter-spacing: -.01em; color: var(--ink); }
-  .t-lead { font-size: 16px; line-height: 1.55; color: var(--ink-4); }
-  .t-lead b { font-weight: 400; color: var(--ink); }
-  .t-body { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-  .t-ui { font-size: 14px; line-height: 1.4; font-weight: 500; color: var(--ink); }
-  .t-small { font-size: 13px; line-height: 1.5; color: var(--ink-4); }
-  .t-micro { font-size: 12px; line-height: 1.6; font-weight: 500; color: var(--ink-3); }
-  .t-tag { font-size: 11px; line-height: 1; font-weight: 500; letter-spacing: .01em; color: var(--ink); }
+  .t-display { font-size: var(--fs-display); line-height: var(--lh-display); font-weight: var(--fw-medium); letter-spacing: var(--track-display); color: var(--ink); text-wrap: balance; }
+  .t-title { font-size: var(--fs-title); line-height: var(--lh-title); font-weight: var(--fw-medium); letter-spacing: var(--track-title); color: var(--ink); text-wrap: balance; }
+  .t-heading { font-size: var(--fs-heading); line-height: var(--lh-heading); font-weight: var(--fw-medium); letter-spacing: var(--track-heading); color: var(--ink); }
+  .t-lead { font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--ink-4); }
+  .t-lead b { font-weight: var(--fw-regular); color: var(--ink); }
+  .t-body { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--ink-2); }
+  .t-ui { font-size: var(--fs-ui); line-height: var(--lh-ui); font-weight: var(--fw-medium); color: var(--ink); }
+  .t-small { font-size: var(--fs-small); line-height: var(--lh-small); color: var(--ink-4); }
+  .t-micro, .t-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: var(--fw-medium); color: var(--ink-3); }
+  .t-tag { font-size: var(--fs-tag); line-height: 1; font-weight: var(--fw-medium); letter-spacing: var(--track-tag); color: var(--ink); }
 
   /* ---- Sections ---- */
-  section { padding-top: 72px; scroll-margin-top: 64px; }
+  section { padding-top: var(--s-14); scroll-margin-top: var(--h-topbar); }
   .sh { display: flex; align-items: baseline; gap: var(--s-6); flex-wrap: wrap; margin-bottom: var(--s-9); }
   .sh h2 { margin: 0; }
   .sh p { margin: 0; flex-basis: 100%; max-width: 62ch; }
-  h3 { margin: 0 0 var(--s-6); font-size: 13px; font-weight: 500; color: var(--ink); }
+  h3 { margin: 0 0 var(--s-6); font-size: var(--fs-small); font-weight: 500; color: var(--ink); }
 
   .stage { background: var(--wash); border-radius: var(--r-card); padding: var(--s-10); }
   .grid { display: grid; gap: var(--s-4); }
@@ -94,40 +94,40 @@
   /* ---- Principles ---- */
   .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: var(--s-4); }
   .rule { background: var(--surface); border-radius: var(--r-card); padding: var(--s-9); display: grid; gap: var(--s-4); align-content: start; }
-  .rule b { color: var(--ink); font-weight: 500; font-size: 15px; }
-  .rule span { font-size: 14px; color: var(--ink-4); line-height: 1.5; }
+  .rule b { color: var(--ink); font-weight: 500; font-size: var(--fs-body); }
+  .rule span { font-size: var(--fs-ui); color: var(--ink-4); line-height: var(--lh-body); }
 
   /* ---- Swatches ---- */
   .sw { background: var(--bg); border-radius: 20px; padding: var(--s-3); box-shadow: var(--ring); }
   .sw .chip-c { height: 72px; border-radius: 14px; box-shadow: inset 0 0 0 1px var(--hairline); }
   .sw .meta { padding: var(--s-4) var(--s-3) var(--s-2); display: grid; gap: 1px; }
-  .sw .meta b { font-size: 13px; font-weight: 500; color: var(--ink); }
-  .sw .meta code { color: var(--ink-4); font-size: 11.5px; }
-  .sw .meta small { color: var(--ink-4); font-size: 12px; }
+  .sw .meta b { font-size: var(--fs-small); font-weight: 500; color: var(--ink); }
+  .sw .meta code { color: var(--ink-4); font-size: var(--fs-mono-sm); }
+  .sw .meta small { color: var(--ink-4); font-size: var(--fs-caption); }
 
   /* ---- Type specimen ---- */
   .spec { display: grid; grid-template-columns: 150px 1fr; gap: var(--s-7) var(--s-9); align-items: baseline; padding-block: var(--s-7); border-top: 1px solid var(--hairline); }
   .spec:first-child { border-top: 0; padding-top: 0; }
   .spec .k { display: grid; gap: 2px; }
-  .spec .k b { font-size: 13px; font-weight: 500; color: var(--ink); }
-  .spec .k code { color: var(--ink-4); font-size: 11.5px; }
+  .spec .k b { font-size: var(--fs-small); font-weight: 500; color: var(--ink); }
+  .spec .k code { color: var(--ink-4); font-size: var(--fs-mono-sm); }
   .spec > div:last-child { min-width: 0; }
 
   /* ---- Icons ---- */
   .ico-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--s-4); }
   .ico { aspect-ratio: 1.15; max-width: 100%; border-radius: 20px; background: var(--surface); color: var(--ink-3); display: grid; place-items: center; align-content: center; gap: var(--s-4); transition: color var(--t-color), background var(--t-color); }
   .ico:hover { color: var(--ink); background: var(--surface-2); }
-  .ico span { font-size: 11.5px; color: var(--ink-4); }
+  .ico span { font-size: var(--fs-caption); color: var(--ink-4); }
   .ico-sizes { display: grid; gap: var(--s-7); }
   .ico-sizes div { display: grid; grid-template-columns: 28px 110px minmax(0, 1fr); align-items: center; gap: var(--s-6); color: var(--ink-3); }
-  .ico-sizes span { font-size: 13px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .ico-sizes small { font-size: 12.5px; color: var(--ink-4); }
+  .ico-sizes span { font-size: var(--fs-small); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .ico-sizes small { font-size: var(--fs-caption); color: var(--ink-4); }
   .ico-ctx { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
   @media (max-width: 560px) {
     /* five across keeps thirty icons to six full rows instead of ten */
-    .ico-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
-    .ico { aspect-ratio: 1; border-radius: var(--r-inner); gap: 6px; }
-    .ico span { font-size: 10px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-inline: 2px; }
+    .ico-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-3); }
+    .ico { aspect-ratio: 1; border-radius: var(--r-inner); gap: var(--s-3); }
+    .ico span { font-size: var(--fs-tag); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-inline: 2px; }
     .ico-sizes div { grid-template-columns: 28px minmax(0, 1fr); row-gap: 2px; }
     .ico-sizes small { grid-column: 2; }
   }
@@ -135,23 +135,55 @@
 
   /* ---- Space / radius ---- */
   .ladder { display: grid; gap: var(--s-3); }
-  .ladder div { display: grid; grid-template-columns: 56px 44px minmax(0, 1fr); gap: var(--s-6); align-items: center; font-size: 12.5px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+  .ladder div { display: grid; grid-template-columns: 56px 44px minmax(0, 1fr); gap: var(--s-6); align-items: center; font-size: var(--fs-caption); color: var(--ink-4); font-variant-numeric: tabular-nums; }
   .ladder i { display: block; height: 10px; border-radius: var(--r-pill); background: var(--ink); }
   .radii { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
-  .radii div { aspect-ratio: 1.3; max-width: 100%; background: var(--surface-3); display: grid; place-items: end start; padding: var(--s-6); font-size: 12.5px; color: var(--ink-3); }
+  .radii div { aspect-ratio: 1.3; max-width: 100%; background: var(--surface-3); display: grid; place-items: end start; padding: var(--s-6); font-size: var(--fs-caption); color: var(--ink-3); }
+
+  /* ---- Rhythm: guide-tinted strips measure each gap at 1:1 ---- */
+  .rhythm { display: grid; justify-items: start; }
+  .rb, .rrow i { display: block; border-radius: 6px; background: var(--wash-2); }
+  .rg { width: 100%; height: var(--g); display: flex; align-items: center; justify-content: flex-end; gap: var(--s-2); padding-inline: var(--s-4);
+    background: color-mix(in srgb, var(--guide) 12%, transparent); box-shadow: inset 0 1px color-mix(in srgb, var(--guide) 50%, transparent), inset 0 -1px color-mix(in srgb, var(--guide) 50%, transparent);
+    font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); white-space: nowrap; }
+  .rhythm b { font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .rs { position: relative; width: 100%; display: grid; justify-items: start; padding: var(--s-10); border-radius: var(--r-card); background: var(--bg);
+    box-shadow: inset 0 0 0 var(--s-10) color-mix(in srgb, var(--guide) 8%, transparent); }
+  .rs-pad { position: absolute; top: var(--s-5); left: var(--s-10); display: flex; gap: var(--s-2); font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); }
+  .rrow { display: flex; align-items: center; gap: var(--s-4); }
+  .rrow i { width: 52px; height: 24px; border-radius: var(--r-pill); }
+  .rrow span { display: flex; gap: var(--s-2); margin-left: var(--s-4); font: 400 var(--fs-caption)/1 var(--font-ui); color: var(--ink-3); white-space: nowrap; }
+  @media (max-width: 560px) { .rrow i { width: 32px; } }
+
+  /* ---- Do / don't ---- */
+  .dd { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-7); }  /* two across keeps each do beside its don't */
+  @media (max-width: 560px) { .dd { grid-template-columns: 1fr; } }
+  .dd figure { margin: 0; display: grid; gap: var(--s-4); align-content: start; }
+  .dd-stage { min-height: 148px; padding: var(--s-9); border-radius: var(--r-card); background: var(--surface); display: grid; align-content: center; gap: var(--s-2); }
+  .dd figcaption { font-size: var(--fs-small); line-height: var(--lh-small); color: var(--ink-4); }
+  .dd figcaption b { display: inline-flex; align-items: center; gap: var(--s-1); margin-right: var(--s-3); font-weight: 500; }
+  .dd figcaption svg.i { width: var(--icon-sm); height: var(--icon-sm); }
+  .dd .do b { color: var(--ok); }
+  .dd .dont b { color: var(--ember); }
+  .dd-num { justify-items: end; justify-content: center; }
+  .dd-groups { gap: var(--out); justify-content: center; }
+  .dd-groups div { display: grid; gap: var(--in); }
+  .dd-groups i { display: block; width: 180px; max-width: 100%; height: 10px; border-radius: var(--r-pill); background: var(--wash-2); }
+  .dd-card .chip { display: inline-flex; align-items: center; background: var(--thumb); box-shadow: var(--shadow-1); }
+  .dd-card { display: flex; gap: var(--s-4); align-self: stretch; min-height: 148px; align-items: flex-start; border-radius: var(--r-card); background: var(--wash); }
 
   /* ---- Elevation ---- */
   .elev { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: var(--s-7); }
-  .elev > div { height: 140px; border-radius: var(--r-card); display: grid; place-items: end start; padding: var(--s-7); font-size: 13px; color: var(--ink-3); }
+  .elev > div { height: 140px; border-radius: var(--r-card); display: grid; place-items: end start; padding: var(--s-7); font-size: var(--fs-small); color: var(--ink-3); }
   .glass-stage { position: relative; overflow: hidden; background: var(--paper); }
   .glass-stage::before { content: ""; position: absolute; width: 120px; height: 120px; border-radius: 50%; background: var(--ember); top: -20px; right: 10px; }
-  .glass-stage span { position: relative; background: var(--pane); border: 1px solid var(--pane-edge); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: var(--r-pill); padding: 6px 12px; color: var(--ink); }
+  .glass-stage span { position: relative; background: var(--pane); border: 1px solid var(--pane-edge); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: var(--r-pill); padding: var(--s-3) var(--s-6); color: var(--ink); }
 
   /* ---- Components ---- */
   .btn {
-    height: var(--h-button); padding: 0 20px; border: 0; border-radius: var(--r-pill);
+    height: var(--h-button); padding: 0 var(--s-8); border: 0; border-radius: var(--r-pill);
     background: var(--ink); color: var(--on-ink);
-    font: 500 15px/1 var(--font-ui); cursor: pointer; text-decoration: none;
+    font: 500 var(--fs-body)/1 var(--font-ui); cursor: pointer; text-decoration: none;
     display: inline-flex; align-items: center; gap: var(--s-4);
     transition: opacity var(--t-fade), scale var(--t-press) var(--spring-soft), background var(--t-color), color var(--t-color);
   }
@@ -161,13 +193,13 @@
   .btn.hero:active { scale: var(--press-hero); }
   .btn.quiet { background: var(--wash); color: var(--ink); }
   .btn.quiet:hover { opacity: 1; background: var(--wash-2); }
-  .btn.sm { height: var(--h-nav); padding: 0 16px; font-size: 14px; }
+  .btn.sm { height: var(--h-nav); padding: 0 var(--s-7); font-size: var(--fs-ui); }
   .btn.block { width: 100%; height: 52px; border-radius: 14px; justify-content: center; }
   .btn[disabled] { opacity: .4; cursor: not-allowed; scale: 1; }
 
   .split { display: inline-flex; gap: 1px; }
-  .split .btn { border-radius: var(--r-pill) 0 0 var(--r-pill); padding: 0 12px 0 16px; }
-  .split .btn + .btn { border-radius: 0 var(--r-pill) var(--r-pill) 0; padding: 0 10px; }
+  .split .btn { border-radius: var(--r-pill) 0 0 var(--r-pill); padding: 0 var(--s-6) 0 var(--s-7); }
+  .split .btn + .btn { border-radius: 0 var(--r-pill) var(--r-pill) 0; padding: 0 var(--s-5); }
 
   .icon-btn {
     width: var(--h-nav); height: var(--h-nav); border-radius: 50%; border: 0;
@@ -184,7 +216,7 @@
   .nav-link {
     height: var(--h-nav); padding: 0 13px; border-radius: var(--r-pill);
     display: inline-flex; align-items: center; white-space: nowrap;
-    font: 500 14px/1 var(--font-ui); color: var(--ink-4); text-decoration: none;
+    font: 500 var(--fs-ui)/1 var(--font-ui); color: var(--ink-4); text-decoration: none;
     transition: color var(--t-color), background var(--t-color), scale var(--t-press) var(--spring-soft);
   }
   .nav-link:hover { color: var(--ink); }
@@ -194,30 +226,30 @@
   .search {
     height: var(--h-field); border-radius: var(--r-pill); background: var(--wash);
     display: inline-flex; align-items: center; gap: var(--s-4); padding: 0 6px 0 14px;
-    color: var(--ink-4); font-size: 14px; min-width: 0; width: 220px; max-width: 100%;
+    color: var(--ink-4); font-size: var(--fs-ui); min-width: 0; width: 220px; max-width: 100%;
   }
   .search input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; color: var(--ink); outline: none; }
   .search input::placeholder { color: var(--ink-4); }
   .search:focus-within { box-shadow: var(--ring); background: var(--bg); }
-  .kbd { font: 500 11px/1 var(--font-ui); color: var(--ink-4); padding: 5px 7px; border-radius: var(--r-pill); }
+  .kbd { font: 500 var(--fs-tag)/1 var(--font-ui); color: var(--ink-4); padding: 5px 7px; border-radius: var(--r-pill); }
 
   .chip {
     height: var(--h-chip); padding: 0 14px; border: 0; border-radius: var(--r-pill);
-    background: var(--wash); color: var(--ink-2); font: 500 14px/1 var(--font-ui); cursor: pointer;
+    background: var(--wash); color: var(--ink-2); font: 500 var(--fs-ui)/1 var(--font-ui); cursor: pointer;
     transition: background var(--t-color), color var(--t-color), scale var(--t-press) var(--spring-soft);
   }
   .chip:hover { background: var(--wash-2); color: var(--ink); }
   .chip:active { scale: var(--press-chip); }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
 
-  .tag { height: var(--h-tag); padding: 0 10px; border-radius: var(--r-pill); display: inline-flex; align-items: center; background: var(--bg); }
-  .tag.glass { height: 28px; padding: 0 9px; background: var(--scrim); color: #fff; font-size: 12px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .tag { height: var(--h-tag); padding: 0 var(--s-5); border-radius: var(--r-pill); display: inline-flex; align-items: center; background: var(--bg); }
+  .tag.glass { height: 28px; padding: 0 9px; background: var(--scrim); color: #fff; font-size: var(--fs-caption); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   .tag.lock { background: var(--surface-3); color: var(--ink-3); }
 
   .count {
-    height: 32px; padding: 0 14px; border-radius: var(--r-pill); box-shadow: var(--ring);
+    height: var(--h-chip); padding: 0 14px; border-radius: var(--r-pill); box-shadow: var(--ring);
     display: inline-flex; align-items: center; gap: var(--s-4);
-    font: 500 14px/1 var(--font-ui); color: var(--ink); font-variant-numeric: tabular-nums;
+    font: 500 var(--fs-ui)/1 var(--font-ui); color: var(--ink); font-variant-numeric: tabular-nums;
   }
   .count i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
 
@@ -226,16 +258,16 @@
   .faq { border-top: 1px solid var(--hairline); }
   .faq-item { border-bottom: 1px solid var(--hairline); }
   .faq-item button {
-    width: 100%; background: none; border: 0; padding: 16px 0; cursor: pointer;
+    width: 100%; background: none; border: 0; padding: var(--s-7) 0; cursor: pointer;
     display: flex; justify-content: space-between; align-items: center; gap: var(--s-7);
-    font: 500 15px/1.4 var(--font-ui); color: var(--ink); text-align: left;
+    font: 500 var(--fs-body)/var(--lh-ui) var(--font-ui); color: var(--ink); text-align: left;
   }
   .faq-item button svg { transition: rotate var(--t-press) var(--settle); flex-shrink: 0; }
   .faq-item[data-open] button svg { rotate: 45deg; }
   .faq-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--t-open) var(--settle); }
   .faq-item[data-open] .faq-body { grid-template-rows: 1fr; }
   .faq-body > div { overflow: hidden; }
-  .faq-body p { margin: 0; padding: 0 28px 16px 0; font-size: 14px; line-height: 1.55; color: var(--ink-4); opacity: 0; transition: opacity var(--t-fade); }
+  .faq-body p { margin: 0; padding: 0 28px var(--s-7) 0; font-size: var(--fs-ui); line-height: var(--lh-lead); color: var(--ink-4); opacity: 0; transition: opacity var(--t-fade); }
   .faq-item[data-open] .faq-body p { opacity: 1; transition-delay: 80ms; }
 
   /* ---- Entrance ---- */
@@ -249,8 +281,8 @@
   @media (max-width: 480px) { .lab { grid-template-columns: 1fr; } }
   .lab > div { background: var(--surface); border-radius: var(--r-card); padding: var(--s-9) var(--s-8) var(--s-8); display: grid; gap: var(--s-7); justify-items: center; text-align: center; }
   .lab .stagebox { height: 72px; display: grid; place-items: center; }
-  .lab b { font-size: 14px; font-weight: 500; color: var(--ink); }
-  .lab code { color: var(--ink-4); font-size: 11.5px; line-height: 1.6; }
+  .lab b { font-size: var(--fs-ui); font-weight: 500; color: var(--ink); }
+  .lab code { color: var(--ink-4); font-size: var(--fs-mono-sm); line-height: var(--lh-caption); }
 
   /* ---- Phone ---- */
   .phones { display: flex; flex-wrap: wrap; gap: var(--s-10); align-items: flex-start; }
@@ -277,14 +309,14 @@
   .pbody { padding: 82px 14px 24px; display: grid; gap: var(--s-7); }
   .pbody .phero { text-align: center; display: grid; justify-items: center; gap: var(--s-6); padding-block: 20px 8px; }
   .pbody .phero h4 { margin: 0; font-size: 34px; line-height: 1.05; font-weight: 500; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
-  .pbody .phero p { margin: 0; font-size: 15px; color: var(--ink-4); }
+  .pbody .phero p { margin: 0; font-size: var(--fs-body); color: var(--ink-4); }
   .pchips { display: flex; gap: var(--s-4); overflow-x: auto; scrollbar-width: none; margin-inline: -14px; padding-inline: 14px;
     mask-image: linear-gradient(90deg, #000 calc(100% - 64px), transparent); }
-  .pchips .chip { height: 38px; padding: 0 16px; flex-shrink: 0; }
+  .pchips .chip { height: var(--h-field); padding: 0 var(--s-7); flex-shrink: 0; }
   .pcard { position: relative; background: var(--wash); border-radius: var(--r-card); height: 300px; display: grid; place-items: center; }
-  .pcard .tag { position: absolute; top: 12px; left: 12px; }
-  .pcard .pfoot { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-  .pcard .pname { height: var(--h-touch); padding: 0 16px; border-radius: var(--r-pill); background: var(--frost); display: inline-flex; align-items: center; font-size: 13.5px; color: var(--ink-2); }
+  .pcard .tag { position: absolute; top: var(--s-6); left: var(--s-6); }
+  .pcard .pfoot { position: absolute; left: var(--s-6); right: var(--s-6); bottom: var(--s-6); display: flex; justify-content: space-between; align-items: center; }
+  .pcard .pname { height: var(--h-touch); padding: 0 var(--s-7); border-radius: var(--r-pill); background: var(--frost); display: inline-flex; align-items: center; font-size: var(--fs-small); color: var(--ink-2); }
   .pcard .icon-btn { width: var(--h-touch); height: var(--h-touch); }
 
   .psheet {
@@ -296,25 +328,25 @@
   .psheet[data-open] { opacity: 1; visibility: visible; translate: none; transition-delay: 0s; }
   .psheet .close { position: absolute; top: 10px; right: 10px; }
   .psheet nav { display: grid; padding-inline: 10px; }
-  .psheet nav a { height: 44px; display: flex; align-items: center; font-size: 26px; font-weight: 500; letter-spacing: -.01em; color: var(--ink-4); text-decoration: none; }
+  .psheet nav a { height: 44px; display: flex; align-items: center; font-size: var(--fs-heading); font-weight: 500; letter-spacing: var(--track-heading); color: var(--ink-4); text-decoration: none; }
   .psheet nav a[aria-current] { color: var(--ink); }
-  .plist { background: var(--surface); border-radius: 20px; padding-inline: 16px; }
-  .plist div { height: 50px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 500; color: var(--ink-2); }
+  .plist { background: var(--surface); border-radius: 20px; padding-inline: var(--s-7); }
+  .plist div { height: 50px; display: flex; align-items: center; justify-content: space-between; font-size: var(--fs-body); font-weight: 500; color: var(--ink-2); }
   .plist div + div { border-top: 1px solid var(--hairline); }
   .ptoggles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
-  .ptoggles .seg { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; }
-  .ptoggles .seg button { height: 38px; display: grid; place-items: center; padding: 0; }
+  .ptoggles .seg { display: grid; grid-template-columns: 1fr 1fr; padding: var(--s-2); }
+  .ptoggles .seg button { height: var(--h-field); display: grid; place-items: center; padding: 0; }
   .ptoggles .seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); box-shadow: none; }
 
   .patterns { flex: 1; min-width: min(100%, 300px); display: grid; gap: var(--s-4); }
   .pat { background: var(--surface); border-radius: 20px; padding: var(--s-7) var(--s-8); display: grid; gap: var(--s-2); }
-  .pat b { font-size: 14px; font-weight: 500; color: var(--ink); }
-  .pat span { font-size: 13.5px; line-height: 1.5; color: var(--ink-4); }
+  .pat b { font-size: var(--fs-ui); font-weight: 500; color: var(--ink); }
+  .pat span { font-size: var(--fs-small); line-height: var(--lh-small); color: var(--ink-4); }
 
   /* ---- Panels ---- */
   .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--s-9); align-items: start; }
   .panels figure { margin: 0; display: grid; gap: var(--s-6); justify-items: center; }
-  .panels figcaption { font-size: 13px; color: var(--ink-4); text-align: center; max-width: 34ch; }
+  .panels figcaption { font-size: var(--fs-small); color: var(--ink-4); text-align: center; max-width: 34ch; }
   .pan-stage { width: 100%; background: var(--surface); border-radius: var(--r-card); padding: var(--s-9) var(--s-7); display: grid; place-items: center; }
 
   /* tool: icon button whose backdrop grows in on hover */
@@ -338,14 +370,14 @@
   }
   .side.on-surface { background: var(--elev); background-image: linear-gradient(var(--wash), var(--wash)); }
   .side-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 0 12px; padding-bottom: 14px; }
-  .side-title { margin: 0; font-size: 17px; line-height: 1.25; font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
-  .side-say { flex-basis: 100%; margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: var(--ink-4); text-wrap: pretty; }
+  .side-title { margin: 0; font-size: var(--fs-subhead); line-height: var(--lh-subhead); font-weight: 500; letter-spacing: var(--track-subhead); color: var(--ink); }
+  .side-say { flex-basis: 100%; margin: var(--s-4) 0 0; font-size: var(--fs-small); line-height: var(--lh-small); color: var(--ink-4); text-wrap: pretty; }
   .side-head .tool { margin: -6px -6px 0 0; }
   .ctls { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 0; scrollbar-width: thin; }
   .ctl { min-height: calc(var(--h-row) + 12px); padding: 6px 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .ctl-label { font-size: 13.5px; line-height: 1; color: var(--ink-2); }
-  .mini-seg { display: flex; gap: 2px; padding: 2px; border-radius: var(--r-pill); background: var(--wash); }
-  .mini-seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-3); font: 500 12.5px/1 var(--font-ui); cursor: pointer; transition: background 180ms, color 180ms; }
+  .ctl-label { font-size: var(--fs-small); line-height: 1; color: var(--ink-2); }
+  .mini-seg { display: flex; gap: var(--s-1); padding: var(--s-1); border-radius: var(--r-pill); background: var(--wash); }
+  .mini-seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-3); font: 500 var(--fs-caption)/1 var(--font-ui); cursor: pointer; transition: background 180ms, color 180ms; }
   .mini-seg button:hover { color: var(--ink); }
   .mini-seg button[aria-pressed="true"] { background: var(--thumb); color: var(--ink); box-shadow: var(--shadow-1); }
   .switch { position: relative; width: 50px; height: var(--h-switch); flex: none; border: 0; border-radius: var(--r-pill); background: rgba(var(--ink-rgb), .16); cursor: pointer; transition: background 200ms; }
@@ -362,14 +394,14 @@
   .slide:hover { background: rgba(var(--ink-rgb), .08); }
   .slide:hover::before { background: rgba(var(--ink-rgb), .15); }
   .slide span { position: relative; pointer-events: none; white-space: nowrap; }
-  .slide .bl { font-size: 13.5px; font-weight: 500; line-height: 1; color: var(--ink-2); }
-  .slide .bv { font-size: 12.5px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .slide .bl { font-size: var(--fs-small); font-weight: 500; line-height: 1; color: var(--ink-2); }
+  .slide .bv { font-size: var(--fs-caption); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
   .slide input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
   .slide:has(input:focus-visible) { box-shadow: inset 0 0 0 2px rgba(var(--ink-rgb), .45); }
-  .side-foot { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .side-foot { display: flex; flex-direction: column; gap: var(--s-4); margin-top: var(--s-6); }
   .act {
     height: 40px; padding: 0 16px; border-radius: var(--r-pill); display: flex; align-items: center; justify-content: center; gap: 7px;
-    font: 500 13px/1 var(--font-ui); letter-spacing: -.01em; cursor: pointer; white-space: nowrap;
+    font: 500 var(--fs-small)/1 var(--font-ui); letter-spacing: -.01em; cursor: pointer; white-space: nowrap;
     transition: opacity 160ms, background 180ms, color 180ms, border-color 180ms, scale var(--t-press) var(--spring-soft);
   }
   .act.solid { border: 0; background: var(--ink); color: var(--on-ink); }
@@ -384,24 +416,24 @@
   .info { width: var(--side); max-width: 100%; height: 520px; padding: 20px; border-radius: var(--r-card); background: var(--elev); box-shadow: var(--lift); display: flex; flex-direction: column; text-align: left; }
   .info-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; }
   .info-bar .tool:first-child { margin-left: -9px; } .info-bar .tool:last-child { margin-right: -9px; }
-  .info-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
-  .info-tags span { height: 34px; padding: 0 13px; border-radius: var(--r-pill); background: rgba(var(--ink-rgb), .05); display: inline-flex; align-items: center; font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .info-tags { display: flex; flex-wrap: wrap; gap: var(--s-5); margin-bottom: var(--s-7); }
+  .info-tags span { height: 34px; padding: 0 13px; border-radius: var(--r-pill); background: rgba(var(--ink-rgb), .05); display: inline-flex; align-items: center; font-size: var(--fs-small); font-weight: 500; color: var(--ink-2); }
   .info .side-title { margin-bottom: 14px; }
-  .credit { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; font-size: 13px; font-weight: 500; color: var(--ink); }
+  .credit { display: flex; align-items: center; gap: 7px; margin-bottom: var(--s-7); font-size: var(--fs-small); font-weight: 500; color: var(--ink); }
   .credit i { width: 22px; height: 22px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 1px var(--hairline); }
-  .info p { margin: 0 0 12px; font-size: 13px; line-height: 1.62; color: var(--ink-3); }
-  .info time { font-size: 11.5px; color: var(--ink-4); }
+  .info p { margin: 0 0 var(--s-6); font-size: var(--fs-small); line-height: var(--lh-caption); color: var(--ink-3); }
+  .info time { font-size: var(--fs-caption); color: var(--ink-4); }
   .info .side-foot { margin-top: auto; }
 
   /* dropdown menu */
-  .menu { width: 240px; padding: 4px; border-radius: var(--r-menu); background: var(--elev); box-shadow: var(--menu-ring), var(--float); display: flex; flex-direction: column; text-align: left; }
-  .mrow { height: var(--h-row); padding: 0 16px; border: 0; border-radius: var(--r-row); background: none; display: flex; align-items: center; gap: 8px; font: 500 14px/1 var(--font-ui); color: var(--ink-2); cursor: pointer; transition: background 150ms, color 150ms; }
+  .menu { width: 240px; padding: var(--s-2); border-radius: var(--r-menu); background: var(--elev); box-shadow: var(--menu-ring), var(--float); display: flex; flex-direction: column; text-align: left; }
+  .mrow { height: var(--h-row); padding: 0 var(--s-7); border: 0; border-radius: var(--r-row); background: none; display: flex; align-items: center; gap: var(--s-4); font: 500 var(--fs-ui)/1 var(--font-ui); color: var(--ink-2); cursor: pointer; transition: background 150ms, color 150ms; }
   .mrow:hover { background: var(--wash); color: var(--ink); }
   .mrow span { flex: 1; text-align: left; }
   .mrow svg.i { color: var(--ink-3); }
-  .mrule { height: 1px; margin: 4px 12px; background: var(--hairline); }
-  .mset { height: 45px; padding: 0 4px 0 16px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 500; color: var(--ink-2); }
-  .icon-seg { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--wash); }
+  .mrule { height: 1px; margin: var(--s-2) var(--s-6); background: var(--hairline); }
+  .mset { height: 45px; padding: 0 var(--s-2) 0 var(--s-7); display: flex; align-items: center; justify-content: space-between; font-size: var(--fs-ui); font-weight: 500; color: var(--ink-2); }
+  .icon-seg { display: flex; gap: var(--s-1); padding: var(--s-2); border-radius: var(--r-pill); background: var(--wash); }
   .icon-seg button { width: 35px; height: 27px; border: 0; border-radius: var(--r-pill); background: none; color: var(--ink-4); display: grid; place-items: center; cursor: pointer; transition: background 180ms, color 180ms; }
   .icon-seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
   .icon-seg svg.i { width: var(--icon-sm); height: var(--icon-sm); }
@@ -409,7 +441,7 @@
     .icon-seg button { width: 44px; height: 36px; }
     .mset { height: 52px; }
   }
-  .mwho { padding: 10px 16px 12px; display: grid; gap: 2px; font-size: 14px; }
+  .mwho { padding: var(--s-5) var(--s-7) var(--s-6); display: grid; gap: var(--s-1); font-size: var(--fs-ui); }
   .mwho b { font-weight: 500; color: var(--ink); } .mwho span { color: var(--ink-4); }
 
   /* modal demo */
@@ -438,14 +470,14 @@
   }
 
   .seg { display: inline-flex; padding: var(--s-1); gap: var(--s-1); border-radius: var(--r-pill); background: var(--wash); }
-  .seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--ink-4); font: 500 13px/1 var(--font-ui); cursor: pointer; transition: background var(--t-color), color var(--t-color); }
+  .seg button { height: 32px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--ink-4); font: 500 var(--fs-small)/1 var(--font-ui); cursor: pointer; transition: background var(--t-color), color var(--t-color); }
   .seg button[aria-pressed="true"] { background: var(--thumb); color: var(--ink); box-shadow: var(--shadow-1); }
 
   .comp { display: grid; grid-template-columns: 180px 1fr; gap: var(--s-9); padding-block: var(--s-9); border-top: 1px solid var(--hairline); }
   .comp:first-of-type { border-top: 0; padding-top: 0; }
   .comp .k { display: grid; gap: var(--s-2); align-content: start; }
-  .comp .k b { font-size: 14px; font-weight: 500; color: var(--ink); }
-  .comp .k span { font-size: 12.5px; color: var(--ink-4); line-height: 1.5; }
+  .comp .k b { font-size: var(--fs-ui); font-weight: 500; color: var(--ink); }
+  .comp .k span { font-size: var(--fs-caption); color: var(--ink-4); line-height: var(--lh-body); }
   .comp > div:last-child { min-width: 0; }
 
   /* ---- Motion ---- */
@@ -454,25 +486,24 @@
   .curve .track { height: 32px; border-radius: var(--r-pill); background: var(--wash); position: relative; }
   .curve .dot { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--ink); }
   .curve:hover .dot, .curve:focus-visible .dot { left: calc(100% - 28px); }
-  .curve b { font-size: 14px; font-weight: 500; color: var(--ink); }
-  .curve code { color: var(--ink-4); font-size: 11.5px; overflow-wrap: anywhere; }
+  .curve b { font-size: var(--fs-ui); font-weight: 500; color: var(--ink); }
+  .curve code { color: var(--ink-4); font-size: var(--fs-mono-sm); overflow-wrap: anywhere; }
 
   /* ---- Tables ---- */
   .tbl { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
-  th { text-align: left; font-weight: 500; color: var(--ink-4); font-size: 12px; padding: 0 var(--s-6) var(--s-4) 0; border-bottom: 1px solid var(--hairline); }
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-weight: 500; color: var(--ink-4); font-size: var(--fs-caption); padding: 0 var(--s-6) var(--s-4) 0; border-bottom: 1px solid var(--hairline); }
   td { padding: var(--s-5) var(--s-6) var(--s-5) 0; border-bottom: 1px solid var(--hairline); color: var(--ink-2); vertical-align: top; }
   td:first-child { color: var(--ink); white-space: nowrap; }
 
-  pre { margin: 0; background: var(--solid); color: var(--solid-ink); border-radius: 20px; padding: var(--s-8); overflow-x: auto; font: 12.5px/1.7 var(--font-code); }
+  pre { margin: 0; background: var(--solid); color: var(--solid-ink); border-radius: 20px; padding: var(--s-8); overflow-x: auto; font: var(--fs-mono)/var(--lh-mono) var(--font-code); }
 
-  footer { margin-top: 96px; padding-top: var(--s-9); border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-6); }
+  footer { margin-top: var(--s-15); padding-top: var(--s-9); border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-6); }
 
   @media (max-width: 760px) {
     .spec, .comp { grid-template-columns: 1fr; gap: var(--s-4); }
     .stage { padding: var(--s-8); }
     .bar nav { display: none; }
-    .t-display { font-size: 32px; }
   }
 
   /* ---- Motion components: dropzone, label field, liquid switch, opening search, like-pop ---- */
@@ -480,12 +511,12 @@
     transition: background var(--t-color), box-shadow var(--t-color), scale var(--t-press) var(--spring-soft); }
   .drop:hover { background: var(--wash-2); }
   .drop svg.i { width: var(--icon-lg); height: var(--icon-lg); margin-bottom: var(--s-4); color: var(--ink-3); }
-  .drop .big { font-size: 15px; font-weight: 500; color: var(--ink); }
-  .drop .small { font-size: 13px; color: var(--ink-4); }
+  .drop .big { font-size: var(--fs-body); font-weight: 500; color: var(--ink); }
+  .drop .small { font-size: var(--fs-small); color: var(--ink-4); }
   .field-float { display: flex; align-items: center; width: 280px; max-width: 100%; height: 48px; padding: 0 18px; border-radius: var(--r-pill); background: var(--wash); cursor: text;
     transition: background var(--t-color), box-shadow var(--t-color); }
   .field-float:hover { background: var(--wash-2); }
-  .field-float input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: none; padding: 0; font: 400 15px/1 var(--font-ui); color: var(--ink); }
+  .field-float input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: none; padding: 0; font: 400 var(--fs-body)/1 var(--font-ui); color: var(--ink); }
   .btn.quiet[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
 
   /* Dropzone: lifts its icon while a file hovers, gulps what it takes, shakes off what it refuses */
@@ -502,7 +533,7 @@
   .float { position: relative; }
   .float .lift {
     position: absolute; left: 12px; top: 50%; translate: 0 -50%; padding: 0 6px; border-radius: var(--r-pill);
-    font: 400 15px/1.2 var(--font-ui); color: var(--ink-4); pointer-events: none; white-space: nowrap; transform-origin: left center;
+    font: 400 var(--fs-body)/1.2 var(--font-ui); color: var(--ink-4); pointer-events: none; white-space: nowrap; transform-origin: left center;
     transition: top var(--t-open) var(--spring-soft), scale var(--t-open) var(--spring-soft), color var(--t-color), background var(--t-color);
   }
   .float input::placeholder { color: transparent; transition: color var(--t-color); }
@@ -539,7 +570,7 @@
   .seek:hover { background: var(--wash-2); color: var(--ink); }
   .seek svg.i { width: 16px; height: 16px; flex: none; }
   .seek input { flex: 1 1 0; width: 0; min-width: 0; opacity: 0; border: 0; outline: 0; background: none; padding: 0;
-    font: 400 14px/1 var(--font-ui); color: var(--ink); transition: opacity var(--t-fade); }
+    font: 400 var(--fs-ui)/1 var(--font-ui); color: var(--ink); transition: opacity var(--t-fade); }
   .seek input::placeholder { color: var(--ink-4); }
   .seek input::-webkit-search-cancel-button { display: none; }
   .seek:is(:focus-within, :has(input:not(:placeholder-shown))) { width: var(--seek-w, 240px); padding: 0 14px; gap: var(--s-4); cursor: text; background: var(--bg); box-shadow: var(--ring); }
@@ -661,7 +692,7 @@
       <div class="sw"><div class="chip-c" style="background:var(--ink-5)"></div><div class="meta"><b>ink-5</b><code>#85847e</code><small>Icons only, not text</small></div></div>
     </div>
 
-    <h3 style="margin-top:32px">Surfaces</h3>
+    <h3 style="margin-top:var(--s-10)">Surfaces</h3>
     <div class="grid g-auto">
       <div class="sw"><div class="chip-c" style="background:var(--bg)"></div><div class="meta"><b>bg</b><code>#ffffff</code><small>Page</small></div></div>
       <div class="sw"><div class="chip-c" style="background:var(--surface)"></div><div class="meta"><b>surface</b><code>#f7f7f6</code><small>Canvas, stage</small></div></div>
@@ -671,7 +702,7 @@
       <div class="sw"><div class="chip-c" style="background:var(--solid)"></div><div class="meta"><b>solid</b><code>#0e0f11</code><small>Deepest fill, code</small></div></div>
     </div>
 
-    <h3 style="margin-top:32px">Washes and lines</h3>
+    <h3 style="margin-top:var(--s-10)">Washes and lines</h3>
     <div class="grid g-auto">
       <div class="sw"><div class="chip-c" style="background:var(--wash)"></div><div class="meta"><b>wash</b><code>ink / 6%</code><small>Chips, cards</small></div></div>
       <div class="sw"><div class="chip-c" style="background:var(--wash-2)"></div><div class="meta"><b>wash-2</b><code>ink / 10%</code><small>Hover on a wash</small></div></div>
@@ -679,7 +710,7 @@
       <div class="sw"><div class="chip-c" style="background:var(--scrim)"></div><div class="meta"><b>scrim</b><code>ink / 72%</code><small>Dark glass tag</small></div></div>
     </div>
 
-    <h3 style="margin-top:32px">Signal (content only)</h3>
+    <h3 style="margin-top:var(--s-10)">Signal (content only)</h3>
     <div class="grid g-auto">
       <div class="sw"><div class="chip-c" style="background:var(--signal)"></div><div class="meta"><b>signal</b><code>#2231dd</code><small>Links, focus</small></div></div>
       <div class="sw"><div class="chip-c" style="background:var(--pick)"></div><div class="meta"><b>pick</b><code>#0d99ff</code><small>Selection</small></div></div>
@@ -689,7 +720,7 @@
       <div class="sw"><div class="chip-c" style="background:var(--lock)"></div><div class="meta"><b>lock</b><code>#adaca6</code><small>Locked content</small></div></div>
     </div>
 
-    <h3 style="margin-top:32px">Dark mode</h3>
+    <h3 style="margin-top:var(--s-10)">Dark mode</h3>
     <div class="tbl">
       <table>
         <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Note</th></tr></thead>
@@ -706,17 +737,69 @@
 
   <!-- ===== Type ===== -->
   <section id="type">
-    <div class="sh"><h2 class="t-title">Type</h2><p class="t-lead">One family, Inter, at weights 400 and 500. Hierarchy comes from size and ink, not boldness. Large sizes tighten their tracking; nothing goes above 500.</p></div>
+    <div class="sh"><h2 class="t-title">Type</h2><p class="t-lead">One family, Inter, at weights 400 and 500. Hierarchy comes from size and ink, not boldness. Large sizes tighten their tracking; nothing goes above 500. Every step is a token: <code>--fs-*</code>, <code>--lh-*</code>, <code>--track-*</code>.</p></div>
     <div class="stage">
-      <div class="spec"><div class="k"><b>Display</b><code>40 / 1.1 · 500 · −2%</code></div><div class="t-display">Small parts, live on the page</div></div>
-      <div class="spec"><div class="k"><b>Title</b><code>30 / 1.08 · 500 · −1.2%</code></div><div class="t-title">Unlock the full library</div></div>
-      <div class="spec"><div class="k"><b>Heading</b><code>26 / 1.2 · 500 · −1%</code></div><div class="t-heading">Common questions</div></div>
-      <div class="spec"><div class="k"><b>Lead</b><code>16 / 1.55 · 400 · ink-4</code></div><div class="t-lead">Browse working parts, change them, and <b>take the code</b> into your own project.</div></div>
-      <div class="spec"><div class="k"><b>Body</b><code>15 / 1.5 · 400 · ink-2</code></div><div class="t-body">Every part runs in the page, so what you try is what you ship.</div></div>
-      <div class="spec"><div class="k"><b>UI</b><code>14 / 1.4 · 500 · ink</code></div><div class="t-ui">Buttons, nav, chips, accordion rows</div></div>
-      <div class="spec"><div class="k"><b>Small</b><code>13 / 1.5 · 400 · ink-4</code></div><div class="t-small">Footer links, card captions, helper text</div></div>
-      <div class="spec"><div class="k"><b>Micro</b><code>12 / 1.6 · 500 · ink-3</code></div><div class="t-micro">Glass tags, column labels</div></div>
-      <div class="spec"><div class="k"><b>Tag</b><code>11 / 1 · 500 · +1%</code></div><div><span class="tag t-tag" style="box-shadow:var(--ring)">New</span></div></div>
+      <div class="spec"><div class="k"><b>Display</b><code>fs-display · 40 / 1.1 · −2%</code></div><div class="t-display">Small parts, live on the page</div></div>
+      <div class="spec"><div class="k"><b>Title</b><code>fs-title · 30 / 1.08 · −1.2%</code></div><div class="t-title">Unlock the full library</div></div>
+      <div class="spec"><div class="k"><b>Heading</b><code>fs-heading · 26 / 1.2 · −1%</code></div><div class="t-heading">Common questions</div></div>
+      <div class="spec"><div class="k"><b>Subhead</b><code>fs-subhead · 17 / 1.25 · −2%</code></div><div class="side-title">Voice memo</div></div>
+      <div class="spec"><div class="k"><b>Lead</b><code>fs-lead · 16 / 1.55 · ink-4</code></div><div class="t-lead">Browse working parts, change them, and <b>take the code</b> into your own project.</div></div>
+      <div class="spec"><div class="k"><b>Body</b><code>fs-body · 15 / 1.5 · ink-2</code></div><div class="t-body">Every part runs in the page, so what you try is what you ship.</div></div>
+      <div class="spec"><div class="k"><b>UI</b><code>fs-ui · 14 / 1.4 · 500 · ink</code></div><div class="t-ui">Buttons, nav, chips, accordion rows</div></div>
+      <div class="spec"><div class="k"><b>Small</b><code>fs-small · 13 / 1.5 · ink-4</code></div><div class="t-small">Tables, footer links, helper text, control labels</div></div>
+      <div class="spec"><div class="k"><b>Caption</b><code>fs-caption · 12 / 1.6 · 500 · ink-3</code></div><div class="t-caption">Glass tags, column heads, values in a slider</div></div>
+      <div class="spec"><div class="k"><b>Tag</b><code>fs-tag · 11 / 1 · 500 · +1%</code></div><div><span class="tag t-tag" style="box-shadow:var(--ring)">New</span></div></div>
+      <div class="spec"><div class="k"><b>Mono</b><code>fs-mono · 12.5 / 1.7 · mono-sm 11.5</code></div><div><code>--fs-body: 15px;</code></div></div>
+    </div>
+
+    <div class="g-2 grid" style="margin-top:var(--s-7)">
+      <div class="stage">
+        <h3>When to use which</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Role</th><th>Use for</th><th>Not for</th></tr></thead>
+          <tbody>
+            <tr><td>display</td><td>The page hero, once. 32 on phones.</td><td>Section titles</td></tr>
+            <tr><td>title</td><td>Section and modal titles</td><td>Two in one view</td></tr>
+            <tr><td>heading</td><td>Headings inside a section, phone menu links</td><td>Card names</td></tr>
+            <tr><td>subhead</td><td>Panel, card and dialog titles</td><td>Running text</td></tr>
+            <tr><td>lead</td><td>The first paragraph under a title, in ink-4</td><td>Long copy</td></tr>
+            <tr><td>body</td><td>Running text, primary buttons, field input</td><td>Dense tables</td></tr>
+            <tr><td>ui</td><td>Chips, nav, menu rows, small buttons</td><td>Paragraphs</td></tr>
+            <tr><td>small</td><td>Tables, helper text, control labels, footers</td><td>A button's only label</td></tr>
+            <tr><td>caption</td><td>Column heads, meta, slider values</td><td>Anything past one line</td></tr>
+            <tr><td>tag</td><td>Tags and key hints</td><td>Anything that wraps</td></tr>
+            <tr><td>mono</td><td>Code, token names; mono-sm under a label</td><td>Numbers in UI</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="stage">
+        <h3>Rules</h3>
+        <div class="tbl"><table><tbody>
+          <tr><td>Steps</td><td>Inter sits on whole pixels. Mono runs large, so it takes the half steps 12.5 and 11.5.</td></tr>
+          <tr><td>Weight</td><td><code>fw-regular</code> 400 to read, <code>fw-medium</code> 500 for anything you name or press. The wordmark is the only 600.</td></tr>
+          <tr><td>Tracking</td><td>Tightens from 17 up (−1% to −2%), 0 for body and UI, +1% only on the 11px tag.</td></tr>
+          <tr><td>Leading</td><td>1.08–1.25 for big type, 1.5 to read, 1.6 for captions, 1 inside single-line controls.</td></tr>
+          <tr><td>Measure</td><td>Lead and body stop at 54–62ch.</td></tr>
+          <tr><td>Ink</td><td>ink for names and headings, ink-2 for body, ink-4 for lead and helper text. ink-5 is never text.</td></tr>
+          <tr><td>Numbers</td><td>Tabular figures wherever digits stack or change.</td></tr>
+          <tr><td>Fields</td><td>16px on phones so iOS does not zoom on focus.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <div class="dd" style="margin-top:var(--s-7)">
+      <figure class="do"><div class="dd-stage"><div class="t-heading">Common questions</div><div class="t-small">Plans, licences and frameworks.</div></div>
+        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Lead with size and ink: 26 in ink over 13 in ink-4.</figcaption></figure>
+      <figure class="dont"><div class="dd-stage"><div class="t-body" style="font-weight:700;color:var(--ink)">Common questions</div><div class="t-body" style="font-weight:700;color:var(--ink)">Plans, licences and frameworks.</div></div>
+        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Reach for bold. Two lines at one size and weight read as one.</figcaption></figure>
+      <figure class="do"><div class="dd-stage"><div class="t-caption" style="color:var(--ink-4)">Updated 3 days ago · 1.2k saves</div></div>
+        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Keep meta at 12 in ink-4, which holds 4.9:1 on white.</figcaption></figure>
+      <figure class="dont"><div class="dd-stage"><div style="font-size:10px;color:var(--ink-5)">Updated 3 days ago · 1.2k saves</div></div>
+        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Go below the scale or set text in ink-5. Quiet is not faint.</figcaption></figure>
+      <figure class="do"><div class="dd-stage dd-num t-ui" style="font-variant-numeric:tabular-nums"><span>1,111.10</span><span>480.08</span><span>9,999.99</span></div>
+        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Set stacked numbers in tabular figures so the decimals line up.</figcaption></figure>
+      <figure class="dont"><div class="dd-stage dd-num t-ui" style="font-variant-numeric:proportional-nums"><span>1,111.10</span><span>480.08</span><span>9,999.99</span></div>
+        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Leave proportional figures in a column; the digits drift.</figcaption></figure>
     </div>
   </section>
 
@@ -756,7 +839,7 @@
       <div class="ico"><svg class="i"><use href="#i-github"/></svg><span>github</span></div>
     </div>
 
-    <div class="g-2 grid" style="margin-top:16px">
+    <div class="g-2 grid" style="margin-top:var(--s-7)">
       <div class="stage">
         <h3>Sizes</h3>
         <div class="ico-sizes">
@@ -778,7 +861,7 @@
           <button class="btn quiet sm"><svg class="i"><use href="#i-share"/></svg>Share</button>
           <span class="tag glass">Featured <svg class="i" style="width:11px;height:11px;stroke-width:2.4"><use href="#i-arrow"/></svg></span>
         </div>
-        <div class="tbl" style="margin-top:20px"><table><tbody>
+        <div class="tbl" style="margin-top:var(--s-8)"><table><tbody>
           <tr><td>Stroke</td><td>2px, round caps and joins. 1.75 only at 26px and up, inside a knob.</td></tr>
           <tr><td>Colour</td><td><code>ink-3</code> at rest, <code>ink</code> on hover or when on; on an ink fill, <code>on-ink</code>.</td></tr>
           <tr><td>Motion</td><td>In a tool button the icon grows to 1.04 on hover and .96 on press, 90ms.</td></tr>
@@ -790,7 +873,7 @@
 
   <!-- ===== Space, radius, elevation ===== -->
   <section id="space">
-    <div class="sh"><h2 class="t-title">Space, shape and depth</h2><p class="t-lead">Fine 2px steps up to 12, then the scale opens up. Most gaps inside a component are 8; sections sit 64–72 apart.</p></div>
+    <div class="sh"><h2 class="t-title">Space, shape and depth</h2><p class="t-lead">Fine 2px steps up to 12, then the scale opens up. The gap grows with what it separates: 8 between related items, 24 under a title, 72 between sections.</p></div>
     <div class="g-2 grid">
       <div class="stage">
         <h3>Space</h3>
@@ -803,21 +886,78 @@
           <div style="border-radius:var(--r-card)">card · 28</div>
           <div style="border-radius:var(--r-pill);aspect-ratio:1.3;place-items:center">pill · 999</div>
         </div>
-        <h3 style="margin-top:32px">Control heights</h3>
+        <h3 style="margin-top:var(--s-10)">Control heights</h3>
         <div class="tbl"><table>
           <tbody>
-            <tr><td>tag</td><td>24</td><td>Status labels on cards</td></tr>
-            <tr><td>chip</td><td>32</td><td>Filters, segmented items</td></tr>
-            <tr><td>nav</td><td>36</td><td>Nav links, icon buttons, small buttons</td></tr>
-            <tr><td>field</td><td>38</td><td>Search, card name bar</td></tr>
-            <tr><td>button</td><td>40</td><td>Primary actions</td></tr>
+            <tr><td>tag</td><td>24 · side 10</td><td>Status labels on cards</td></tr>
+            <tr><td>chip</td><td>32 · side 14</td><td>Filters, segmented items</td></tr>
+            <tr><td>nav</td><td>36 · side 13–16</td><td>Nav links, icon buttons, small buttons</td></tr>
+            <tr><td>field</td><td>38 · side 14</td><td>Search, card name bar</td></tr>
+            <tr><td>button</td><td>40 · side 20</td><td>Primary actions</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <p class="t-small" style="margin:var(--s-6) 0 0;max-width:62ch">Control side padding follows the control's height, not the rhythm, so it stays outside the scale: roughly 40% of the height, and half the height for the primary button.</p>
+
+    <h3 style="margin-top:var(--s-11)">Rhythm</h3>
+    <div class="g-2 grid">
+      <div class="stage">
+        <div class="rhythm" aria-label="A section measured: each gap is one step larger than the one inside it">
+          <i class="rb" style="width:46%;height:30px"></i>
+          <span class="rg" style="--g:var(--s-6)"><b>12</b>s-6 · title to lead</span>
+          <i class="rb" style="width:82%;height:24px"></i>
+          <span class="rg" style="--g:var(--s-9)"><b>24</b>s-9 · title block to content</span>
+          <div class="rs">
+            <span class="rs-pad"><b>32</b>s-10 · stage padding</span>
+            <i class="rb" style="width:30%;height:13px"></i>
+            <span class="rg" style="--g:var(--s-6)"><b>12</b>s-6 · label to its content</span>
+            <div class="rrow"><i></i><i></i><i></i><span><b>8</b>s-4 · related items</span></div>
+            <span class="rg" style="--g:var(--s-7)"><b>16</b>s-7 · siblings in a stage</span>
+            <div class="rrow"><i></i><i></i></div>
+          </div>
+          <span class="rg" style="--g:var(--s-14)"><b>72</b>s-14 · to the next section</span>
+          <i class="rb" style="width:38%;height:30px"></i>
+        </div>
+      </div>
+      <div class="stage">
+        <h3>When to use which</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Step</th><th>px</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr><td>s-1</td><td>2</td><td>Track padding in a segment, joined pills</td></tr>
+            <tr><td>s-2</td><td>4</td><td>Menu padding, a label over its value</td></tr>
+            <tr><td>s-3</td><td>6</td><td>Swatch padding, dense icon grids</td></tr>
+            <tr><td>s-4</td><td>8</td><td>The default: chips in a row, icon to label, cards in a grid</td></tr>
+            <tr><td>s-5</td><td>10</td><td>Tag sides, table rows</td></tr>
+            <tr><td>s-6</td><td>12</td><td>A label to its content, offsets inside a card</td></tr>
+            <tr><td>s-7</td><td>16</td><td>Siblings in a stage, two grids side by side</td></tr>
+            <tr><td>s-8</td><td>20</td><td>Button sides, card padding, stage padding on phones</td></tr>
+            <tr><td>s-9</td><td>24</td><td>A title block to its content</td></tr>
+            <tr><td>s-10</td><td>32</td><td>Stage padding, groups inside a section</td></tr>
+            <tr><td>s-11</td><td>40</td><td>A group that needs air, dropzone padding</td></tr>
+            <tr><td>s-12</td><td>48</td><td>Spare: a hero inside a stage</td></tr>
+            <tr><td>s-13 · s-14</td><td>64 · 72</td><td>The intro, then every section</td></tr>
+            <tr><td>s-15</td><td>96</td><td>The end of the page, above the footer</td></tr>
+            <tr><td>gutter</td><td>16–24</td><td>Page sides, with the safe-area inset</td></tr>
           </tbody>
         </table></div>
       </div>
     </div>
 
-    <h3 style="margin-top:40px">Elevation</h3>
-    <p class="t-small" style="margin:0 0 16px;max-width:62ch">Flat is the default. Shadow means something sits above the page: a selected thumb, a panel, a menu. Each step is used for one job only.</p>
+    <div class="dd" style="margin-top:var(--s-7)">
+      <figure class="do"><div class="dd-stage dd-groups" style="--in:var(--s-4);--out:var(--s-9)"><div><i></i><i></i><i></i></div><div><i></i><i></i><i></i></div></div>
+        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Space inside a group less than between groups: 8 in, 24 between.</figcaption></figure>
+      <figure class="dont"><div class="dd-stage dd-groups" style="--in:var(--s-7);--out:var(--s-7)"><div><i></i><i></i><i></i></div><div><i></i><i></i><i></i></div></div>
+        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Use one gap for everything. The groups dissolve into a list.</figcaption></figure>
+      <figure class="do"><div class="dd-stage" style="padding:0"><div class="dd-card" style="padding:var(--s-8)"><span class="chip">Hover</span><span class="chip">Press</span></div></div>
+        <figcaption><b><svg class="i"><use href="#i-check"/></svg>Do</b>Pad a card from the scale so its corner has room: 20 or more inside 28.</figcaption></figure>
+      <figure class="dont"><div class="dd-stage" style="padding:0"><div class="dd-card" style="padding:var(--s-2)"><span class="chip">Hover</span><span class="chip">Press</span></div></div>
+        <figcaption><b><svg class="i"><use href="#i-x"/></svg>Don't</b>Crowd the edge. A pill 4px from a 28px corner collides with the curve.</figcaption></figure>
+    </div>
+
+    <h3 style="margin-top:var(--s-11)">Elevation</h3>
+    <p class="t-small" style="margin:0 0 var(--s-7);max-width:62ch">Flat is the default. Shadow means something sits above the page: a selected thumb, a panel, a menu. Each step is used for one job only.</p>
     <div class="elev">
       <div style="background:var(--wash)">Flat · wash<br><span class="mono">Cards, chips, stages</span></div>
       <div style="box-shadow:var(--ring)">Ring · 1px inset<br><span class="mono">Outline pills</span></div>
@@ -836,7 +976,7 @@
       <div class="curve" tabindex="0"><b>spring-soft · 260ms</b><div class="track"><span class="dot" style="transition:left var(--t-press) var(--spring-soft)"></span></div><code>cubic-bezier(.3, 1.12, .4, 1)</code><span class="t-small">Press scale on chips and icons</span></div>
       <div class="curve" tabindex="0"><b>settle · 320ms</b><div class="track"><span class="dot" style="transition:left var(--t-open) var(--settle)"></span></div><code>cubic-bezier(.32, .72, 0, 1)</code><span class="t-small">Accordions, drawers, rotations</span></div>
     </div>
-    <div class="tbl" style="margin-top:24px"><table>
+    <div class="tbl" style="margin-top:var(--s-9)"><table>
       <thead><tr><th>Token</th><th>Value</th><th>Used for</th></tr></thead>
       <tbody>
         <tr><td>t-color</td><td>160ms linear</td><td>Text and fill color changes</td></tr>
@@ -863,7 +1003,7 @@
       <div><div class="stagebox"><button class="icon-btn" aria-label="Add"><svg class="i"><use href="#i-plus"/></svg></button></div><b>Icon button</b><code>hover wash fill<br>press scale .92</code></div>
       <div><div class="stagebox"><a class="nav-link" href="#buttons" aria-current="true">Nav link</a></div><b>Nav link</b><code>hover ink-4 → ink · 160ms<br>press scale .985</code></div>
     </div>
-    <div class="tbl" style="margin-top:24px"><table>
+    <div class="tbl" style="margin-top:var(--s-9)"><table>
       <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
       <tbody>
         <tr><td>Use <code>scale</code>, not <code>transform</code></td><td>The individual property leaves <code>transform</code> free for layout moves, so press and hover never fight.</td></tr>
@@ -945,8 +1085,8 @@
       <thead><tr><th>Part</th><th>Spec</th></tr></thead>
       <tbody>
         <tr><td>Panel head</td><td>Title 17/500/−2% ink; description 13/1.45 ink-4 below it, full width; close is a 36px tool, nudged −6px into the corner.</td></tr>
-        <tr><td>Control row</td><td>44px line + 6px above and below; label 13.5 ink-2 left, control right. Groups sit 18px apart.</td></tr>
-        <tr><td>Mini segmented</td><td>2px padding in a wash pill; 32px items at 12.5/500; selected is an <code>elev</code> pill with ink text.</td></tr>
+        <tr><td>Control row</td><td>44px line + 6px above and below; label 13 ink-2 left, control right. Groups sit 18px apart.</td></tr>
+        <tr><td>Mini segmented</td><td>2px padding in a wash pill; 32px items at 12/500; selected is an <code>elev</code> pill with ink text.</td></tr>
         <tr><td>Switch</td><td>50×30, 24px knob 3px in. Off is ink 16%; on is solid ink with the knob in <code>on-ink</code>, moving 20px over 320ms.</td></tr>
         <tr><td>Slider row</td><td>44px wash bar, 10px radius; fill is ink 12% from the left; label left, tabular value right; ew-resize cursor; drag anywhere on the row.</td></tr>
         <tr><td>Footer</td><td>Pinned to the bottom, 8px apart: outline action (1px ink 16%) above a solid one. Both 40px pills, 13/500. A finished action turns <code>ok</code>-tinted.</td></tr>
@@ -1001,7 +1141,7 @@
         <div class="row"><button class="btn quiet sm" id="pop-demo" type="button" aria-pressed="false">Save</button></div></div>
 
       <div class="comp"><div class="k"><b>Tags</b><span>24px for status on a card; dark glass with blur for overlays; lock for gated items.</span></div>
-        <div class="row" style="background:var(--wash);padding:12px;border-radius:var(--r-inner)"><span class="tag t-tag">New</span><span class="tag glass">Featured</span><span class="tag t-tag lock">Pro</span></div></div>
+        <div class="row" style="background:var(--wash);padding:var(--s-6);border-radius:var(--r-inner)"><span class="tag t-tag">New</span><span class="tag glass">Featured</span><span class="tag t-tag lock">Pro</span></div></div>
 
       <div class="comp"><div class="k"><b>Live count</b><span>Ringed pill with a pulsing dot, tabular numerals. Use above a hero title.</span></div>
         <div class="row"><span class="count"><i></i>482 joined this week</span></div></div>
@@ -1115,14 +1255,14 @@
 &lt;link rel="stylesheet" href="https://granqvistsanna-web.github.io/pumice/tokens.css"&gt;
 
 .my-button {
-  height: var(--h-button); padding: 0 20px;
+  height: var(--h-button); padding: 0 var(--s-8);
   border-radius: var(--r-pill);
   background: var(--ink); color: var(--on-ink);
-  font: 500 15px/1 var(--font-ui);
+  font: var(--fw-medium) var(--fs-body)/1 var(--font-ui);
   transition: transform var(--t-move) var(--spring);
 }
 .my-button:active { transform: scale(.96); }</pre>
-<p class="t-lead" style="margin:24px 0 12px">Theme switch: flip the theme inside a view transition and tokens.css wipes it in from the toggle. Try the moon in the bar.</p>
+<p class="t-lead" style="margin:var(--s-9) 0 var(--s-6)">Theme switch: flip the theme inside a view transition and tokens.css wipes it in from the toggle. Try the moon in the bar.</p>
 <pre>function setTheme(next, from) {
   var root = document.documentElement;
   var flip = function () { root.dataset.theme = next; };
@@ -1170,7 +1310,7 @@ toggle.onclick = function () {
   });
 
   // space ladder
-  var steps = [2,4,6,8,10,12,16,20,24,32,40,48,64,72];
+  var steps = [2,4,6,8,10,12,16,20,24,32,40,48,64,72,96];
   document.getElementById("ladder").innerHTML = steps.map(function (v, i) {
     return '<div><span>s-' + (i + 1) + '</span><span>' + v + 'px</span><i style="width:' + v * 3 + 'px;max-width:100%"></i></div>';
   }).join("");
