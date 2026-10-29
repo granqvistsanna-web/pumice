@@ -102,6 +102,7 @@
 
   /* panels — an elevated sheet sits above the washes */
   --elev: #ffffff;                       /* panel, menu, popover fill */
+  --thumb: #ffffff;                      /* anything raised ON a wash: selected segment, knob, tag, hovered row */
   /* shadow scale — three steps, one job each: shadow-1 thumbs and knobs,
      lift panels and sticky bars, float menus and modals */
   --shadow-1: 0 1px 2px rgba(var(--ink-rgb), .1), 0 0 0 .5px rgba(var(--ink-rgb), .04);
@@ -134,6 +135,7 @@
   --pick: #3aa9ff; --guide: #ff5c84; --ok: #34d17a; --lock: #525252; --signal: #7b86ff;
   --float: 0 10px 30px rgba(0, 0, 0, .5);
   --elev: #181818;
+  --thumb: rgba(255, 255, 255, .16);   /* #181818 vanishes on a dark wash */
   --lift: 0 2px 5px rgba(0,0,0,.22), 0 10px 24px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.07);
   --fill: rgba(var(--ink-rgb), .11);
   --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 0 0 .5px rgba(255,255,255,.06);
@@ -154,6 +156,7 @@
     --pick: #3aa9ff; --guide: #ff5c84; --ok: #34d17a; --lock: #525252; --signal: #7b86ff;
     --float: 0 10px 30px rgba(0, 0, 0, .5);
     --elev: #181818;
+    --thumb: rgba(255, 255, 255, .16);   /* #181818 vanishes on a dark wash */
     --lift: 0 2px 5px rgba(0,0,0,.22), 0 10px 24px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.07);
     --fill: rgba(var(--ink-rgb), .11);
   --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 0 0 .5px rgba(255,255,255,.06);
