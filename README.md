@@ -4,7 +4,7 @@ A soft, warm-grey design system for component libraries and product
 showcases. Pill controls, 28px cards, ink washes instead of borders,
 and motion that springs a little. Light and dark.
 
-**Live reference (tokens, type scale, button motion, phone patterns, panels, live components):**
+**Live reference (tokens, type scale, icons, button motion, phone patterns, panels, live components):**
 https://granqvistsanna-web.github.io/pumice/
 
 ## Use it in a project

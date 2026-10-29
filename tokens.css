@@ -55,6 +55,12 @@
      lead 16/1.55/400 ink-4 · body 15/1.5 · ui 14/1.4/500 · small 13/1.5
      micro 12/1.6/500 · tag 11/1/500/+1% · tabular numerals everywhere digits stack */
 
+  /* icons — Lucide geometry on a 24 grid, round 2px stroke, ink-3 at rest */
+  --icon: 18px;        /* default: tool buttons, menu rows, fields */
+  --icon-sm: 15px;     /* inside buttons, chips and segments */
+  --icon-lg: 22px;     /* on a stage or knob */
+  --icon-stroke: 2;
+
   /* radius — two shapes: pill and soft card */
   --r-pill: 999px;
   --r-card: 28px;
