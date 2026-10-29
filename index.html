@@ -474,6 +474,94 @@
     .bar nav { display: none; }
     .t-display { font-size: 32px; }
   }
+
+  /* ---- Motion components: dropzone, label field, liquid switch, opening search, like-pop ---- */
+  .drop { display: grid; justify-items: center; gap: var(--s-2); padding: var(--s-11) var(--s-8); border-radius: var(--r-card); background: var(--wash); text-align: center; cursor: pointer;
+    transition: background var(--t-color), box-shadow var(--t-color), scale var(--t-press) var(--spring-soft); }
+  .drop:hover { background: var(--wash-2); }
+  .drop svg.i { width: var(--icon-lg); height: var(--icon-lg); margin-bottom: var(--s-4); color: var(--ink-3); }
+  .drop .big { font-size: 15px; font-weight: 500; color: var(--ink); }
+  .drop .small { font-size: 13px; color: var(--ink-4); }
+  .field-float { display: flex; align-items: center; width: 280px; max-width: 100%; height: 48px; padding: 0 18px; border-radius: var(--r-pill); background: var(--wash); cursor: text;
+    transition: background var(--t-color), box-shadow var(--t-color); }
+  .field-float:hover { background: var(--wash-2); }
+  .field-float input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: none; padding: 0; font: 400 15px/1 var(--font-ui); color: var(--ink); }
+  .btn.quiet[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
+
+  /* Dropzone: lifts its icon while a file hovers, gulps what it takes, shakes off what it refuses */
+  .drop svg.i { transition: color var(--t-color), translate var(--t-press) var(--spring); }
+  .drop.over { background: var(--wash-2); box-shadow: inset 0 0 0 2px var(--rule); scale: 1.01; }
+  .drop.over svg.i { color: var(--ink); translate: 0 -5px; }
+  .drop.took { animation: drop-took 420ms var(--spring-soft); }
+  .drop.nope { animation: drop-nope 380ms var(--settle); }
+  .drop .small.say { color: var(--ink); }
+  @keyframes drop-took { 35% { scale: .975; } }
+  @keyframes drop-nope { 18% { translate: -7px; } 36% { translate: 6px; } 54% { translate: -4px; } 72% { translate: 2px; } }
+
+  /* Label field: the label rests inside the pill, then lifts into its top edge on focus or once filled */
+  .float { position: relative; }
+  .float .lift {
+    position: absolute; left: 12px; top: 50%; translate: 0 -50%; padding: 0 6px; border-radius: var(--r-pill);
+    font: 400 15px/1.2 var(--font-ui); color: var(--ink-4); pointer-events: none; white-space: nowrap; transform-origin: left center;
+    transition: top var(--t-open) var(--spring-soft), scale var(--t-open) var(--spring-soft), color var(--t-color), background var(--t-color);
+  }
+  .float input::placeholder { color: transparent; transition: color var(--t-color); }
+  .float .proto { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width var(--t-open) var(--spring-soft), opacity var(--t-fade); }
+  .float:is(:focus-within, :has(input:not(:placeholder-shown))) { background: var(--bg); box-shadow: var(--ring); }
+  .float:is(:focus-within, :has(input:not(:placeholder-shown))) .lift { top: 0; scale: .8; color: var(--ink-3); background: var(--bg); }
+  .float:is(:focus-within, :has(input:not(:placeholder-shown))) .proto { max-width: 5em; opacity: 1; }
+  .float:focus-within input::placeholder { color: var(--ink-4); }
+
+  /* Liquid switch on a native checkbox: the leading edge leaves first, so the knob stretches as it travels */
+  .liquid {
+    appearance: none; -webkit-appearance: none; position: relative; flex: none; margin: 0; padding: 0;
+    width: 50px; height: var(--h-switch); border-radius: var(--r-pill); cursor: pointer;
+    background: rgba(var(--ink-rgb), .16); transition: background-color 200ms; --knob: var(--thumb);
+  }
+  .liquid::before {
+    content: ""; position: absolute; top: 3px; bottom: 3px; left: 3px; right: 23px; border-radius: inherit;
+    background: var(--knob); box-shadow: var(--shadow-1);
+    transition: left 300ms var(--spring-soft), right 380ms var(--spring-soft) 70ms, background-color 200ms;
+  }
+  .liquid:checked { background-color: var(--ink); --knob: var(--on-ink); }
+  .liquid:checked::before { left: 23px; right: 3px; transition: right 300ms var(--spring-soft), left 380ms var(--spring-soft) 70ms, background-color 200ms; }
+  .liquid:active:not(:checked)::before { right: 17px; }
+  .liquid:checked:active::before { left: 17px; }
+  .liquid:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+  /* Opening search: a round icon button that opens into the field as one object, and closes again when left empty */
+  .seek {
+    display: inline-flex; align-items: center; gap: 0; width: var(--h-field); height: var(--h-field); padding: 0 0 0 11px;
+    border-radius: var(--r-pill); background: var(--wash); color: var(--ink-3); cursor: pointer; overflow: hidden;
+    transition: width var(--t-open) var(--spring-soft), padding var(--t-open) var(--spring-soft), gap var(--t-open) var(--spring-soft),
+      background var(--t-color), box-shadow var(--t-color);
+  }
+  .seek:hover { background: var(--wash-2); color: var(--ink); }
+  .seek svg.i { width: 16px; height: 16px; flex: none; }
+  .seek input { flex: 1 1 0; width: 0; min-width: 0; opacity: 0; border: 0; outline: 0; background: none; padding: 0;
+    font: 400 14px/1 var(--font-ui); color: var(--ink); transition: opacity var(--t-fade); }
+  .seek input::placeholder { color: var(--ink-4); }
+  .seek input::-webkit-search-cancel-button { display: none; }
+  .seek:is(:focus-within, :has(input:not(:placeholder-shown))) { width: var(--seek-w, 240px); padding: 0 14px; gap: var(--s-4); cursor: text; background: var(--bg); box-shadow: var(--ring); }
+  .seek:is(:focus-within, :has(input:not(:placeholder-shown))) input { opacity: 1; transition-delay: 90ms; }
+
+  /* Like-pop: on set only, the button presses in, springs back and throws a ring and eight ink dots */
+  .pop { position: relative; animation: pop-press 480ms var(--spring); }
+  .pop::before, .pop::after { content: ""; position: absolute; pointer-events: none; }
+  .pop::after { inset: -3px; border-radius: inherit; box-shadow: 0 0 0 2px var(--ink); opacity: 0; animation: pop-ring 520ms var(--settle); }
+  .pop::before { left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; opacity: 0; animation: pop-dots 560ms var(--settle); }
+  @keyframes pop-press { 30% { scale: .88; } }
+  @keyframes pop-ring { from { opacity: .4; scale: .92; } to { opacity: 0; scale: 1.35; } }
+  @keyframes pop-dots {
+    0%, 45% { opacity: 1; }
+    from { box-shadow: 0 -10px var(--ink), 9px -7px var(--ink), 14px 0 var(--ink), 9px 7px var(--ink), 0 10px var(--ink), -9px 7px var(--ink), -14px 0 var(--ink), -9px -7px var(--ink); }
+    to { opacity: 0; box-shadow: 0 -22px 0 -1px var(--ink), 21px -16px 0 -1px var(--ink), 30px 0 0 -1px var(--ink), 21px 16px 0 -1px var(--ink), 0 22px 0 -1px var(--ink), -21px 16px 0 -1px var(--ink), -30px 0 0 -1px var(--ink), -21px -16px 0 -1px var(--ink); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drop.took, .drop.nope, .pop, .pop::before, .pop::after { animation: none; }
+    .liquid::before, .seek, .float .lift { transition-duration: 0ms; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .curve .dot { transition: none !important; }
   }
@@ -513,6 +601,7 @@
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.27 21a2 2 0 0 0 3.46 0M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
   <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
 </svg>
 
 <header class="bar">
@@ -896,6 +985,21 @@
       <div class="comp"><div class="k"><b>Segmented</b><span>Chips inside a wash track. The selected item is a page-colored pill.</span></div>
         <div class="row"><div class="seg" id="seg"><button aria-pressed="true">Monthly</button><button aria-pressed="false">Yearly</button></div></div></div>
 
+      <div class="comp"><div class="k"><b>Opening search</b><span>A 38px round button that opens into the field as one object and closes again when it loses focus empty. For a bar with no room for a full field, like a phone.</span></div>
+        <div class="row"><label class="seek" for="seek-q"><svg class="i"><use href="#i-search"/></svg><input id="seek-q" type="search" placeholder="Search" aria-label="Search"></label></div></div>
+
+      <div class="comp"><div class="k"><b>Label field</b><span>48px wash pill. The label rests inside, then lifts and shrinks into the top edge on focus or once filled, notching the ring.</span></div>
+        <div class="row"><label class="field-float float" for="ff-mail"><span class="lift">Email</span><input id="ff-mail" type="email" placeholder="you@studio.com" autocomplete="off"></label></div></div>
+
+      <div class="comp"><div class="k"><b>Liquid switch</b><span>A native checkbox. The leading edge leaves first and the trailing one follows 70ms later, so the knob stretches as it slides. A press leans it toward where it will go.</span></div>
+        <div class="row"><input class="liquid" type="checkbox" aria-label="Startup fee"><input class="liquid" type="checkbox" checked aria-label="Moms"></div></div>
+
+      <div class="comp"><div class="k"><b>Dropzone</b><span>28px wash card. A file over it lifts the icon and rings the card. A drop it takes gulps once; one it refuses shakes and says why.</span></div>
+        <div class="drop" id="drop-demo" tabindex="0" role="button" aria-label="Choose or drop an image"><svg class="i"><use href="#i-upload"/></svg><span class="big">Drop an image here</span><span class="small" id="drop-say">or click to choose. Anything else gets shaken off</span><input type="file" id="drop-file" hidden></div></div>
+
+      <div class="comp"><div class="k"><b>Like-pop</b><span>For a commit like Save or Star, on set only. The button presses in, springs back and throws a ring and eight ink dots. Undoing is quiet, and nothing pops on load.</span></div>
+        <div class="row"><button class="btn quiet sm" id="pop-demo" type="button" aria-pressed="false">Save</button></div></div>
+
       <div class="comp"><div class="k"><b>Tags</b><span>24px for status on a card; dark glass with blur for overlays; lock for gated items.</span></div>
         <div class="row" style="background:var(--wash);padding:12px;border-radius:var(--r-inner)"><span class="tag t-tag">New</span><span class="tag glass">Featured</span><span class="tag t-tag lock">Pro</span></div></div>
 
@@ -1040,6 +1144,31 @@ toggle.onclick = function () {
 </main>
 
 <script>
+  // motion components
+  function nudge(el, cls, ms) { clearTimeout(el._nudge); el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); el._nudge = setTimeout(function () { el.classList.remove(cls); }, ms || 600); }
+  var dd = document.getElementById("drop-demo"), df = document.getElementById("drop-file"), ds = document.getElementById("drop-say"), dsText = ds.textContent, dsT;
+  function take(list) {
+    var files = Array.prototype.slice.call(list || []);
+    if (!files.length) return;
+    var ok = files.every(function (f) { return /^image\//.test(f.type); });
+    nudge(dd, ok ? "took" : "nope", 450);
+    ds.textContent = ok ? files.length + (files.length > 1 ? " images" : " image") + " taken" : "Images only";
+    ds.classList.toggle("say", !ok);
+    clearTimeout(dsT); dsT = setTimeout(function () { ds.textContent = dsText; ds.classList.remove("say"); }, 2400);
+  }
+  dd.addEventListener("click", function () { df.click(); });
+  dd.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); df.click(); } });
+  df.addEventListener("change", function () { take(df.files); df.value = ""; });
+  ["dragenter", "dragover"].forEach(function (t) { dd.addEventListener(t, function (e) { e.preventDefault(); dd.classList.add("over"); }); });
+  ["dragleave", "drop"].forEach(function (t) { dd.addEventListener(t, function (e) { e.preventDefault(); dd.classList.remove("over"); }); });
+  dd.addEventListener("drop", function (e) { take(e.dataTransfer.files); });
+  var pd = document.getElementById("pop-demo");
+  pd.addEventListener("click", function () {
+    var on = pd.getAttribute("aria-pressed") !== "true";
+    pd.setAttribute("aria-pressed", on); pd.textContent = on ? "Saved" : "Save";
+    if (on) nudge(pd, "pop");
+  });
+
   // space ladder
   var steps = [2,4,6,8,10,12,16,20,24,32,40,48,64,72];
   document.getElementById("ladder").innerHTML = steps.map(function (v, i) {
