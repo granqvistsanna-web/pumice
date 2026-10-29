@@ -221,21 +221,7 @@
   }
   .count i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
 
-  .card {
-    position: relative; background: var(--wash); border-radius: var(--r-card);
-    min-height: 260px; display: grid; place-items: center; overflow: hidden;
-  }
-  .card .tags { position: absolute; top: 12px; left: 12px; display: flex; gap: var(--s-3); }
-  .card .foot {
-    position: absolute; left: 0; right: 0; bottom: 0; padding: 0 14px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-    opacity: 0; transform: translateY(6px);
-    transition: opacity var(--t-fade), transform var(--t-move) var(--spring);
-  }
-  .card:hover .foot, .card:focus-within .foot { opacity: 1; transform: none; }
-  .card .foot .name { height: var(--h-field); padding: 0 14px; border-radius: var(--r-pill); background: var(--frost); display: inline-flex; align-items: center; font-size: 12.5px; color: var(--ink-2); }
   .demo-knob { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 10px var(--wash); transition: transform var(--t-move) var(--spring); }
-  .card:hover .demo-knob { transform: scale(1.08); }
 
   .faq { border-top: 1px solid var(--hairline); }
   .faq-item { border-bottom: 1px solid var(--hairline); }
@@ -449,10 +435,6 @@
     .block { flex: 0 0 calc(44% - var(--panel-gap)); }
     .modal .side { width: 100%; flex: 1; min-height: 0; padding: 14px 16px; }
     .modal .side-foot { flex-direction: row; } .modal .side-foot .act { flex: 1; min-width: 0; }
-  }
-
-  @media (hover: none) {
-    .card .foot { opacity: 1; transform: none; }
   }
 
   .seg { display: inline-flex; padding: var(--s-1); gap: var(--s-1); border-radius: var(--r-pill); background: var(--wash); }
@@ -919,12 +901,6 @@
 
       <div class="comp"><div class="k"><b>Live count</b><span>Ringed pill with a pulsing dot, tabular numerals. Use above a hero title.</span></div>
         <div class="row"><span class="count"><i></i>482 joined this week</span></div></div>
-
-      <div class="comp"><div class="k"><b>Showcase card</b><span>28px wash stage. Tags pinned top-left; name bar and action spring up on hover or focus.</span></div>
-        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))">
-          <article class="card" tabindex="0"><div class="tags"><span class="tag t-tag">New</span></div><span class="demo-knob"></span><div class="foot"><span class="name">Press dial</span><button class="icon-btn solid" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg></button></div></article>
-          <article class="card" tabindex="0" style="background:var(--paper-2)"><div class="tags"><span class="tag glass">Featured</span></div><span class="demo-knob" style="border-radius:var(--r-inner)"></span><div class="foot"><span class="name">Stack tile</span><button class="icon-btn solid" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg></button></div></article>
-        </div></div>
 
       <div class="comp"><div class="k"><b>Accordion</b><span>Hairline rows, plus icon rotates 45°. Height animates through grid rows with the settle curve.</span></div>
         <div class="faq" id="faq">
